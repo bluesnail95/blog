@@ -17,7 +17,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 @Configuration
 @MapperScan(basePackages = "gdut.ff.mapper",sqlSessionTemplateRef = "blogSqlSessionTemplate")
-public class DataSource1Config {
+public class BlogDataSourceConfig {
 	
 	@Bean(name = "blogDataSource")
 	@ConfigurationProperties(prefix = "blog.datasource")
