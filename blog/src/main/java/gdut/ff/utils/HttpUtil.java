@@ -13,7 +13,7 @@ import java.net.URL;
  */
 public class HttpUtil {
 
-	private static String httpRequest(String requestUrl) {
+	public static String httpRequest(String requestUrl) {
 		StringBuffer stringBuffer = null;
 		BufferedReader bufferReader = null;
 		InputStreamReader inputStreamReader = null;

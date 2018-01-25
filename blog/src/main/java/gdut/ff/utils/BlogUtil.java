@@ -3,15 +3,19 @@ package gdut.ff.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 /**
  * 
  * @author liuffei
  *
  */
 public class BlogUtil {
+	
+	public ArrayNode blogs = NodeUtil.crete();
 
-	public static String filterHtml(String html) {
-		StringBuffer stringBuffer = new StringBuffer("");
+	public ArrayNode filterHtml(String html) {
 		String str2 = "";
 		Pattern pattern = Pattern.compile("(.*)(<li class=\"clearfix\" data-type=\"blog\")(.*?)(>)(.*?)(</li>)(.*)");
 	    Matcher m = pattern.matcher(html);
@@ -40,18 +44,20 @@ public class BlogUtil {
 	    		pattern = Pattern.compile("(.*)(<a strategy=)(.*?)( href=\")(.*?)(\" target=\"_blank\">)(.*?)(</a>)(.*)");
 			    m = pattern.matcher(str2);
 			    if(m.matches()) {
-			    	str2 = m.group(5);
-			    	stringBuffer.append(str2.trim());
-			    	str2 = m.group(7);
-		    		stringBuffer.append(str2.trim());
+			    	ObjectNode blog = NodeUtil.create();
+			    	String url = m.group(5);
+			    	blog.put("url",url.trim());
+			    	String title = m.group(7);
+			    	blog.put("title",title.trim());
+			    	blogs.add(blog);
 			    }	    	    
 	    	}
 	    	
 	    	//遍历
 	    	if("" != html.trim()) {
-	    		System.out.println(filterHtml(html));
+	    	    filterHtml(html);
 	    	}
 	    }
-		return stringBuffer.toString();
+		return blogs;
 	}
 }
