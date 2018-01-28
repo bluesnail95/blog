@@ -1,5 +1,7 @@
 package gdut.ff.web;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +27,7 @@ public class BlogController {
 	 * @return
 	 */
 	@RequestMapping(value = "/csdn/list",method = RequestMethod.GET)
-	public ObjectNode csdnBlog() {
+	public ObjectNode csdnBlog(HttpServletResponse resp) {
 		ObjectNode result = NodeUtil.create();
 		//现在是写死的的链接，后期要修改成前端传入的参数
 		String html = HttpUtil.httpRequest("https://www.csdn.net/");
@@ -33,6 +35,7 @@ public class BlogController {
 		ArrayNode content = result.putArray("blogs");
 		content.addAll(blogs);
 		result.put("status",1);
+		//resp.setHeader("Access-Control-Allow-Origin","*");
 		return result;
 	}
 }
