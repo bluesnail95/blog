@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author liuffei
  * @date 2018-01-27
  */
-@WebFilter(urlPatterns = "/")
+@WebFilter(urlPatterns = "/*")
 public class HttpFilter implements Filter {
 
 	@Override
