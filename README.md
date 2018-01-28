@@ -14,7 +14,7 @@ Project:blog
 
 二：这个项目将会使用哪些技术？
 
-(1)后台将会使用Maven管理包依赖，SpringBoot集成Spring,SpringMvc,Mybatis。这里选择Mybatis而不是Spring Data JPA的原因是，自己比较熟悉Mybatis，而且如果表与表之间的关联比较多，直接写原生的sql比较简便，虽然Spring Data JPA也可以写原生的Sql,但需要硬编码在代码中，而且MyBatis更有利于优化Sql，美中不足的是不能像Spring Data JPA一样自动建表。可能会选择开源框架Gecco(http://www.geccocrawler.com/)做网站内容抽取，目前还在观望中。
+(1)后台将会使用Maven管理包依赖，SpringBoot集成Spring,SpringMvc,Mybatis。这里选择Mybatis而不是Spring Data JPA的原因是，自己比较熟悉Mybatis，而且如果表与表之间的关联比较多，直接写原生的sql比较简便，虽然Spring Data JPA也可以写原生的Sql,但需要硬编码在代码中，而且MyBatis更有利于优化Sql，美中不足的是不能像Spring Data JPA一样自动建表。可能会选择[开源框架Gecco](http://www.geccocrawler.com/)做网站内容抽取，目前还在观望中。
 
 (2)前端会采用axios+vue+bootstrap的组合做视图层。
 
