@@ -19,3 +19,8 @@ Project:blog
 (2)前端会采用axios+vue+bootstrap的组合做视图层。
 
 (3)数据库选择的是mysql。
+
+三:项目文件夹说明
+(1)blog:项目源代码。
+(2)perspective：效果图存放的位置。
+(3)doc：开发日志，记录自己开发过程遇到的问题。
