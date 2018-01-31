@@ -14,5 +14,14 @@ public class TestGecco {
 		           .thread(5)
 		           .run();
 	}
+	
+	@Test
+	public void testGeccoOsc() {
+		GeccoEngine.create()
+		           .classpath("gdut.ff.gecco")
+		           .start("https://www.csdn.net/")
+		           .thread(5)
+		           .run();
+	}
 
 }

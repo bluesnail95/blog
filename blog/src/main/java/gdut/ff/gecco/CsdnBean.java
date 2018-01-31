@@ -1,18 +1,25 @@
-package gdut.ff.domain;
+package gdut.ff.gecco;
 
 import com.geccocrawler.gecco.annotation.Attr;
 import com.geccocrawler.gecco.annotation.HtmlField;
 import com.geccocrawler.gecco.annotation.Text;
 import com.geccocrawler.gecco.spider.HtmlBean;
 
-public class CnBlogsBean implements HtmlBean{
+/**
+ * 
+ * @author liuffei
+ * @date 2017-01-31
+ */
+public class CsdnBean implements HtmlBean{
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Attr("href")
-	@HtmlField(cssPath = ".post_item_body > h3 > a")
+	@HtmlField(cssPath = ".list_con > h2 > a")
 	private String url;
 	
 	@Text
-	@HtmlField(cssPath = ".post_item_body > h3 > a")
+	@HtmlField(cssPath = ".list_con > h2 > a")
 	private String title;
 
 	public String getUrl() {

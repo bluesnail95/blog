@@ -1,5 +1,7 @@
 package gdut.ff.utils;
 
+import java.util.List;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -17,8 +19,12 @@ public class NodeUtil {
 		return objectMapper.createObjectNode();
 	}
 	
-	public static  ArrayNode crete() {
+	public static  ArrayNode createArr() {
 		return objectMapper.createArrayNode();
+	}
+	
+	public static ArrayNode transFromList(List list) {
+		return objectMapper.convertValue(list, ArrayNode.class);
 	}
 
 }

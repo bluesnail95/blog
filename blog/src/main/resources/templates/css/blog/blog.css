@@ -1,0 +1,16 @@
+.content li{
+	background-image:url(../../image/csdn.jpg);
+	background-repeat:no-repeat;
+	background-position:0px 5px; 
+	padding-left:14px;
+	clear:both;
+}
+
+.content li a{
+	color: black;
+	text-align: center;
+}
+
+.content li a:hover{
+	background-color: white;
+}

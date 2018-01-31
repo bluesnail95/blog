@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  */
 public class BlogUtil {
 	
-	public ArrayNode blogs = NodeUtil.crete();
+	public ArrayNode blogs = NodeUtil.createArr();
 
 	public ArrayNode filterHtml(String html) {
 		String str2 = "";

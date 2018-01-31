@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="../../css/index.css">
+	<link rel="stylesheet" type="text/css" href="../../css/blog/blog.css">
+</head>
+<body>
+	
+	<ul class="header">
+		<li><a href="../index.html" class="active">主页</a></li>
+		<div class="dropdown">
+			<a href="#" class="dropbtn">博客网站</a>
+			<div class="dropdown-content">
+				<a href="csdn.html">CSDN</a>
+				<a href="cnblogs.html">博客园</a>
+				<a href="osc.html">开源中国</a>
+			</div>
+		</div>
+		<li><a href="../contact.html">联系我</a></li>
+		<li><a href="../about.html">关于</a></li>
+	</ul>
+
+	<ol id="blog-osc" class="content">
+        <li v-for="blog in blogs">
+              <img src="../../image/osc.jpg" alt="csdn" width="50" height="50">
+              <a v-bind:href="blog.url" target="_blank">{{blog.title}}</a>
+        </li>
+    </ol>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script type="text/javascript">
+		axios.get('http://127.0.0.1:8080/osc/blogs')
+	     .then(function (response) {
+			 if(1 == response.data.status){
+				 var blogsApp = new Vue({
+			    	 el:"#blog-osc",
+			    	 data:{
+			    		 "blogs":response.data.blogs
+			    	 }
+			     });
+			 }    
+	     })   
+	     .catch(function (error) {
+		
+	     });
+
+	</script>
+
+    
+</body>
+</html>
