@@ -6,7 +6,7 @@ import gdut.ff.domain.User;
 
 /**
  * 用户数据访问层操作接口
- * @author Administrator
+ * @author liuffei
  *
  */
 public interface UserMapper {
@@ -37,4 +37,13 @@ public interface UserMapper {
 	 * @return
 	 */
 	public void updateUser(User user);
+	
+	/**
+	 * 根据用户用户名或邮箱登录
+	 * @param loginName 登录名
+	 * @param password 密码
+	 */
+	public User loginUser(User user);
+	
+	
 }

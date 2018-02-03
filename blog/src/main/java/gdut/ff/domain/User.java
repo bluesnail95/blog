@@ -3,11 +3,7 @@ package gdut.ff.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.springframework.stereotype.Component;
 
 /**
  * 用户实体层
@@ -15,37 +11,32 @@ import javax.persistence.Table;
  * @date 2018年1月16日
  * @description
  */
-@Entity
-@Table
+@Component
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	@Id
 	private String id;
 	
 	//用户名
-	@Column
 	private String name;
 	
+	//邮箱
+	private String email;
+	
 	//出生日期
-	@Column
 	private Date birthday;
 	
 	//登录名
-	@Column(name = "login_name")
 	private String loginName;
 	
 	//密码
-	@Column(name = "pass_word")
-	private String passWord;
+	private String password;
 	
 	//个性签名
-	@Column
 	private String signature;
 
-	//图片
-	@Column
+	//头像
 	private String img;
 
 	public String getId() {
@@ -80,12 +71,12 @@ public class User implements Serializable{
 		this.loginName = loginName;
 	}
 
-	public String getPassWord() {
-		return passWord;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPassWord(String passWord) {
-		this.passWord = passWord;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getImg() {
@@ -103,7 +94,21 @@ public class User implements Serializable{
 	public void setSignature(String signature) {
 		this.signature = signature;
 	}
-	
-	
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", email=" + email + ", birthday=" + birthday + ", loginName="
+				+ loginName + ", password=" + password + ", signature=" + signature + ", img=" + img + "]";
+	}
+	
+	
+	
 }

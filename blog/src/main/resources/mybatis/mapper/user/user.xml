@@ -5,9 +5,10 @@
     <resultMap id="userMap" type="gdut.ff.domain.User">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
+        <result column="email" property="email"/>
         <result column="birthday" property="birthday" />
         <result column="login_name" property="loginName"/>
-        <result column="pass_word" property="passWord"/>
+        <result column="password" property="password"/>
         <result column="img" property="img"/>
         <result column="signature" property="signature"/>
     </resultMap>
@@ -24,20 +25,29 @@
     </select>
     
     <insert id="saveUser" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user(name,birthday,login_name,pass_word,signature,img)
-        VALUES(#{name},#{birthday},#{loginName},#{passWord},#{signature},#{img})
+        INSERT INTO user(id,name,email,birthday,login_name,password,signature,img)
+        VALUES(#{id},#{name},#{email},#{birthday},#{loginName},#{password},#{signature},#{img})
     </insert>
     
     <update id="updateUser">
         UPDATE user 
         SET name = #{name},
+            email = #{email},
             birthday = #{birthday},
             login_name = #{loginName},
-            pass_word = #{passWord},
+            password = #{password},
             signature = #{signature},
             img = #{img}
-         WHERE id = #{id}
+        WHERE id = #{id}
     </update>
+    
+    <select id="loginUser" resultType="gdut.ff.domain.User">
+        SELECT *
+        FROM user
+        WHERE (login_name = #{loginName} or email = #{email}) AND password = #{password}
+    </select>
+    
+    
     
     
 </mapper>

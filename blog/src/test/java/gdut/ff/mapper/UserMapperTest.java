@@ -30,7 +30,7 @@ public class UserMapperTest {
 				User user = users.get(i);
 				System.out.println("id = "+user.getId()+",name = "+user.getName()
 				+",birthday="+sdf.format(user.getBirthday())+",loginName="+user.getLoginName()
-				+",passWord="+user.getPassWord()+",signature="+user.getSignature());
+				+",passWord="+user.getPassword()+",signature="+user.getSignature());
 			}
 		}
 	}
@@ -41,7 +41,7 @@ public class UserMapperTest {
 		User user = userMapper.fingOneById(id);
 		System.out.println("id = "+user.getId()+",name = "+user.getName()
 		+",birthday="+sdf.format(user.getBirthday())+",loginName="+user.getLoginName()
-		+",passWord="+user.getPassWord()+",signature="+user.getSignature());
+		+",passWord="+user.getPassword()+",signature="+user.getSignature());
 	}
 	
 	@Test
@@ -53,7 +53,7 @@ public class UserMapperTest {
 		user.setBirthday(sdf.parse(birthdate));
 		user.setImg(img);
 		user.setLoginName("liuffei");
-		user.setPassWord("123");
+		user.setPassword("123");
 		user.setSignature("坚持做自己");
 		user.setName("liuffei");
 		userMapper.saveUser(user);
@@ -68,9 +68,32 @@ public class UserMapperTest {
 		user.setBirthday(sdf.parse(birthdate));
 		user.setImg(img);
 		user.setLoginName("hequn");
-		user.setPassWord("123");
+		user.setPassword("123");
 		user.setSignature("坚持做自己");
 		user.setName("hequn");
 		userMapper.saveUser(user);
 	}
+	
+	@Test
+	/**
+	 * 测试用户登录
+	 */
+	public void testLoginUser() {
+		String email = "13642315483@163.com";
+		String loginName = "bluesnail95";
+		String password = "123";
+		User userA = new User();
+		userA.setEmail(email);
+		userA.setPassword(password);
+		User user1 = userMapper.loginUser(userA);
+		System.out.println(user1);
+		
+		User userB = new User();
+		userB.setLoginName(loginName);
+		userB.setPassword(password);
+		User user2 = userMapper.loginUser(userB);
+		System.out.println(user2);
+	}
+	
+	
 }
