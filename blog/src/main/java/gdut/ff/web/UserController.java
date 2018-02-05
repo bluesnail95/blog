@@ -10,7 +10,9 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.eclipse.jetty.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,13 +29,21 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import gdut.ff.domain.User;
 import gdut.ff.mapper.UserMapper;
+import gdut.ff.utils.AjaxResult;
 import gdut.ff.utils.NodeUtil;
+import gdut.ff.utils.TokenUtil;
 
 @RestController
 public class UserController {
 	
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Value("${blog.user.expire-minutes}")
+	private int expireMinutes;
+	           
+	@Value("${blog.user.secret}")
+	private String SECERT;
 	
 	/**
 	 * 查询全部的用户
@@ -112,6 +122,13 @@ public class UserController {
 		if(null == user) {
 			result.put("error","用户名/邮箱或密码错误");
 		}
+		try {
+			String token = TokenUtil.token(SECERT, user, expireMinutes);
+			result.put("token",token);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		result.putPOJO("user",user);
 		result.put("status", 1);
 		return result;
 	}
@@ -135,6 +152,27 @@ public class UserController {
 		User user = NodeUtil.transToPOJO(param,User.class);
 		user.setId(UUID.randomUUID().toString());
 		userMapper.saveUser(user);
+		result.put("status",1);
+		return result;
+	}
+	
+	@PostMapping("/user/verify")
+	public ObjectNode userVerify(@RequestBody JsonNode param) {
+		ObjectNode result = NodeUtil.create();
+		String token = param.has("token") ? param.get("token").asText() : "";
+		if(StringUtil.isNotBlank(token)) {
+			try {
+				User user = TokenUtil.verifyUser(token, SECERT);
+				if(null == user) {
+					result.put("error","登录失败");
+				}
+				result.putPOJO("user",user);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else {
+			result.put("error","登录失败");
+		}
 		result.put("status",1);
 		return result;
 	}

@@ -38,6 +38,15 @@ public class NodeUtil {
 	}
 	
 	/**
+	 * 将POJO转成JsonNode
+	 * @param clazz
+	 * @return
+	 */
+	public static JsonNode transFromPOJO(Class clazz) {
+		return objectMapper.convertValue(clazz,JsonNode.class);
+	}
+	
+	/**
 	 * 将
 	 * @param fromValue
 	 * @param toClass
