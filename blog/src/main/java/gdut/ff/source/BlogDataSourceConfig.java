@@ -28,16 +28,16 @@ public class BlogDataSourceConfig {
 	
 	@Primary
 	@Bean(name = "blogSqlSessionFactory")
-	public SqlSessionFactory testSqlSessionFactory(@Qualifier("blogDataSource")DataSource dataSource) throws Exception {
+	public SqlSessionFactory blogSqlSessionFactory(@Qualifier("blogDataSource")DataSource dataSource) throws Exception {
 		SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
 		bean.setDataSource(dataSource);
-		bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/mybatis/mapper/user/user.xml"));
+		bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/mybatis/mapper/**/*.xml"));
 		return bean.getObject();
 	}
 	
 	@Primary
 	@Bean(name = "blogTransactionManager")
-	public DataSourceTransactionManager testTransactionManager(@Qualifier("blogDataSource")DataSource dataSource) {
+	public DataSourceTransactionManager blogTransactionManager(@Qualifier("blogDataSource")DataSource dataSource) {
 		return new DataSourceTransactionManager(dataSource);
 	}
 	
