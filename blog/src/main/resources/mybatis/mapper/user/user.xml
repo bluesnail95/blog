@@ -13,22 +13,26 @@
         <result column="signature" property="signature"/>
     </resultMap>
     
+    <!-- 查找全部用户 -->
     <select id="findAll" resultMap="userMap">
         SELECT *
         FROM user
     </select>
     
+    <!-- 查询指定的用户 -->
     <select id="findOneById" resultMap="userMap">
         SELECT * 
         FROM user 
         WHERE id = #{id}
     </select>
     
+    <!-- 保存用户 -->
     <insert id="saveUser" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user(id,name,email,birthday,login_name,password,signature,img)
         VALUES(#{id},#{name},#{email},#{birthday},#{loginName},#{password},#{signature},#{img})
     </insert>
     
+    <!-- 更新用户 -->
     <update id="updateUser">
         UPDATE user 
         SET name = #{name},
@@ -41,6 +45,7 @@
         WHERE id = #{id}
     </update>
     
+    <!-- 根据登录名或邮箱和密码登录 -->
     <select id="loginUser" resultType="gdut.ff.domain.User">
         SELECT *
         FROM user

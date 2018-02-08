@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,6 +29,8 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import gdut.ff.domain.User;
+import gdut.ff.domain.UserAccess;
+import gdut.ff.mapper.UserAccessMapper;
 import gdut.ff.mapper.UserMapper;
 import gdut.ff.utils.AjaxResult;
 import gdut.ff.utils.NodeUtil;
@@ -44,6 +47,9 @@ public class UserController {
 	           
 	@Value("${blog.user.secret}")
 	private String SECERT;
+	
+	@Autowired
+	private UserAccessMapper userAccessMapper;
 	
 	/**
 	 * 查询全部的用户
@@ -156,6 +162,11 @@ public class UserController {
 		return result;
 	}
 	
+	/**
+	 * 用户校验token测试
+	 * @param param
+	 * @return
+	 */
 	@PostMapping("/user/verify")
 	public ObjectNode userVerify(@RequestBody JsonNode param) {
 		ObjectNode result = NodeUtil.create();
@@ -173,6 +184,22 @@ public class UserController {
 		}else {
 			result.put("error","登录失败");
 		}
+		result.put("status",1);
+		return result;
+	}
+	
+	/**
+	 * 保存用户访问
+	 * @param userAccess
+	 * @return
+	 */
+	@PostMapping("/user/access")
+	public ObjectNode userAccess(@RequestBody UserAccess userAccess) {
+		ObjectNode result = NodeUtil.create();
+		//设置主键和创建时间 保存
+		userAccess.setId(UUID.randomUUID().toString());
+		userAccess.setCreateTime(new Date());
+		userAccessMapper.saveUserAccess(userAccess);
 		result.put("status",1);
 		return result;
 	}

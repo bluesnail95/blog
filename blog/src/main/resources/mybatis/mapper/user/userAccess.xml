@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gdut.ff.mapper.UserAccessMapper">
+    
+    
+    <resultMap id="userAccessMap" type="gdut.ff.domain.UserAccess">    
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="url" property="url"/>
+        <result column="create_time" property="createTime" />
+        <result column="website_type" property="websiteType"/>
+        <result column="classification" property="classification"/>
+    </resultMap>
+    
+    
+    <!-- 保存用户 访问记录-->
+    <insert id="saveUserAccess">
+        INSERT INTO user_access(id,title,url,create_time,website_type,classification)
+        VALUES(#{id},#{title},#{url},#{createTime},#{websiteType},#{classification})
+    </insert>
+    
+    
+</mapper>

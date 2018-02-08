@@ -9,4 +9,8 @@
 		<typeAlias alias="ArrayList" type="java.util.ArrayList" />
 		<typeAlias alias="LinkedList" type="java.util.LinkedList" />
 	</typeAliases>
+	
+	<mappers >
+	    <package name="mybatis.mapper.**"/>
+	</mappers>
 </configuration>

@@ -25,7 +25,7 @@
 	<ol id="blog-csdn" class="content">
         <li v-for="blog in blogs">
               <img src="../../image/csdn.jpg" alt="csdn" width="50" height="50">
-              <a v-bind:href="blog.url" target="_blank">{{blog.title}}</a>
+              <a href="javascript:void(0)" target="_blank" v-on:click="view(blog);">{{blog.title}}</a>
         </li>
     </ol>
     
@@ -39,6 +39,26 @@
 			    	 el:"#blog-csdn",
 			    	 data:{
 			    		 "blogs":response.data.blogs
+			    	 },
+			    	 methods:{
+			    	 	/**
+			    	 	 *点击博客记录，保存到数据库，然后跳转
+			    	 	 */
+			    	 	view:function(blog){
+			    	 		axios.post("http://127.0.0.1:8080/user/access",{
+				                 "title":blog.title,
+				                 "url":blog.url,
+				                 "classification":blog.classification,
+				                 "websiteType":3
+					     	  })
+					     	  .then(function(response){
+					     	  	  window.location.href = blog.url;
+				                  //window.open(blog.url);
+					     	  })
+					     	  .catch(function(error){
+				                  alert(error);
+					     	  });
+			    	 	}
 			    	 }
 			     });
 			 }    
