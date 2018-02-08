@@ -11,7 +11,7 @@ import com.geccocrawler.gecco.spider.HtmlBean;
  * @author liuffei
  * @date 2017-01-31
  */
-@Gecco(matchUrl="https://www.csdn.net/", pipelines={"consolePipeline","csdnPipeline"})
+@Gecco(matchUrl="https://www.csdn.net/", pipelines={"csdnPipeline"})
 public class CsdnBeanList implements HtmlBean{
 	
 	private static final long serialVersionUID = 1L;

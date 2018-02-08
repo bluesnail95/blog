@@ -15,12 +15,16 @@ public class CsdnBean implements HtmlBean{
 	private static final long serialVersionUID = 1L;
 	
 	@Attr("href")
-	@HtmlField(cssPath = ".list_con > h2 > a")
+	@HtmlField(cssPath = ".list_con > .title > h2 > a")
 	private String url;
 	
 	@Text
-	@HtmlField(cssPath = ".list_con > h2 > a")
+	@HtmlField(cssPath = ".list_con > .title > h2 > a")
 	private String title;
+	
+	@Text
+	@HtmlField(cssPath = ".list_con .list_userbar .tag > a")
+	private String classification;
 
 	public String getUrl() {
 		return url;
@@ -37,6 +41,15 @@ public class CsdnBean implements HtmlBean{
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
+	public String getClassification() {
+		return classification;
+	}
+
+	public void setClassification(String classification) {
+		this.classification = classification;
+	}
+	
 	
 	
 

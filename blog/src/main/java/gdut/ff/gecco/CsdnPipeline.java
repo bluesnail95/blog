@@ -27,7 +27,8 @@ public class CsdnPipeline implements Pipeline<CsdnBeanList> {
 		if(null != blogs && blogs.size() > 0) {
 			constant.csdnNodes.addAll(NodeUtil.transFromList(blogs));
 			for(int i = 0;i < blogs.size();i++) {
-				System.out.println("url :"+blogs.get(i).getUrl()+"->"+"title:"+blogs.get(i).getTitle());
+				System.out.println("url :"+blogs.get(i).getUrl()+" -> title:"+blogs.get(i).getTitle()
+						+" -> classification:"+blogs.get(i).getClassification());
 			}
 		}	
 	}
