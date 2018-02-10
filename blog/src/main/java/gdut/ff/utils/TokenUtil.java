@@ -42,6 +42,7 @@ public class TokenUtil {
 				.withHeader(header)
 				//.withClaim("loginName",user.getLoginName())
 				.withClaim("email", user.getEmail())
+				.withClaim("id", user.getId())
 				.withExpiresAt(expireDate)
 				.withIssuedAt(iatDate)
 				.sign(Algorithm.HMAC256(secret));
@@ -62,6 +63,7 @@ public class TokenUtil {
 			Map<String,Claim> claims = jwt.getClaims();
 			User user = new User();
 			user.setEmail(claims.get("email").asString());
+			user.setId(claims.get("id").asString());
 			//需要处理login_name与loginName的映射问题
 			//user.setLoginName(claims.get("loginName").asString());
 			return user;
