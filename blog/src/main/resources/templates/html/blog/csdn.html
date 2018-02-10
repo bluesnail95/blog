@@ -7,20 +7,9 @@
 	<link rel="stylesheet" type="text/css" href="../../css/blog/blog.css">
 </head>
 <body>
-	
-	<ul class="header">
-		<li><a href="../index.html" class="active">主页</a></li>
-		<div class="dropdown">
-			<a href="#" class="dropbtn">博客网站</a>
-			<div class="dropdown-content">
-				<a href="csdn.html">CSDN</a>
-				<a href="cnblogs.html">博客园</a>
-				<a href="osc.html">开源中国</a>
-			</div>
-		</div>
-		<li><a href="../contact.html">联系我</a></li>
-		<li><a href="../about.html">关于</a></li>
-	</ul>
+	<div id="top">
+		<my-nav/>
+	</div>
 
 	<ol id="blog-csdn" class="content">
         <li v-for="blog in blogs">
@@ -29,9 +18,11 @@
         </li>
     </ol>
     
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="../../js/comm/vue.js"></script>
+    <script src="../../js/comm/axios.min.js"></script>
+    <script src="../../js/comm/comm.js"></script>
 	<script type="text/javascript">
+
 		axios.get('http://127.0.0.1:8080/csdn/blogs')
 	     .then(function (response) {
 			 if(1 == response.data.status){
