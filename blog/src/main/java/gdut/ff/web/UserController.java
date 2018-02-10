@@ -134,6 +134,8 @@ public class UserController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		//不返回用户密码
+		user.setPassword(null);
 		result.putPOJO("user",user);
 		result.put("status", 1);
 		return result;
@@ -193,12 +195,23 @@ public class UserController {
 	 * @param userAccess
 	 * @return
 	 */
-	@PostMapping("/user/access")
-	public ObjectNode userAccess(@RequestBody UserAccess userAccess) {
+	@PostMapping("/user/access/{token}")
+	public ObjectNode userAccess(@RequestBody UserAccess userAccess,@PathVariable String token) {
 		ObjectNode result = NodeUtil.create();
 		//设置主键和创建时间 保存
 		userAccess.setId(UUID.randomUUID().toString());
 		userAccess.setCreateTime(new Date());
+		//判断token是否有效，有效取出用户的主键
+		try {
+			User user = TokenUtil.verifyUser(token, SECERT);
+			if(null != user) {
+				userAccess.setId(user.getId());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("error","出错啦!!!");
+			return result;
+		}
 		userAccessMapper.saveUserAccess(userAccess);
 		result.put("status",1);
 		return result;
