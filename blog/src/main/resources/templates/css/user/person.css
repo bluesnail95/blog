@@ -1,0 +1,79 @@
+body{
+    margin: 0px;
+    padding-top: 60px;
+    width: 1349px;
+    background-color: #333
+}
+h2{
+    color: #512b1e;
+}
+input{
+    background-color: gainsboro;
+}
+/*侧边导航*/
+#sideBar{
+    width: 300px;
+    height: 500px;
+    margin: 40px 20px 0px 100px;
+    float: left;
+}
+#sideName{
+    width: 300px;
+    height: 150px;
+    background-color:#512b1e;
+    color: white;
+    text-align: center;
+    line-height: 150px;
+    font-size: 20px;
+}
+#sideNav{
+    width: 300px;
+    height: 350px;
+    background-color: white;
+}
+#sideNav ul{
+    margin: 0px;
+    padding: 0px;
+}
+#sideNav li{
+    width: 240px;
+    height: 40px;
+    margin: 0px 30px 15px 30px;
+    list-style: none;
+    background-color: white;
+    line-height: 40px;
+    text-align: center;
+}
+#sideNav li:hover{
+    background-color: gainsboro;
+    cursor: pointer;
+}
+#logout:hover{
+    background-color: #b9003a!important;
+}
+/*内容*/
+#contentBox{
+    width: 800px;
+    height: 500px;
+    overflow: hidden;
+    position: relative;
+    margin: 40px 50px 0px 20px;
+    float: left;
+}
+#content{
+    width: 800px;
+    position: absolute;
+    background-color: white;
+}
+
+.part{
+    width: 600px;
+    height: 400px;
+    padding: 50px 100px;
+    position: relative;
+}
+
+#content div{
+    display: none;
+}
+

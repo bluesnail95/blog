@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <link rel="stylesheet" href="../../css/user/person.css">
+</head>
+<body>
+    <!--左侧菜单栏-->
+    <div id="sideBar">
+        <div id="sideName">
+            欢迎,bluesnail95
+        </div>
+        <div id="sideNav">
+            <br>
+            <ul>
+                <li onclick="module('profile')">上传图像</li>
+                <li onclick="module('base')">基本信息</li>
+                <li onclick="module('password')">修改密码</li>
+                <li onclick="module('hobbies')">我的兴趣</li>
+                <li onclick="module('collects')">我的收藏</li>
+                <li id="logout" onclick="logout()">退出账号</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="contentBox">
+        <div id="content">
+            <div class="part" id="profile">
+                <h2>上传头像</h2>
+                <hr/>
+            </div>
+            <div class="part" id="base">
+                <h2>基本信息</h2>
+                <hr/>
+            </div>
+            <div class="part" id="password">
+                <h2>修改密码</h2>
+                <hr/>
+            </div>
+            <div class="part" id="hobbies">
+                <h2>我的兴趣</h2>
+                <hr/>
+            </div>
+            <div class="part" id="collects">
+                <h2>我的收藏</h2>
+                <hr/>
+            </div>
+        </div>
+    </div>
+
+<script src="../../js/user/person.js"></script>
+</body>
+</html>
