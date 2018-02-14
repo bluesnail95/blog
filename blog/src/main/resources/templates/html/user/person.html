@@ -26,29 +26,47 @@
 
     <div id="contentBox">
         <div id="content">
+
             <div class="part" id="profile">
                 <h2>上传头像</h2>
                 <hr/>
+                <form>
+                    <img v-bind:src="url"/>
+                    <input type="file" @change="uploadImg($event)"/>
+                    <button @click="submitForm($event)">上传</button>
+                </form>
             </div>
+
             <div class="part" id="base">
                 <h2>基本信息</h2>
                 <hr/>
             </div>
+
             <div class="part" id="password">
                 <h2>修改密码</h2>
                 <hr/>
             </div>
+
             <div class="part" id="hobbies">
                 <h2>我的兴趣</h2>
                 <hr/>
             </div>
+
             <div class="part" id="collects">
                 <h2>我的收藏</h2>
                 <hr/>
             </div>
+
         </div>
     </div>
 
+
+<script src="../../js/comm/axios.min.js"></script>
+<script src="../../js/comm/vue.js"></script>
 <script src="../../js/user/person.js"></script>
+<script type="text/javascript">
+    
+
+</script>
 </body>
 </html>
