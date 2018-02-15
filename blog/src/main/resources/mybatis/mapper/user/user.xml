@@ -7,7 +7,7 @@
         <result column="name" property="name"/>
         <result column="email" property="email"/>
         <result column="birthday" property="birthday" />
-        <result column="login_name" property="loginName"/>
+        <result column="login_name" property="loginName" />
         <result column="password" property="password"/>
         <result column="img" property="img"/>
         <result column="signature" property="signature"/>
@@ -35,18 +35,34 @@
     <!-- 更新用户 -->
     <update id="updateUser">
         UPDATE user 
-        SET name = #{name},
-            email = #{email},
-            birthday = #{birthday},
-            login_name = #{loginName},
-            password = #{password},
-            signature = #{signature},
-            img = #{img}
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday},
+            </if>
+            <if test="loginName != null">
+                login_name = #{loginName},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="signature != null">
+            	signature = #{signature},
+            </if>
+            <if test="img != null">
+                img = #{img}
+            </if>
+        </set>
         WHERE id = #{id}
     </update>
     
     <!-- 根据登录名或邮箱和密码登录 -->
-    <select id="loginUser" resultType="gdut.ff.domain.User">
+    <select id="loginUser" resultMap="userMap">
         SELECT *
         FROM user
         WHERE (login_name = #{loginName} or email = #{email}) AND password = #{password}

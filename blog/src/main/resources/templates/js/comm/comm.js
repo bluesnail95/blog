@@ -41,7 +41,14 @@ axios.get('http://127.0.0.1:8080/comm/path')
 					      +   '</div>'
 					      +   '<li><a v-bind:href="contact_href">联系我</a></li>'
 					      +   '<li><a v-bind:href="about_href">关于</a></li>'
-					      +   '<li style="float: right;"><a v-bind:href="login_href">登录</a></li>'
+					      +   '<li style="float: right;"><a v-bind:href="login_href" v-if="login_seen">登录</a></li>'
+					      +   '<div class="dropdown" v-if="person_seen" style="float: right;margin-right:100px;">'
+					      +       '<img v-bind:src="profile" style="width:50px;height:50px;" class="profile-login"/>'
+						  +       '<div class="dropdown-content">'
+						  +	          '<a v-bind:href="person_href">个人主页</a>'
+						  +	          '<a onclick="logout();">退出</a>'
+						  +        '</div>'
+					      +   '</div>'
 				          +'</ul>',
 				data:function(){
 					return router;
@@ -69,10 +76,24 @@ function initRouter(path){
 	    'csdn_href':"/"+path+"templates/html/blog/csdn.html",
 	    'cnblogs_href':"/"+path+"templates/html/blog/cnblogs.html",
 	    'osc_href':"/"+path+"templates/html/blog/osc.html",
-	    'login_href':"/"+path+"templates/html/user/login.html"
+	    'login_href':"/"+path+"templates/html/user/login.html",
+	    "login_seen":true,
+	    "person_seen":false,
+	    "profile":"/"+path+"templates/image/user/profile.gif",
+	    "person_href":"/"+path+"templates/html/user/person.html"
 	};
+	var user = JSON.parse(localStorage.getItem("user"));
+    var token = localStorage.getItem("token");
+    if(user && token){
+    	if(user.img){
+    		router.profile = "/"+path+"/"+user.img;
+    	}
+    	router.login_seen = false;
+    	router.person_seen = true;
+    }
     return true;
 }
+
 
 
 

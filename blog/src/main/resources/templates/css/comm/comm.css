@@ -1,0 +1,13 @@
+/**
+ *头像
+ */
+.profile-login{
+    color: #D4D4D4;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: top;
+    background-color: #eee;
+    border: 1px solid #fff;
+}

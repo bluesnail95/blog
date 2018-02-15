@@ -40,7 +40,7 @@ public class TokenUtil {
 		
 		return JWT.create()
 				.withHeader(header)
-				//.withClaim("loginName",user.getLoginName())
+				.withClaim("loginName",user.getLoginName())
 				.withClaim("email", user.getEmail())
 				.withClaim("id", user.getId())
 				.withExpiresAt(expireDate)
@@ -65,7 +65,7 @@ public class TokenUtil {
 			user.setEmail(claims.get("email").asString());
 			user.setId(claims.get("id").asString());
 			//需要处理login_name与loginName的映射问题
-			//user.setLoginName(claims.get("loginName").asString());
+			user.setLoginName(claims.get("loginName").asString());
 			return user;
 		}catch(Exception e) {
 			e.printStackTrace();

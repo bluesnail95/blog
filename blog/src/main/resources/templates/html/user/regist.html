@@ -54,10 +54,14 @@
                 passwordConfirm:passwordConfirmMd5
     	    })
     	    .then(function(response){
-                console.log(response);
+                if(response.status == 200){
+                    if(response.data.status == 1){
+                        window.location.href = "login.html";
+                    }
+                }
     	    })
     	    .catch(function(error){
-    	  	    console.log(error);
+    	  	    alert(error);
     	    });
 	    }
 

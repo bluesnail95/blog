@@ -3,14 +3,12 @@ package gdut.ff.web;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jetty.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -95,19 +93,39 @@ public class UserController {
 		    return result;
 		}
 		try {
-			byte[] bytes = file.getBytes();
-			String root = ResourceUtils.getURL("classpath:").getPath() + "/upload";
-			File parent = new File(root);
-			if(!parent.exists()) {
-				parent.mkdirs();
+			//获取登录token			
+			String token = req.getHeader("token");
+			if(StringUtil.isNotBlank(token)) {
+				User user = TokenUtil.verifyUser(token,SECERT);
+				if(null == user) {
+					result.put("status",2);
+					result.put("message","请确认登录!!!");
+					return result;
+				}
+				String imgName = user.getLoginName();
+				byte[] bytes = file.getBytes();
+				String root = ResourceUtils.getURL("classpath:").getPath() + "/upload";
+				File parent = new File(root);
+				if(!parent.exists()) {
+					parent.mkdirs();
+				}
+				int split = file.getOriginalFilename().lastIndexOf(".");
+				String fileName = file.getOriginalFilename().replace(file.getOriginalFilename().substring(0,split),imgName);
+				BufferedOutputStream bos =    
+	                    new BufferedOutputStream(new FileOutputStream(new File(parent,fileName)));    
+				bos.write(bytes);    
+				bos.close();
+				//保存用户头像信息
+				user.setImg("/upload/"+fileName);
+				userMapper.updateUser(user);
+				result.put("status", 1);
+			    result.put("message","successfully upload "+file.getOriginalFilename());
+			}else {
+				result.put("status",2);
+				result.put("message","请确认登录!!!");
+				return result;
 			}
-			BufferedOutputStream bos =    
-                    new BufferedOutputStream(new FileOutputStream(new File(parent,file.getOriginalFilename())));    
-			bos.write(bytes);    
-			bos.close();
-		    result.put("message","successfully upload "+file.getOriginalFilename());
-		    
-		}catch(IOException e) {
+		}catch(Exception e) {
 			e.printStackTrace();
 			result.put("error","error");
 		}
@@ -127,6 +145,7 @@ public class UserController {
 		User user = userMapper.loginUser(userValidate);
 		if(null == user) {
 			result.put("error","用户名/邮箱或密码错误");
+			return result;
 		}
 		try {
 			String token = TokenUtil.token(SECERT, user, expireMinutes);
@@ -135,8 +154,7 @@ public class UserController {
 			e.printStackTrace();
 		}
 		//不返回用户密码
-		user.setPassword(null);
-		result.putPOJO("user",user);
+		result.putPOJO("user", new AjaxResult(NodeUtil.transFromPOJO(user)).blacksProps("password").filter());
 		result.put("status", 1);
 		return result;
 	}
@@ -152,7 +170,7 @@ public class UserController {
 		String passwordConfirm = param.has("passwordConfirm") ? param.get("passwordConfirm").asText() :"";
 		String password = param.has("password") ? param.get("password").asText() : "";
 		//判断密码是否相等
-		if(StringUtils.isBlank(passwordConfirm) || StringUtils.isBlank(password) 
+		if(StringUtil.isBlank(passwordConfirm) || StringUtil.isBlank(password) 
 				|| !passwordConfirm.equals(password)) {
 			result.put("error","两次输入密码不一致，请重新输入");
 		    return result;	

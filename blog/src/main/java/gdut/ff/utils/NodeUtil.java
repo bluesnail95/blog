@@ -39,11 +39,11 @@ public class NodeUtil {
 	
 	/**
 	 * 将POJO转成JsonNode
-	 * @param clazz
+	 * @param pojo
 	 * @return
-	 */
-	public static JsonNode transFromPOJO(Class clazz) {
-		return objectMapper.convertValue(clazz,JsonNode.class);
+	 */	
+	public static JsonNode transFromPOJO(Object pojo) {
+		return objectMapper.convertValue(pojo, JsonNode.class);
 	}
 	
 	/**
@@ -62,4 +62,5 @@ public class NodeUtil {
 		return objectMapper.convertValue(filterValue,toClass);
 	}
 
+	
 }

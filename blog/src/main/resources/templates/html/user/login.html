@@ -41,10 +41,16 @@
 	        	password:passwordMd5
 	        })
 	        .then(function(response){
-	            console.log(response.data); 
+	            if(response.status == 200){
+                    if(response.data.status == 1){
+                        localStorage.setItem("user",JSON.stringify(response.data.user));
+                        localStorage.setItem("token",response.data.token);
+                        location.href = "../index.html";
+                    }
+                }
 	        })
 	        .catch(function(error){
-	            console.log(error);
+	            alert("登录失败");
 	        });
         }
         
