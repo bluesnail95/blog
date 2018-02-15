@@ -31,7 +31,7 @@ public class HttpFilter implements Filter {
         res.addHeader("Access-Control-Allow-Origin", "*");
         res.addHeader("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT");
         res.addHeader("Allow", "GET, POST, DELETE, PUT");
-        res.addHeader("Access-Control-Allow-Headers", "Content-Type");
+        res.addHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, token");
         res.setCharacterEncoding("UTF-8");
         chain.doFilter(request, res);
 	}
