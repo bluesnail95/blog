@@ -33,18 +33,42 @@
                 <form>
                     <img v-bind:src="url"/>
                     <input type="file" @change="uploadImg($event)"/>
-                    <button @click="submitForm($event)">上传</button>
+                    <button @click="submitForm($event)" class="btn btn-primary">上传</button>
                 </form>
             </div>
 
+            <!--这部分目前实现的是上传头像的新样式，参考segmentfault-->
             <div class="part" id="base">
                 <h2>基本信息</h2>
                 <hr/>
+                <div class="col-md-2 col-sm-3 col-xs-3">
+                    <div class="profile-heading-avatar-warp">
+                        <a href="/u/bluesnail95">
+                            <img class="profile-heading-avatar avatar-160" src="https://sfault-avatar.b0.upaiyun.com/105/118/1051181866-5a83d992570d5_huge256" alt="bluesnail95"/>
+                        </a>
+                        <input type="file" id="avatarFile" name="avatar" class="file hide" onchange="test();"/>
+                        <div class="profile-avatar-uploader" id="avatarUploader">
+                            <span>上传头像</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="part" id="password">
                 <h2>修改密码</h2>
                 <hr/>
+                <div>
+                    <label for="oldpassword" class="required">当前密码</label>
+                    <input type="password" name="password" required placeholder="请输入当前密码" v-model="password" class="form-control">
+                    <br/>       
+                    <label for="newpassword" class="required">新密码</label>
+                    <input type="password" name="newPassword" required placeholder="请输入新密码" v-model="newPassword" class="form-control">
+                    <br/>          
+                    <input type="password" name="confirmPassword" required placeholder="重复上面新密码" v-model="confirmPassword" class="form-control">
+                    <br/>           
+                    <button class="btn btn-primary" onclick="savePassword();">保存</button>
+                    <button class="btn" onclick="resetPassword();">重置</button>
+                </div>
             </div>
 
             <div class="part" id="hobbies">
@@ -60,13 +84,11 @@
         </div>
     </div>
 
-
 <script src="../../js/comm/axios.min.js"></script>
 <script src="../../js/comm/vue.js"></script>
 <script src="../../js/user/person.js"></script>
 <script type="text/javascript">
     
-
 </script>
 </body>
 </html>

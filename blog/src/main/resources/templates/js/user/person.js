@@ -2,11 +2,22 @@ function logout() {
     
 }
 
+function test(){
+	console.log(document.getElementById("avatarFile").files);
+}
+
 /**
  *初始化
  */
 function init(){
     document.getElementById('content').children[0].style.display = "block";
+
+    document.getElementById('avatarUploader').addEventListener("click",function(e){
+        if(document.getElementById("avatarFile")){
+        	document.getElementById("avatarFile").click();          
+        }
+        //e.preventDefault();
+    },false);
 }
 
 /**
@@ -70,5 +81,22 @@ window.onload = function(){
                     })
             }
         }
+    })
+
+    new Vue({
+    	el: "#password",
+    	data: {
+    	    password:"",
+    	    newPassword:"",
+    	    confirmPassword:""	
+    	},
+    	methods:{
+    		savePassword(){
+
+    		},
+    		resetPassword(){
+
+    		}
+    	}
     })
 }

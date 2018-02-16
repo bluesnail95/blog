@@ -71,9 +71,101 @@ input{
     height: 400px;
     padding: 50px 100px;
     position: relative;
+    display: none;
 }
 
 #content div{
-    display: none;
+    
 }
+
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42858;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    -webkit-transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
+    -o-transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s,box-shadow ease-in-out 0.15s;
+}
+
+.btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42858;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #009a61;
+    border-color: #008151;
+}
+
+.required:after {
+    content: " *";
+    color: #ED1C24;
+}
+
+.profile-heading-avatar-warp {
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.profile-heading-avatar {
+    background: #ffffff;
+    width: 100%;
+    border-radius: 50%;
+}
+
+.hide {
+    display: none !important;
+}
+
+.profile-avatar-uploader {
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    width: 160px;
+    text-align: center;
+    background: rgba(0,0,0,0.75);
+    height: 40px;
+    color: #fff;
+    line-height: 40px;
+}
+
+.col-md-2 {
+    width: 30%;
+}
+
 
