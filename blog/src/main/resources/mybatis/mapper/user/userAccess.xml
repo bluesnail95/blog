@@ -10,13 +10,14 @@
         <result column="create_time" property="createTime" />
         <result column="website_type" property="websiteType"/>
         <result column="classification" property="classification"/>
+        <result column="user_id" property="userId"/>
     </resultMap>
     
     
     <!-- 保存用户 访问记录-->
     <insert id="saveUserAccess">
-        INSERT INTO user_access(id,title,url,create_time,website_type,classification)
-        VALUES(#{id},#{title},#{url},#{createTime},#{websiteType},#{classification})
+        INSERT INTO user_access(id,title,url,create_time,website_type,classification,user_id)
+        VALUES(#{id},#{title},#{url},#{createTime},#{websiteType},#{classification},#{userId})
     </insert>
     
     

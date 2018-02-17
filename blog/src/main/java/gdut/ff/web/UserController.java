@@ -226,7 +226,7 @@ public class UserController {
 		try {
 			User user = TokenUtil.verifyUser(token, SECERT);
 			if(null != user) {
-				userAccess.setId(user.getId());
+				userAccess.setUserId(user.getId());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

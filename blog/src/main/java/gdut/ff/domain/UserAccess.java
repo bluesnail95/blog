@@ -44,6 +44,8 @@ public class UserAccess implements Serializable {
 	 * 访问网站类型
 	 */
 	private int websiteType;
+	
+	private String userId;
 
 	public UserAccess() {
 	}
@@ -94,6 +96,14 @@ public class UserAccess implements Serializable {
 
 	public void setWebsiteType(int websiteType) {
 		this.websiteType = websiteType;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 }
