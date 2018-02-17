@@ -86,7 +86,7 @@ function initRouter(path){
     var token = localStorage.getItem("token");
     if(user && token){
     	if(user.img){
-    		router.profile = "/"+path+"/"+user.img;
+    		router.profile = user.img;
     	}
     	router.login_seen = false;
     	router.person_seen = true;

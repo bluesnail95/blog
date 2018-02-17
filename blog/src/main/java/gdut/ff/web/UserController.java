@@ -16,6 +16,7 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -116,9 +117,10 @@ public class UserController {
 				bos.write(bytes);    
 				bos.close();
 				//保存用户头像信息
-				user.setImg("/upload/"+fileName);
+				user.setImg(root+"/"+fileName);
 				userMapper.updateUser(user);
 				result.put("status", 1);
+				result.put("url",root+"/"+fileName);
 			    result.put("message","successfully upload "+file.getOriginalFilename());
 			}else {
 				result.put("status",2);
@@ -213,13 +215,14 @@ public class UserController {
 	 * @param userAccess
 	 * @return
 	 */
-	@PostMapping("/user/access/{token}")
-	public ObjectNode userAccess(@RequestBody UserAccess userAccess,@PathVariable String token) {
+	@PostMapping("/user/access")
+	public ObjectNode userAccess(@RequestBody UserAccess userAccess,HttpServletRequest request) {
 		ObjectNode result = NodeUtil.create();
 		//设置主键和创建时间 保存
 		userAccess.setId(UUID.randomUUID().toString());
 		userAccess.setCreateTime(new Date());
 		//判断token是否有效，有效取出用户的主键
+		String token = request.getHeader("token");
 		try {
 			User user = TokenUtil.verifyUser(token, SECERT);
 			if(null != user) {
@@ -232,6 +235,50 @@ public class UserController {
 		}
 		userAccessMapper.saveUserAccess(userAccess);
 		result.put("status",1);
+		return result;
+	}
+	
+	/**
+	 * 用户修改登录密码
+	 * @param param password 当前密码 newPassword 新密码 confirmPassword 确认密码
+	 * @return
+	 */
+	@PutMapping(value="/user/password")
+	public ObjectNode updatePassword(@RequestBody JsonNode param,HttpServletRequest req) {
+		ObjectNode result = NodeUtil.create();
+		String token = req.getHeader("token");
+		try {
+			User user = TokenUtil.verifyUser(token, SECERT);
+			if(null == user) {
+				result.put("status", 2);
+				result.put("msg", "token失效，请登录!!!");
+				return result;
+			}
+			String password = param.has("password") ? param.get("password").asText() : "";
+			if(StringUtil.isBlank(password) || !password.equals(user.getPassword())) {
+				result.put("status", 2);
+				result.put("msg", "当前密码输入有误，请重新输入");
+				return result;
+			}
+			String newPassword = param.has("newPassword") ? param.get("newPassword").asText() : "";
+			String comfirmPassword = param.has("comfirmPassword") ? param.get("comfirmPassword").asText() : "";
+			if(StringUtil.isBlank(newPassword) || StringUtil.isBlank(comfirmPassword) || !newPassword.equals(comfirmPassword) ) {
+				result.put("status", 2);
+				result.put("msg","新密码或重复输入的新密码为空，或两次输入的密码不一致");
+				return result;
+			}
+			user.setPassword(newPassword);
+			userMapper.updateUser(user);
+			String newToken = TokenUtil.token(SECERT, user, expireMinutes);
+			result.put("token",newToken);
+			user.setPassword(null);
+			result.putPOJO("user", user);
+			result.put("status", 1);
+		} catch (Exception e) {
+			result.put("error","error");
+			e.printStackTrace();
+			return result;
+		}
 		return result;
 	}
 }
