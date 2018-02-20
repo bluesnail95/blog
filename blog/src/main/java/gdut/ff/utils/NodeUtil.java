@@ -2,6 +2,7 @@ package gdut.ff.utils;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,7 +48,16 @@ public class NodeUtil {
 	}
 	
 	/**
-	 * 将
+	 * 将Map转成JsonNode
+	 * @param map
+	 * @return
+	 */
+	public static JsonNode transFromMap(Map map) {
+		return objectMapper.convertValue(map, JsonNode.class);
+	}
+	
+	/**
+	 * 转成Bean实体
 	 * @param fromValue
 	 * @param toClass
 	 * @return
@@ -60,6 +70,15 @@ public class NodeUtil {
         }
 		JsonNode filterValue = new AjaxResult(fromValue).whitesProps(fieldArr).filter();
 		return objectMapper.convertValue(filterValue,toClass);
+	}
+	
+	/**
+	 * 将输入的JsonNode转成Map
+	 * @param fromValue
+	 * @return
+	 */
+	public static Map transToMap(JsonNode fromValue) {
+		return objectMapper.convertValue(fromValue, Map.class);
 	}
 
 	

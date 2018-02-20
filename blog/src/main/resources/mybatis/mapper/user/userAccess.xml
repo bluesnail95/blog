@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="gdut.ff.mapper.UserAccessMapper">
-    
-    
+      
     <resultMap id="userAccessMap" type="gdut.ff.domain.UserAccess">    
         <id column="id" property="id"/>
         <result column="title" property="title"/>
@@ -19,6 +18,22 @@
         INSERT INTO user_access(id,title,url,create_time,website_type,classification,user_id)
         VALUES(#{id},#{title},#{url},#{createTime},#{websiteType},#{classification},#{userId})
     </insert>
+    
+    <select id="blogWebsiteAnalysis" parameterType="map" resultType="map">
+        SELECT count(a.id) as sum,a.website_type
+        FROM user_access a
+        WHERE 1 = 1
+        <!--
+        <if test="minDate">
+            AND a.create_time >= #{minDate}
+        </if>
+        <if test="">
+            AND #{maxDate} >= a.create_time
+        </if>
+        -->
+        GROUP BY a.website_type
+    </select>
+    
     
     
 </mapper>

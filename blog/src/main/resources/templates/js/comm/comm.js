@@ -39,6 +39,7 @@ axios.get('http://127.0.0.1:8080/comm/path')
 						  +	          '<a v-bind:href="osc_href">开源中国</a>'
 						  +        '</div>'
 					      +   '</div>'
+					      +   '<li><a v-bind:href="analysis_href">活跃度分析</a></li>'
 					      +   '<li><a v-bind:href="contact_href">联系我</a></li>'
 					      +   '<li><a v-bind:href="about_href">关于</a></li>'
 					      +   '<li style="float: right;"><a v-bind:href="login_href" v-if="login_seen">登录</a></li>'
@@ -80,7 +81,8 @@ function initRouter(path){
 	    "login_seen":true,
 	    "person_seen":false,
 	    "profile":"/"+path+"templates/image/user/profile.gif",
-	    "person_href":"/"+path+"templates/html/user/person.html"
+	    "person_href":"/"+path+"templates/html/user/person.html",
+	    "analysis_href":"/"+path+"templates/html/analysis/blogWebsiteAnalysis.html"
 	};
 	var user = JSON.parse(localStorage.getItem("user"));
     var token = localStorage.getItem("token");
