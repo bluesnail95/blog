@@ -39,7 +39,7 @@ axios.get('http://127.0.0.1:8080/comm/path')
 						  +	          '<a v-bind:href="osc_href">开源中国</a>'
 						  +        '</div>'
 					      +   '</div>'
-					      +   '<li><a v-bind:href="analysis_href">活跃度分析</a></li>'
+					      +   '<li><a v-bind:href="analysis_href">数据分析</a></li>'
 					      +   '<li><a v-bind:href="contact_href">联系我</a></li>'
 					      +   '<li><a v-bind:href="about_href">关于</a></li>'
 					      +   '<li style="float: right;"><a v-bind:href="login_href" v-if="login_seen">登录</a></li>'

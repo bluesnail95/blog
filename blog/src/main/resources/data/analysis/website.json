@@ -1,0 +1,17 @@
+{
+    "status": 1,
+    "analysis": [
+        {
+            "sum": 2,
+            "website_type": 1
+        },
+        {
+            "sum": 3,
+            "website_type": 2
+        },
+        {
+            "sum": 3,
+            "website_type": 3
+        }
+    ]
+}

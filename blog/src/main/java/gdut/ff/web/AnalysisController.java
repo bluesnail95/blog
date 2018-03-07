@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +22,7 @@ import gdut.ff.utils.TokenUtil;
 
 /**
  * 对用户，博客网站进行一些简单的分析
- * @author Administrator
+ * @author liuffei
  *
  */
 @RestController
@@ -37,7 +38,7 @@ public class AnalysisController {
 	 * 分析csdn、cnblogs、osc哪个网站的博客比较受欢迎
 	 * @return
 	 */
-	@GetMapping(value = "/analysis/website")
+	@PostMapping(value = "/analysis/website")
 	public ObjectNode blogWebsiteAnalysis(@RequestBody JsonNode param) {
 	    ObjectNode result = NodeUtil.create();
 	    List<Map<String,String>> data = userAccessMapper.blogWebsiteAnalysis(NodeUtil.transToMap(param));
@@ -52,7 +53,7 @@ public class AnalysisController {
 	 * @param req
 	 * @return
 	 */
-	@GetMapping(value = "/analysis/user")
+	@PostMapping(value = "/analysis/user")
 	public ObjectNode blogUserAnalysis(@RequestBody JsonNode param,HttpServletRequest req) {
 		ObjectNode result = NodeUtil.create();
 		String token = req.getHeader("token");
