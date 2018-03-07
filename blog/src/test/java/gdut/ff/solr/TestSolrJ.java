@@ -26,6 +26,7 @@ import org.junit.Test;
  *
  */
 public class TestSolrJ {
+	
 
 	//本地的solr服务端
 	private final String solrUrl = "http://127.0.0.1:8983/solr";
@@ -56,10 +57,13 @@ public class TestSolrJ {
 	 * @return
 	 */
 	public HttpSolrClient getHttpSolrClient() {
+		/*
 		return new HttpSolrClient.Builder(solrUrl)
 		.withConnectionTimeout(1000)
 		.withSocketTimeout(60000)
 	    .build();
+	   */
+		return new HttpSolrClient(solrUrl);
 	}
 	
 	/**

@@ -27,12 +27,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-        	
+        -->	
         <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
-		-->
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -121,18 +121,19 @@
        <version>3.1.0</version>
    </dependency>
    
-   <dependency>
-	   <groupId>org.apache.solr</groupId>
-	   <artifactId>solr-solrj</artifactId>
-	   <version>7.2.0</version>
-   </dependency>
+    <!-- -->
+    <dependency>
+        <groupId>org.springframework.data</groupId>
+        <artifactId>spring-data-solr</artifactId>
+    </dependency>
    
-   <!-- 热部署 -->
+   <!-- 热部署
    <dependency>
        <groupId>org.springframework</groupId>
        <artifactId>springloaded</artifactId>
        <version>1.2.6.RELEASE</version>
    </dependency>
+    -->
 		
    </dependencies>
     
