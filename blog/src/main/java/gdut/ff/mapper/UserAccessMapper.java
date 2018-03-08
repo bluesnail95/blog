@@ -27,4 +27,11 @@ public interface UserAccessMapper {
 	 */
 	public List<Map<String,String>> blogWebsiteAnalysis(Map<String,Object> param);
 	
+	/**
+	 * 统计一周内的访问量
+	 * @param param
+	 * @return
+	 */
+	public List<Map<String,Object>> analysisGroupByDateAndWebsiteType(Map<String,String> param);
+	
 }

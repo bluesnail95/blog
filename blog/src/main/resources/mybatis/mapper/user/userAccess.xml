@@ -19,21 +19,41 @@
         VALUES(#{id},#{title},#{url},#{createTime},#{websiteType},#{classification},#{userId})
     </insert>
     
+    <!-- 查询一段时间内csdn,博客园，开源中国的博客访问总量 -->
     <select id="blogWebsiteAnalysis" parameterType="map" resultType="map">
         SELECT count(a.id) as sum,a.website_type
         FROM user_access a
         WHERE 1 = 1
-        <!--
-        <if test="minDate">
-            AND a.create_time >= #{minDate}
+        <if test=" '' != minDate and null != minDate ">
+           <![CDATA[ AND a.create_time >= #{minDate} ]]>
         </if>
-        <if test="">
-            AND #{maxDate} >= a.create_time
+        <if test="'' != maxDate and null != maxDate">
+          <![CDATA[  AND a.create_time <= #{maxDate} ]]>
         </if>
-        -->
+        <if test=" '' != userId and null != userId ">
+          AND a.user_id = #{userId}
+        </if>
         GROUP BY a.website_type
     </select>
     
-    
+    <!-- 查询一段时间内每天csdn,博客园，开源中国的博客访问总量 -->
+    <select id="analysisGroupByDateAndWebsiteType" parameterType="map" resultType="map">
+        SELECT count(a.id) as sum,date_format(a.create_time,'%Y-%m-%d') as date,a.website_type
+        FROM user_access a
+        WHERE 1 = 1
+        <if test=" '' != minDate and null != minDate ">
+           <![CDATA[ AND a.create_time >= #{minDate} ]]>
+        </if>
+        <if test="'' != maxDate and null != maxDate">
+          <![CDATA[  AND a.create_time <= #{maxDate} ]]>
+        </if>
+        <if test=" '' != userId and null != userId ">
+          AND a.user_id = #{userId}
+        </if>
+        <if test=" '' != websiteType and null != websiteType ">
+          AND a.website_type = #{websiteType}
+        </if>
+        GROUP BY date_format(a.create_time,'%Y-%m-%d'),a.website_type
+    </select>
     
 </mapper>

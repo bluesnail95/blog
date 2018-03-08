@@ -1,5 +1,8 @@
 package gdut.ff.web;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -82,6 +85,33 @@ public class AnalysisController {
 			return result;
 		}
 		result.put("status", 1);
+		return result;
+	}
+	
+	/**
+	 * 统计一周内的访问量
+	 * @param param
+	 * @param req
+	 * @return
+	 */
+	@PostMapping(value = "/analysis/website/week")
+	public ObjectNode analysisGroupByDateAndWebsiteType(@RequestBody JsonNode param,HttpServletRequest req) {
+		ObjectNode result = NodeUtil.create();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar calendar = Calendar.getInstance();
+		String maxDate = sdf.format(calendar.getTime());
+		calendar.add(calendar.DATE, -7);
+		String minDate = sdf.format(calendar.getTime());
+		
+		Map<String,String> params = NodeUtil.transToPOJO(param, Map.class);
+		params.put("minDate", minDate);
+		params.put("maxDate", maxDate);
+		List<Map<String,Object>> data = userAccessMapper.analysisGroupByDateAndWebsiteType(params);
+		
+		result.putPOJO("data",data);
+		result.put("status", 1);
+		
 		return result;
 	}
 }
