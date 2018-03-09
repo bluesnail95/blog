@@ -31,6 +31,8 @@ import gdut.ff.domain.User;
 import gdut.ff.domain.UserAccess;
 import gdut.ff.mapper.UserAccessMapper;
 import gdut.ff.mapper.UserMapper;
+import gdut.ff.service.UserAccessServiceImpl;
+import gdut.ff.service.UserServiceImpl;
 import gdut.ff.utils.AjaxResult;
 import gdut.ff.utils.NodeUtil;
 import gdut.ff.utils.TokenUtil;
@@ -39,7 +41,7 @@ import gdut.ff.utils.TokenUtil;
 public class UserController {
 	
 	@Autowired
-	private UserMapper userMapper;
+	private UserServiceImpl userServiceImpl;
 	
 	@Value("${blog.user.expire-minutes}")
 	private int expireMinutes;
@@ -48,7 +50,7 @@ public class UserController {
 	private String SECERT;
 	
 	@Autowired
-	private UserAccessMapper userAccessMapper;
+	private UserAccessServiceImpl userAccessServiceImpl;
 	
 	/**
 	 * 查询全部的用户
@@ -58,7 +60,7 @@ public class UserController {
 	public ObjectNode findAllUsers() {
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode result = objectMapper.createObjectNode();
-		List<User> users = userMapper.findAll();
+		List<User> users = userServiceImpl.findAll();
 		ArrayNode content = result.putArray("users");
 		content.addAll(objectMapper.convertValue(users, ArrayNode.class));
 		result.put("status",1);
@@ -74,7 +76,7 @@ public class UserController {
 	public ObjectNode getUser(@PathVariable long id) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode result = objectMapper.createObjectNode();
-		User user = userMapper.fingOneById(id);
+		User user = userServiceImpl.fingOneById(id);
 		result.putPOJO("user",user);
 		result.put("status",1);
 		return result;
@@ -118,7 +120,7 @@ public class UserController {
 				bos.close();
 				//保存用户头像信息
 				user.setImg(root+"/"+fileName);
-				userMapper.updateUser(user);
+				userServiceImpl.updateUser(user);
 				result.put("status", 1);
 				result.put("url",root+"/"+fileName);
 			    result.put("message","successfully upload "+file.getOriginalFilename());
@@ -144,7 +146,7 @@ public class UserController {
 		ObjectNode result = NodeUtil.create();
 		User userValidate = NodeUtil.transToPOJO(param, User.class);
 		//根据邮箱和密码查找用户
-		User user = userMapper.loginUser(userValidate);
+		User user = userServiceImpl.loginUser(userValidate);
 		if(null == user) {
 			result.put("error","用户名/邮箱或密码错误");
 			return result;
@@ -179,7 +181,7 @@ public class UserController {
 		}
 		User user = NodeUtil.transToPOJO(param,User.class);
 		user.setId(UUID.randomUUID().toString());
-		userMapper.saveUser(user);
+		userServiceImpl.saveUser(user);
 		result.put("status",1);
 		return result;
 	}
@@ -233,7 +235,7 @@ public class UserController {
 			result.put("error","出错啦!!!");
 			return result;
 		}
-		userAccessMapper.saveUserAccess(userAccess);
+		userAccessServiceImpl.saveUserAccess(userAccess);
 		result.put("status",1);
 		return result;
 	}
@@ -268,7 +270,7 @@ public class UserController {
 				return result;
 			}
 			user.setPassword(newPassword);
-			userMapper.updateUser(user);
+			userServiceImpl.updateUser(user);
 			String newToken = TokenUtil.token(SECERT, user, expireMinutes);
 			result.put("token",newToken);
 			user.setPassword(null);

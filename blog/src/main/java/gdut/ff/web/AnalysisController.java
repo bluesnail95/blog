@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import gdut.ff.domain.User;
-import gdut.ff.mapper.UserAccessMapper;
+import gdut.ff.service.UserAccessServiceImpl;
 import gdut.ff.utils.NodeUtil;
 import gdut.ff.utils.TokenUtil;
 
@@ -32,7 +32,7 @@ import gdut.ff.utils.TokenUtil;
 public class AnalysisController {
 	
 	@Autowired
-	private UserAccessMapper userAccessMapper;
+	private UserAccessServiceImpl userAccessServiceImpl;
 	
 	@Value("${blog.user.secret}")
 	private String SECERT;
@@ -44,7 +44,7 @@ public class AnalysisController {
 	@PostMapping(value = "/analysis/website")
 	public ObjectNode blogWebsiteAnalysis(@RequestBody JsonNode param) {
 	    ObjectNode result = NodeUtil.create();
-	    List<Map<String,String>> data = userAccessMapper.blogWebsiteAnalysis(NodeUtil.transToMap(param));
+	    List<Map<String,String>> data = userAccessServiceImpl.blogWebsiteAnalysis(NodeUtil.transToMap(param));
 	    result.putPOJO("analysis", NodeUtil.transFromList(data));
 	    result.put("status", 1);
 	    return result;
@@ -71,7 +71,7 @@ public class AnalysisController {
 			String userId = user.getId();
 			Map<String,Object> params = NodeUtil.transToMap(param);
 			params.put("userId", userId);
-			List<Map<String,String>> data = userAccessMapper.blogWebsiteAnalysis(params);
+			List<Map<String,String>> data = userAccessServiceImpl.blogWebsiteAnalysis(params);
 			if(null != data && data.size() > 0) {
 				result.putPOJO("analysis", NodeUtil.transFromList(data));
 			}else {
@@ -107,7 +107,7 @@ public class AnalysisController {
 		Map<String,String> params = NodeUtil.transToPOJO(param, Map.class);
 		params.put("minDate", minDate);
 		params.put("maxDate", maxDate);
-		List<Map<String,Object>> data = userAccessMapper.analysisGroupByDateAndWebsiteType(params);
+		List<Map<String,Object>> data = userAccessServiceImpl.analysisGroupByDateAndWebsiteType(params);
 		
 		result.putPOJO("data",data);
 		result.put("status", 1);
