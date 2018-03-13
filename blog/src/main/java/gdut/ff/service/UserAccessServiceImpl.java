@@ -31,7 +31,7 @@ public class UserAccessServiceImpl {
 	 * @param param 过滤条件 minDate 日期下限 maxDate 日期上限
 	 * @return
 	 */
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = true)
 	public List<Map<String,String>> blogWebsiteAnalysis(Map<String,Object> param){
 		return userAccessMapper.blogWebsiteAnalysis(param);
 	}
@@ -41,9 +41,18 @@ public class UserAccessServiceImpl {
 	 * @param param
 	 * @return
 	 */
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = true)
 	public List<Map<String,Object>> analysisGroupByDateAndWebsiteType(Map<String,String> param){
 		return userAccessMapper.analysisGroupByDateAndWebsiteType(param);
+	}
+	
+	/**
+	 * 查询用户的前10条浏览记录
+	 * @param param
+	 * @return
+	 */
+	public List<Map<String,Object>> selectTop10History(Map<String,String> param){
+		return userAccessMapper.selectTop10History(param);
 	}
 	
 

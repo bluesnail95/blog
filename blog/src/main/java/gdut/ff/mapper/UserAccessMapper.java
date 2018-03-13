@@ -34,4 +34,11 @@ public interface UserAccessMapper {
 	 */
 	public List<Map<String,Object>> analysisGroupByDateAndWebsiteType(Map<String,String> param);
 	
+	/**
+	 * 查询用户的前10条浏览记录
+	 * @param param
+	 * @return
+	 */
+	public List<Map<String,Object>> selectTop10History(Map<String,String> param);
+	
 }

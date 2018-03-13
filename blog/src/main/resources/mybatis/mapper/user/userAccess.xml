@@ -56,4 +56,12 @@
         GROUP BY date_format(a.create_time,'%Y-%m-%d'),a.website_type
     </select>
     
+    <!-- 查询登录用户的前10条浏览记录 -->
+    <select id="selectTop10History" parameterType="map" resultType="map">
+        SELECT * 
+        FROM user_access a
+        WHERE a.user_id = #{userId}
+        limit 0,10
+    </select>
+    
 </mapper>

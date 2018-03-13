@@ -9,15 +9,18 @@ import java.util.UUID;
 
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.beans.Field;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.params.MapSolrParams;
+import org.apache.solr.common.util.NamedList;
 import org.junit.Test;
 
 /**
@@ -131,16 +134,33 @@ public class TestSolrJ {
 	@Test
 	public void testConvertToBean() throws IOException, SolrServerException {
 		SolrClient client = getHttpSolrClient();
-		SolrQuery query = new SolrQuery("*:*");
+		SolrQuery query = new SolrQuery("name:liuffei");
 		query.addField("id");
 		query.addField("name");
+       // query.setHighlight(true);
+        query.addHighlightField("name");
+       // query.setHighlightSimplePre("<font color='red'>");
+       // query.setHighlightSimplePost("</font>");
 		
 		QueryResponse response = client.query("test",query);
+		
+		NamedList namedlist = (NamedList) response.getResponse().get("highlighting");  
+        System.out.println(namedlist);//用于显示list中的值 
+		
 		List<SolrBean> list = response.getBeans(SolrBean.class);
+		
 	    if(null != list && list.size() > 0) {
 	    	for(int i = 0;i < list.size();i++) {
 	    		System.out.println("id="+list.get(i).id+",name="+list.get(i).name[0]);
 	    	}
 	    }
+	    
+	    Map<String,Map<String,List<String>>> maps = response.getHighlighting();
+	    System.out.println(maps);
+	}
+	
+	@Test
+	public void testHighlight() {
+		SolrClient client = getHttpSolrClient();
 	}
 }

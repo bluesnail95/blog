@@ -114,4 +114,15 @@ public class AnalysisController {
 		
 		return result;
 	}
+	
+	/**
+	 * 查找登录用户的前10条浏览记录
+	 */
+	@GetMapping(value = "/analysis/history")
+	public ObjectNode history() {
+		ObjectNode result = NodeUtil.create();
+		
+		
+		return result;
+	}
 }
