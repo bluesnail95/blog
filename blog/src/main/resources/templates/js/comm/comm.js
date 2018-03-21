@@ -71,18 +71,18 @@ axios.get('http://127.0.0.1:8080/comm/path')
 
 function initRouter(path){
     router = {
-	    'index_href':"/"+path+"templates/html/index.html",
-	    'contact_href':"/"+path+"templates/html/contact.html",
-	    'about_href':"/"+path+"templates/html/about.html",
-	    'csdn_href':"/"+path+"templates/html/blog/csdn.html",
-	    'cnblogs_href':"/"+path+"templates/html/blog/cnblogs.html",
-	    'osc_href':"/"+path+"templates/html/blog/osc.html",
-	    'login_href':"/"+path+"templates/html/user/login.html",
+	    'index_href':"/html/index.html",
+	    'contact_href':"/html/contact.html",
+	    'about_href':"/html/about.html",
+	    'csdn_href':"/html/blog/csdn.html",
+	    'cnblogs_href':"/html/blog/cnblogs.html",
+	    'osc_href':"/html/blog/osc.html",
+	    'login_href':"/html/user/login.html",
 	    "login_seen":true,
 	    "person_seen":false,
-	    "profile":"/"+path+"templates/image/user/profile.gif",
-	    "person_href":"/"+path+"templates/html/user/person.html",
-	    "analysis_href":"/"+path+"templates/html/analysis/blogWebsiteAnalysis.html"
+	    "profile":"/image/user/profile.gif",
+	    "person_href":"/html/user/person.html",
+	    "analysis_href":"/html/analysis/blogWebsiteAnalysis.html"
 	};
 	var user = JSON.parse(localStorage.getItem("user"));
     var token = localStorage.getItem("token");
