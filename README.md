@@ -1,29 +1,35 @@
-Date:2018-01-27   
+url:http://193.112.47.238:8088
+
+update date:2018-03-27 
 
 Author:liuffei
 
 Project:blog
 
-一：这个项目计划用来实现哪些功能？
+一：这个项目将会使用哪些技术？
 
-(1)基本功能：从各大网站（包括CSDN，博客园，掘金，开源中国等等）爬取主页数据，用户查看各个网站的博客。
+(1)后台:maven+springboot+mybatis
 
-(2)扩展功能：根据用户的浏览习惯或是自己的选择标签，有选择地抓取符合用户习惯的其他博客网站的数据。
+(2)前端:vue+axios+js
 
-综上，目前的想法就是做一个帮助用户筛选自己感兴趣的知识的网站。
+(3)数据库:mysql
 
-二：这个项目将会使用哪些技术？
 
-(1)后台将会使用Maven管理包依赖，SpringBoot集成Spring,SpringMvc,Mybatis。这里选择Mybatis而不是Spring Data JPA的原因是，自己比较熟悉Mybatis，而且如果表与表之间的关联比较多，直接写原生的sql比较简便，虽然Spring Data JPA也可以写原生的Sql,但需要硬编码在代码中，而且MyBatis更有利于优化Sql，美中不足的是不能像Spring Data JPA一样自动建表。可能会选择[开源框架Gecco](http://www.geccocrawler.com/)做网站内容抽取，目前还在观望中。
+二：这个网站目前已经实现的功能有：
+(1)利用开源框架gecco获取csdn,cnblogs,osc的首页数据。要点：遍历元素，jquery选择器
 
-(2)前端会采用axios+vue+bootstrap的组合做视图层。
+(2)用vue的组件封装了标题栏，减少了标题代码的重复率。
 
-(3)数据库选择的是mysql。
+(3)登录注册功能。
 
-三:项目文件夹说明
+(4)仿segmengfault的上传头像功能。
 
-(1)blog:项目源代码。
+三：部署
 
-(2)perspective：效果图存放的位置。
+特点：前后端分开部署
 
-(3)doc：开发日志，记录自己开发过程遇到的问题。
+(1)前端：nginx作为反向代理服务器。
+
+(2)后台：springboot打的jar,内置的tomcat。
+
+(3)运行在腾讯云centos7.3操作系统。
