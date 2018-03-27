@@ -1,10 +1,10 @@
-url:http://193.112.47.238:8088
+url : http://193.112.47.238:8088
 
-update date:2018-03-27 
+update date : 2018-03-27 
 
-Author:liuffei
+Author : liuffei
 
-Project:blog
+Project : blog
 
 一：这个项目将会使用哪些技术？
 
@@ -16,6 +16,7 @@ Project:blog
 
 
 二：这个网站目前已经实现的功能有：
+
 (1)利用开源框架gecco获取csdn,cnblogs,osc的首页数据。要点：遍历元素，jquery选择器
 
 (2)用vue的组件封装了标题栏，减少了标题代码的重复率。
