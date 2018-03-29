@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MarkDown 编辑器</title>
+	<!--这里引入bootstrap是为了增强样式，但是原则上我是不想使用bootstrap这种傻瓜式框架的，后续要改掉-->
+	<link href="http://cdn.bootcss.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<textarea id="text-input" oninput="this.editor.update()" rows="6" cols="60">Type **Markdown** here.</textarea>
+	<div id="preview"></div>
+	<script type="text/javascript" src="../../js/editor/markdown.js"></script>
+	<script type="text/javascript">
+		function Editor(input, preview){
+			this.update = function(){
+				//Maruku 这里加上是为了可以显示table
+				preview.innerHTML = markdown.toHTML(input.value, 'Maruku');
+			};
+			input.editor = this;
+			this.update();
+		}
+
+		var $ = function(id){
+			return document.getElementById(id);
+		}
+
+		new Editor($("text-input"),$("preview"));
+
+	</script>
+</body>
+</html>
