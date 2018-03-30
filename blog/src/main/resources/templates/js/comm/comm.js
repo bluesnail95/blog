@@ -19,7 +19,7 @@
  *path 从后台获取项目路径
  */
 var path,router;
-axios.get('http://127.0.0.1:8080/comm/path')
+axios.get('http://127.0.0.1:8081/comm/path')
     .then(function(response){
         path = response.data.root;
 

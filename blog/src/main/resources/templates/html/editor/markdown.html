@@ -6,25 +6,44 @@
 	<link href="http://cdn.bootcss.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<textarea id="text-input" oninput="this.editor.update()" rows="6" cols="60">Type **Markdown** here.</textarea>
-	<div id="preview"></div>
-	<script type="text/javascript" src="../../js/editor/markdown.js"></script>
-	<script type="text/javascript">
-		function Editor(input, preview){
-			this.update = function(){
-				//Maruku 这里加上是为了可以显示table
-				preview.innerHTML = markdown.toHTML(input.value, 'Maruku');
-			};
-			input.editor = this;
-			this.update();
-		}
+	<div id="blog">
+		<textarea id="text-input" @input="update();" rows="6" cols="60" >Type **Markdown** here.</textarea>
+		<button class="btn btn-primary" @click="saveBlog();">保存</button>
+		<div id="preview"></div>
+	</div>
 
+	<script type="text/javascript" src="../../js/editor/markdown.js"></script>
+	<script src="../../js/comm/axios.min.js"></script>
+	<script src="../../js/comm/vue.js"></script>
+	<script type="text/javascript">
 		var $ = function(id){
 			return document.getElementById(id);
 		}
 
-		new Editor($("text-input"),$("preview"));
+        new Vue({
+        	el: "#blog",
+        	data: {
+        		
+        	},
+        	methods: {
+        		saveBlog(){
+        			axios.post("http://127.0.0.1:8081/blog",{
+	                   "content": $("preview").innerHTML
+	                })
+	                .then(function(response){
+	                    
+	                })
+	                .catch(function(error){
 
+	                })     
+        		},
+        		update(){
+					//Maruku 这里加上是为了可以显示table
+					$("preview").innerHTML = markdown.toHTML($("text-input").value, 'Maruku');
+				}
+        	}
+            
+        });
 	</script>
 </body>
 </html>

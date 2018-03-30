@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gdut.ff.mapper.BlogMapper">
+    
+  <resultMap id="blogMap" type="gdut.ff.domain.Blog">
+	  <id column="id" jdbcType="VARCHAR" property="id" />
+	  <result column="title" jdbcType="VARCHAR" property="title" />
+	  <result column="summary" jdbcType="VARCHAR" property="summary" />
+	  <result column="keywords" jdbcType="VARCHAR" property="keywords" />
+	  <result column="classification" jdbcType="VARCHAR" property="classification" />
+	  <result column="creator" jdbcType="VARCHAR" property="creator" />
+	  <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+	  <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  
+  <!-- 插入一条博客记录 -->
+  <insert id="insertBlog" parameterType="gdut.ff.domain.Blog">
+	  insert into blog (id,title, summary, keywords, classification, creator, gmt_create, gmt_modified, content)
+	  values (#{id,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR}, 
+	    #{classification,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+	    #{gmtModified,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARBINARY})
+  </insert>
+  
+  <!-- 查找博客记录 -->
+  <select id="findBlogById" resultMap="blogMap">
+  	  select * from blog where id = #{id}
+  </select>
+  
+  <select id="findAllBlog" resultMap="blogMap">
+      select * from blog
+  </select>
+  
+  <!-- 更新博客记录 -->
+  <update id="updateBlog" parameterType="gdut.ff.domain.Blog">
+	  update blog
+	  <set>
+	    <if test="title != null">
+	      title = #{title,jdbcType=VARCHAR},
+	    </if>
+	    <if test="summary != null">
+	      summary = #{summary,jdbcType=VARCHAR},
+	    </if>
+	    <if test="keywords != null">
+	      keywords = #{keywords,jdbcType=VARCHAR},
+	    </if>
+	    <if test="classification != null">
+	      classification = #{classification,jdbcType=VARCHAR},
+	    </if>
+	    <if test="creator != null">
+	      creator = #{creator,jdbcType=VARCHAR},
+	    </if>
+	    <if test="gmtCreate != null">
+	      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+	    </if>
+	    <if test="gmtModified != null">
+	      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+	    </if>
+	    <if test="content != null">
+	      content = #{content,jdbcType=LONGVARBINARY},
+	    </if>
+	  </set>
+	  where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 删除博客记录 -->
+  <delete id="deleteBlogById" parameterType="java.lang.String">
+      delete from blog where id = #{id,jdbcType=VARCHAR}
+  </delete>
+</mapper>

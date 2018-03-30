@@ -14,11 +14,31 @@
 		<my-nav/>
 	</div>
 
-	<p>主页</p>
+	<div id="blogs">
+		
+	</div>
 	
     <script src="../js/comm/vue.js"></script>
     <script src="../js/comm/axios.min.js"></script>
     <script src="../js/comm/comm.js"></script>
+    <script type="text/javascript">
+
+       var $ = function(id){
+			return document.getElementById(id);
+		}
+
+    	axios.get("http://127.0.0.1:8081/blog/d5395fbf-3315-4638-a9b0-7aab840f1299",{
+	           
+        })
+        .then(function(response){
+        	debugger;
+            $("blogs").innerHTML = response.data.content.content;
+        })
+        .catch(function(error){
+
+        })  
+
+    </script>
     
    
 </body>
