@@ -28,7 +28,7 @@
 	    /**
 	     *请求博客数据
 	     */
-		axios.get('http://127.0.0.1:8080/osc/blogs')
+		axios.get('http://127.0.0.1:8081/osc/blogs')
 	     .then(function (response) {
 			 if(1 == response.data.status){
 				 var blogsApp = new Vue({
