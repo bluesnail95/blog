@@ -27,7 +27,10 @@
             <div class="am-panel-hd">文章目录</div>
             <ul class="am-list blog-list" id="menu">
               <li v-for="blog in blogs">
-                <a href="javascript:void(0)" target="_blank" v-on:click="viewBlog(blog);"> {{blog.title}}</a>
+                <a href="javascript:void(0)" target="_blank" v-on:click="viewBlog(blog);"> 
+                  {{blog.title}}
+                  <a href="javascript:void(0)" target="_blank" v-on:click="editBlog(blog);"> 编辑</a>
+                </a>
               </li> 
             </ul>
           </section>       
@@ -90,7 +93,7 @@
       } ,
       methods: {
         viewBlog(blog) {
-          document.setCookie = "blogId="+blog.id;
+          sessionStorage.setItem("blogId",blog.id);
           window.location.href = "view.html";   
         },
         init(value){
@@ -105,6 +108,10 @@
           .catch(function(error){
             console.log(error);
           })  
+        },
+        editBlog(blog){
+          sessionStorage.setItem("blogId",blog.id);
+          window.location.href = "edit.html";
         }
       }
     });

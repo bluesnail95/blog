@@ -3,6 +3,7 @@ package gdut.ff.web;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.eclipse.jetty.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,11 @@ public class BlogController {
 			}
 		}
 		*/
-		blogServiceImpl.insertBlog(blog);
+		if(StringUtil.isNotBlank(blog.getId())) {
+			blogServiceImpl.updateBlog(blog);
+		}else {
+			blogServiceImpl.insertBlog(blog);
+		}
 		result.put("status", 1);
 		return result;
 	}
@@ -68,7 +73,8 @@ public class BlogController {
 	 * @return
 	 */
 	@GetMapping(value = "/blog/{id}")
-	public ObjectNode findBlogById(@PathVariable String id) {
+	public ObjectNode findBlogById(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
+		response.setCharacterEncoding("UTF-8");
 		ObjectNode result = NodeUtil.create();
 		Blog blog = blogServiceImpl.fingOneById(id);
 		result.putPOJO("content", blog);

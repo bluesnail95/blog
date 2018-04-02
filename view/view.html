@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>liuffei's blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,12 +24,10 @@
   <div class="am-u-md-9 am-u-md-push-3">
     <div class="am-g">
       <div class="am-u-sm-11 am-u-sm-centered">
-        <div class="am-cf am-article">
-          标题
+        <div class="am-cf am-article" id="article" >
+          {{blog.title}}
           <hr class="am-article-divider">
-          <h2>正文</h2>
-           xxx
-          <hr class="am-article-divider">
+          <div v-html="blog.content">{{blog.content}}</div>
         </div>
         <hr/>
       </div>
@@ -74,8 +73,41 @@
   <script src="assets/js/vue.js"></script>
   <script src="assets/js/axios.min.js"></script>
   <script src="assets/js/comm.js"></script>
+  <script src="assets/js/markdown.js"></script>
   <script type="text/javascript">
-  
+    new Vue({
+      el: "#article",
+      data: function() {
+        return {
+          "blog": {
+            "title": "",
+            "content": ""
+          }
+        };
+      },
+      created: function() {
+        this.$nextTick(function () {
+           this.init(this.blog);
+         })
+      },
+      methods: {
+        init(blog){
+          var blogId = sessionStorage.getItem("blogId");
+          axios.get(SERVER_URL+"/blog/"+blogId,{
+                   
+          })
+          .then(function(response){
+            blog.title = response.data.content.title;
+            blog.content = markdown.toHTML(response.data.content.content, 'Maruku');
+            //$("article").innerHTML += blog.content;
+          })
+          .catch(function(error){
+            console.log(error);
+          })  
+        }
+      }
+      
+    });
     
     
   </script>

@@ -2,6 +2,7 @@
 <html>
 <head lang="en">
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>liuffei's blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,9 +25,13 @@
     <div class="am-g">
       <div class="am-u-sm-11 am-u-sm-centered">
         <div class="am-cf am-article" id="blog">
-          <textarea id="text-input" @input="update();" rows="10" cols="100" >Type **Markdown** here.</textarea>
+          <textarea id="title" rows="1" cols="100" >{{blog.title}}</textarea>
+          <hr/>
+          <textarea id="text-input" @input="update();" rows="10" cols="100" v-model="blog.content"></textarea>
           <button class="btn btn-primary" @click="draftBlog();">存草稿</button>
           <button class="btn btn-primary" @click="saveBlog();">保存</button>
+          <hr/>
+          <div>预览</div>
           <hr/>
           <div id="preview"></div>
         </div>
@@ -76,18 +81,49 @@
   <script src="assets/js/axios.min.js"></script>
   <script src="assets/js/comm.js"></script>
   <script type="text/javascript">
-    new Vue({
+    var vm = new Vue({
       el: "#blog",
-      data: {
-        
+      data: function() {
+        return {
+          blog: {
+            id: null,
+            title: "",
+            content: ""
+          } 
+        };        
+      },
+      created: function() {
+         //this.$nextTick(function () {
+           this.init(this.blog,this.update);
+        // })
       },
       methods: {
+        init(blog,func){
+          blog.id = sessionStorage.getItem("blogId");
+          if(blog.id){
+            axios.get(SERVER_URL+"/blog/"+blog.id,{
+                   
+            })
+            .then(function(response){
+              blog.title = response.data.content.title;
+              blog.content = response.data.content.content;
+              //$("article").innerHTML += blog.content;
+              $("preview").innerHTML = markdown.toHTML(blog.content, 'Maruku');
+            })
+            .catch(function(error){
+              console.log(error);
+            })  
+          }
+        },
         draftBlog(){
 
         },
         saveBlog(){
           axios.post(SERVER_URL+"/blog",{
-                 "content": $("preview").innerHTML
+                //"content": $("preview").innerHTML
+                "content": $("text-input").value,
+                "title": $("title").value,
+                "id":this.blog.id
           })
           .then(function(response){
               
@@ -98,10 +134,12 @@
         },
         update(){
           //Maruku 这里加上是为了可以显示table
+          debugger
           $("preview").innerHTML = markdown.toHTML($("text-input").value, 'Maruku');
         }
       } 
     });
+
   </script>
 </body>
 </html>
