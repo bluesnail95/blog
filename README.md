@@ -25,6 +25,8 @@ Project : blog
 
 (4)仿segmengfault的上传头像功能。
 
+(5)使用amazeui重构页面，完成markdown编辑器的增删改查,存草稿待完成。(2018-04-03)
+
 三：部署
 
 特点：前后端分开部署
