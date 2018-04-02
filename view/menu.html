@@ -76,30 +76,38 @@
   <script src="assets/js/axios.min.js"></script>
   <script src="assets/js/comm.js"></script>
   <script type="text/javascript">
-    new Vue({
+    var vm = new Vue({
       el: "#menu",
-      data: {
-        blogs: ""
+      data: function() {
+        return {
+          blogs: []
+        };
       },
-      created: function() {
-        axios.get(SERVER_URL+"/blogs",{
-                   
-        })
-        .then(function(response){
-            this.blogs = response.data.blogs;
-        })
-        .catch(function(error){
-
-        })  
+      mounted: function() {
+         this.$nextTick(function () {
+           this.init(this.blogs);
+         })
       } ,
       methods: {
         viewBlog(blog) {
           document.setCookie = "blogId="+blog.id;
           window.location.href = "view.html";   
+        },
+        init(value){
+          axios.get(SERVER_URL+"/blogs",{
+                   
+          })
+          .then(function(response){
+            for(var i = 0;i < response.data.blogs.length;i++){
+              value.push(response.data.blogs[i]);
+            }
+          })
+          .catch(function(error){
+            console.log(error);
+          })  
         }
       }
     });
-
   </script>
 </body>
 </html>
