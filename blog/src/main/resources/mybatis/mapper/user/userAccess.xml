@@ -4,19 +4,21 @@
       
     <resultMap id="userAccessMap" type="gdut.ff.domain.UserAccess">    
         <id column="id" property="id"/>
+        <result column="user_access_id" property="userAccessId"/>
         <result column="title" property="title"/>
         <result column="url" property="url"/>
-        <result column="create_time" property="createTime" />
         <result column="website_type" property="websiteType"/>
         <result column="classification" property="classification"/>
         <result column="user_id" property="userId"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
     </resultMap>
     
     
     <!-- 保存用户 访问记录-->
     <insert id="saveUserAccess">
-        INSERT INTO user_access(id,title,url,create_time,website_type,classification,user_id)
-        VALUES(#{id},#{title},#{url},#{createTime},#{websiteType},#{classification},#{userId})
+        INSERT INTO user_access(id,user_access_id,title,url,create_time,website_type,classification,user_id,gmt_create,gmt_modified)
+        VALUES(#{id},#{userAccessId},#{title},#{url},#{createTime},#{websiteType},#{classification},#{userId},#{gmtCreate},#{gmtModified})
     </insert>
     
     <!-- 查询一段时间内csdn,博客园，开源中国的博客访问总量 -->
@@ -58,7 +60,7 @@
     
     <!-- 查询登录用户的前10条浏览记录 -->
     <select id="selectTop10History" parameterType="map" resultType="map">
-        SELECT * 
+        SELECT id,user_access_id,title,url,create_time,website_type,classification,user_id,gmt_create,gmt_modified
         FROM user_access a
         WHERE a.user_id = #{userId}
         limit 0,10

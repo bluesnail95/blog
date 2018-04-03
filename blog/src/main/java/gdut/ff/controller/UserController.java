@@ -1,4 +1,4 @@
-package gdut.ff.web;
+package gdut.ff.controller;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -60,7 +60,7 @@ public class UserController {
 	public ObjectNode findAllUsers() {
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode result = objectMapper.createObjectNode();
-		List<User> users = userServiceImpl.findAll();
+		List<User> users = userServiceImpl.findAllUser();
 		ArrayNode content = result.putArray("users");
 		content.addAll(objectMapper.convertValue(users, ArrayNode.class));
 		result.put("status",1);
@@ -76,7 +76,7 @@ public class UserController {
 	public ObjectNode getUser(@PathVariable long id) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode result = objectMapper.createObjectNode();
-		User user = userServiceImpl.fingOneById(id);
+		User user = userServiceImpl.fingUserById(id);
 		result.putPOJO("user",user);
 		result.put("status",1);
 		return result;
@@ -222,7 +222,6 @@ public class UserController {
 		ObjectNode result = NodeUtil.create();
 		//设置主键和创建时间 保存
 		userAccess.setId(UUID.randomUUID().toString());
-		userAccess.setCreateTime(new Date());
 		//判断token是否有效，有效取出用户的主键
 		String token = request.getHeader("token");
 		try {

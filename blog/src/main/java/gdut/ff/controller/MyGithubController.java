@@ -1,4 +1,4 @@
-package gdut.ff.web;
+package gdut.ff.controller;
 
 import com.geccocrawler.gecco.GeccoEngine;
 import com.geccocrawler.gecco.annotation.Gecco;

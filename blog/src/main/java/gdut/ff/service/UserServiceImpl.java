@@ -26,8 +26,8 @@ public class UserServiceImpl {
 	 * @return
 	 */
 	@Transactional(readOnly = true)
-	public List<User> findAll(){
-		return userMapper.findAll();
+	public List<User> findAllUser(){
+		return userMapper.findAllUser();
 	}
 	
 	/**
@@ -36,8 +36,8 @@ public class UserServiceImpl {
 	 * @return
 	 */
 	@Transactional(readOnly = true)
-	public User fingOneById(long id) {
-		return userMapper.fingOneById(id);
+	public User fingUserById(long id) {
+		return userMapper.fingUserById(id);
 	}
 	
 	/**

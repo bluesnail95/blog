@@ -4,10 +4,13 @@
     
   <resultMap id="blogMap" type="gdut.ff.domain.Blog">
 	  <id column="id" jdbcType="VARCHAR" property="id" />
+	  <result column="blog_id" jdbcType="VARCHAR" property="blogId" />
 	  <result column="title" jdbcType="VARCHAR" property="title" />
 	  <result column="summary" jdbcType="VARCHAR" property="summary" />
 	  <result column="keywords" jdbcType="VARCHAR" property="keywords" />
+	  <result column="content" jdbcType="LONGVARBINARY" property="content" />
 	  <result column="classification" jdbcType="VARCHAR" property="classification" />
+	  <result column="is_draft" jdbcType="CHAR" property="classification" />
 	  <result column="creator" jdbcType="VARCHAR" property="creator" />
 	  <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
 	  <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
@@ -15,25 +18,31 @@
   
   <!-- 插入一条博客记录 -->
   <insert id="insertBlog" parameterType="gdut.ff.domain.Blog">
-	  insert into blog (id,title, summary, keywords, classification, creator, gmt_create, gmt_modified, content)
-	  values (#{id,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR}, 
+	  insert into blog (id,blog_id,title, summary, keywords, classification, creator, gmt_create, gmt_modified, content,is_draft)
+	  values (#{id,jdbcType=VARCHAR},#{blog_id,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR}, 
 	    #{classification,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
-	    #{gmtModified,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARBINARY})
+	    #{gmtModified,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARBINARY},#{isDraft,jdbcType=CHAR})
   </insert>
   
   <!-- 查找博客记录 -->
   <select id="findBlogById" resultMap="blogMap">
-  	  select * from blog where id = #{id}
+  	  select id,blog_id,title, summary, keywords, classification, creator, gmt_create, gmt_modified, content,is_draft 
+  	  from blog 
+  	  where id = #{id}
   </select>
   
   <select id="findAllBlog" resultMap="blogMap">
-      select * from blog
+      select id,blog_id,title, summary, keywords, classification, creator, gmt_create, gmt_modified, content,is_draft  
+      from blog
   </select>
   
   <!-- 更新博客记录 -->
   <update id="updateBlog" parameterType="gdut.ff.domain.Blog">
 	  update blog
 	  <set>
+	    <if test="blogId != null">
+	      title = #{blogId,jdbcType=VARCHAR},
+	    </if>
 	    <if test="title != null">
 	      title = #{title,jdbcType=VARCHAR},
 	    </if>
@@ -57,6 +66,9 @@
 	    </if>
 	    <if test="content != null">
 	      content = #{content,jdbcType=LONGVARBINARY},
+	    </if>
+	    <if test="isDraft != null">
+	      is_draft = #{isDraft,jdbcType=CHAR},
 	    </if>
 	  </set>
 	  where id = #{id,jdbcType=VARCHAR}

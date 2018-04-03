@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 /**
  * 用户实体层
  * @author liuffei
- * @date 2018年1月16日
+ * @date 2018-04-03 update
  * @description
  */
 @Component
@@ -17,6 +17,9 @@ public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private String id;
+	
+	//用户的业务标识
+	private String userId;
 	
 	//用户名
 	private String name;
@@ -38,6 +41,15 @@ public class User implements Serializable{
 
 	//头像
 	private String img;
+	
+	//是否是管理员 '0' 是 '1' 否
+	private String isAdmin;
+	
+	//创建时间
+	private Date gmtCreated;
+	
+	//修改时间
+	private Date gmtModified;
 
 	public String getId() {
 		return id;
@@ -103,12 +115,44 @@ public class User implements Serializable{
 		this.email = email;
 	}
 
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(String isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	public Date getGmtCreated() {
+		return gmtCreated;
+	}
+
+	public void setGmtCreated(Date gmtCreated) {
+		this.gmtCreated = gmtCreated;
+	}
+
+	public Date getGmtModified() {
+		return gmtModified;
+	}
+
+	public void setGmtModified(Date gmtModified) {
+		this.gmtModified = gmtModified;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", email=" + email + ", birthday=" + birthday + ", loginName="
-				+ loginName + ", password=" + password + ", signature=" + signature + ", img=" + img + "]";
+		return "User [id=" + id + ", userId=" + userId + ", name=" + name + ", email=" + email + ", birthday="
+				+ birthday + ", loginName=" + loginName + ", password=" + password + ", signature=" + signature
+				+ ", img=" + img + ", isAdmin=" + isAdmin + ", gmtCreated=" + gmtCreated + ", gmtModified="
+				+ gmtModified + "]";
 	}
-	
-	
 	
 }

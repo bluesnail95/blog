@@ -1,47 +1,16 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : mydb
- Source Server Type    : MySQL
- Source Server Version : 50721
- Source Host           : localhost:3306
- Source Schema         : blog
-
- Target Server Type    : MySQL
- Target Server Version : 50721
- File Encoding         : 65001
-
- Date: 07/03/2018 23:51:06
-*/
-
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
-
--- ----------------------------
--- Table structure for user_access
--- ----------------------------
-DROP TABLE IF EXISTS `user_access`;
-CREATE TABLE `user_access`  (
-  `id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `classification` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '',
-  `create_time` datetime(0) NULL DEFAULT NULL,
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '',
-  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '',
-  `website_type` int(255) NULL DEFAULT NULL,
-  `user_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of user_access
--- ----------------------------
-INSERT INTO `user_access` VALUES ('0cee360a-a034-444b-a093-08a7a14e551b', NULL, '2018-03-07 21:46:48', 'MySQL高级学习笔记', 'https://www.cnblogs.com/yrrAwx/p/8523361.html', 2, '8a2153bb-d5ec-4678-9f50-0709126b2a73');
-INSERT INTO `user_access` VALUES ('2746d8e5-03a3-441c-b0e9-2a3df8805af3', NULL, '2018-03-07 21:46:22', '深度学习大神都推荐入门必须读完这9篇论文', 'http://blog.csdn.net/meyh0x5vDTk48P2/article/details/79072666', 1, '8a2153bb-d5ec-4678-9f50-0709126b2a73');
-INSERT INTO `user_access` VALUES ('2a55f5a9-f9cc-4bc0-af98-6509fffaf179', NULL, '2018-03-07 21:47:00', 'W3Techs CMS 流行度统计：WordPress 一枝独秀', 'http://www.oschina.net/news/93930/w3techs-cms-trend', 3, '8a2153bb-d5ec-4678-9f50-0709126b2a73');
-INSERT INTO `user_access` VALUES ('712202b5-606c-406d-a962-2515302bbfb5', '资讯', '2018-03-07 21:46:14', '颠覆BAT的新出路', 'http://blog.csdn.net/kXYOnA63Ag9zqtXx0/article/details/79073454', 1, '8a2153bb-d5ec-4678-9f50-0709126b2a73');
-INSERT INTO `user_access` VALUES ('8145883c-ef31-4364-8b86-c1a1becf1324', NULL, '2018-03-07 21:46:55', 'Atom 团队推出下一代跨平台高性能文本编辑器 Xray', 'http://www.oschina.net/news/93954/atom-team-opensource-xray', 3, '8a2153bb-d5ec-4678-9f50-0709126b2a73');
-INSERT INTO `user_access` VALUES ('a8e1f7a8-0e54-4c76-acc4-a062ee5855c9', NULL, '2018-03-07 21:46:44', 'Django 自定义用户认证', 'https://www.cnblogs.com/forsaken627/p/8523371.html', 2, '8a2153bb-d5ec-4678-9f50-0709126b2a73');
-INSERT INTO `user_access` VALUES ('d5a765d4-428a-40f4-81e5-9a4a126f8e97', NULL, '2018-03-07 21:47:07', '码云周刊 | 五花八门的验证码程序，你遇过几个？', 'https://my.oschina.net/gitosc/blog/1627438', 3, '8a2153bb-d5ec-4678-9f50-0709126b2a73');
-INSERT INTO `user_access` VALUES ('e5b717be-04ae-43e0-bd29-6768ce31b53b', NULL, '2018-03-07 21:46:37', '为什么你应该停止阅读新闻?', 'https://www.cnblogs.com/IcanFixIt/p/8524843.html', 2, '8a2153bb-d5ec-4678-9f50-0709126b2a73');
-
-SET FOREIGN_KEY_CHECKS = 1;
+INSERT INTO `user_access`(`id`, `user_access_id`, `classification`, `title`, `url`, `website_type`, `user_id`, `gmt_create`, `gmt_modified`) VALUES ('081d8a1a-2fe3-4ee8-ad07-8307f288ad24', NULL, '程序人生', 'Spring Boot 2.0 新特性和发展方向', 'http://blog.csdn.net/B9Q8e64lO6mm/article/details/79441430', 1, NULL, '2018-03-08 21:59:00', NULL);
+INSERT INTO `user_access`(`id`, `user_access_id`, `classification`, `title`, `url`, `website_type`, `user_id`, `gmt_create`, `gmt_modified`) VALUES ('0cee360a-a034-444b-a093-08a7a14e551b', NULL, NULL, 'MySQL高级学习笔记', 'https://www.cnblogs.com/yrrAwx/p/8523361.html', 2, '8a2153bb-d5ec-4678-9f50-0709126b2a73', '2018-03-06 21:46:48', NULL);
+INSERT INTO `user_access`(`id`, `user_access_id`, `classification`, `title`, `url`, `website_type`, `user_id`, `gmt_create`, `gmt_modified`) VALUES ('262ff947-0a67-4a32-9093-26e42eaeda5f', NULL, '程序人生', '程序猿跳槽季，为什么你的薪水总升不上去？', 'http://blog.csdn.net/csdnnews/article/details/79549261', 1, '8a2153bb-d5ec-4678-9f50-0709126b2a73', '2018-03-21 22:03:25', NULL);
+INSERT INTO `user_access`(`id`, `user_access_id`, `classification`, `title`, `url`, `website_type`, `user_id`, `gmt_create`, `gmt_modified`) VALUES ('2746d8e5-03a3-441c-b0e9-2a3df8805af3', NULL, NULL, '深度学习大神都推荐入门必须读完这9篇论文', 'http://blog.csdn.net/meyh0x5vDTk48P2/article/details/79072666', 1, '8a2153bb-d5ec-4678-9f50-0709126b2a73', '2018-03-07 21:46:22', NULL);
+INSERT INTO `user_access`(`id`, `user_access_id`, `classification`, `title`, `url`, `website_type`, `user_id`, `gmt_create`, `gmt_modified`) VALUES ('2a55f5a9-f9cc-4bc0-af98-6509fffaf179', NULL, NULL, 'W3Techs CMS 流行度统计：WordPress 一枝独秀', 'http://www.oschina.net/news/93930/w3techs-cms-trend', 3, '8a2153bb-d5ec-4678-9f50-0709126b2a73', '2018-03-07 21:47:00', NULL);
+INSERT INTO `user_access`(`id`, `user_access_id`, `classification`, `title`, `url`, `website_type`, `user_id`, `gmt_create`, `gmt_modified`) VALUES ('3784e494-049e-492c-ae89-8cb6b0a18e6c', NULL, NULL, '弃用微软 C++ 编译器，Win 版 Chrome 改用 Clang', 'http://www.oschina.net/news/93961/chrome-for-win-use-clang', 3, NULL, '2018-03-08 21:59:32', NULL);
+INSERT INTO `user_access`(`id`, `user_access_id`, `classification`, `title`, `url`, `website_type`, `user_id`, `gmt_create`, `gmt_modified`) VALUES ('3b0ecd05-a21b-4090-a60d-abc8b4ce2d3c', NULL, NULL, '物联网框架ServerSuperIO在.NetCore实现跨平台的实践路线', 'https://www.cnblogs.com/lsjwq/p/8531046.html', 2, NULL, '2018-03-08 21:59:13', NULL);
+INSERT INTO `user_access`(`id`, `user_access_id`, `classification`, `title`, `url`, `website_type`, `user_id`, `gmt_create`, `gmt_modified`) VALUES ('4bc6cf73-4fab-4d3a-97de-47081b6ba79b', NULL, NULL, 'AI 经典书单 | 人工智能学习该读哪些书', 'http://blog.csdn.net/T7SFOKzorD1JAYMSFk4/article/details/79073686', 1, NULL, '2018-03-01 21:58:48', NULL);
+INSERT INTO `user_access`(`id`, `user_access_id`, `classification`, `title`, `url`, `website_type`, `user_id`, `gmt_create`, `gmt_modified`) VALUES ('503b9ff1-1dfd-4f43-9596-2aa8deb2d80b', NULL, NULL, '码云推荐 | 高性能消息分发中心 HPMessageCenter', 'https://gitee.com/dugukuangshao/HPMessageCenter', 3, NULL, '2018-03-08 21:59:24', NULL);
+INSERT INTO `user_access`(`id`, `user_access_id`, `classification`, `title`, `url`, `website_type`, `user_id`, `gmt_create`, `gmt_modified`) VALUES ('712202b5-606c-406d-a962-2515302bbfb5', NULL, '资讯', '颠覆BAT的新出路', 'http://blog.csdn.net/kXYOnA63Ag9zqtXx0/article/details/79073454', 1, '8a2153bb-d5ec-4678-9f50-0709126b2a73', '2018-03-07 21:46:14', NULL);
+INSERT INTO `user_access`(`id`, `user_access_id`, `classification`, `title`, `url`, `website_type`, `user_id`, `gmt_create`, `gmt_modified`) VALUES ('8145883c-ef31-4364-8b86-c1a1becf1324', NULL, NULL, 'Atom 团队推出下一代跨平台高性能文本编辑器 Xray', 'http://www.oschina.net/news/93954/atom-team-opensource-xray', 3, '8a2153bb-d5ec-4678-9f50-0709126b2a73', '2018-03-02 21:46:55', NULL);
+INSERT INTO `user_access`(`id`, `user_access_id`, `classification`, `title`, `url`, `website_type`, `user_id`, `gmt_create`, `gmt_modified`) VALUES ('a779b4b4-c1a9-4bd0-a219-2fb810268780', NULL, NULL, 'AI 经典书单 | 人工智能学习该读哪些书', 'http://blog.csdn.net/T7SFOKzorD1JAYMSFk4/article/details/79073686', 1, NULL, '2018-03-08 21:58:47', NULL);
+INSERT INTO `user_access`(`id`, `user_access_id`, `classification`, `title`, `url`, `website_type`, `user_id`, `gmt_create`, `gmt_modified`) VALUES ('a8e1f7a8-0e54-4c76-acc4-a062ee5855c9', NULL, NULL, 'Django 自定义用户认证', 'https://www.cnblogs.com/forsaken627/p/8523371.html', 2, '8a2153bb-d5ec-4678-9f50-0709126b2a73', '2018-03-07 21:46:44', NULL);
+INSERT INTO `user_access`(`id`, `user_access_id`, `classification`, `title`, `url`, `website_type`, `user_id`, `gmt_create`, `gmt_modified`) VALUES ('d0eadb99-3e55-4fe2-8ba0-cbc5fb3b85fb', NULL, NULL, 'class-提升方法Boosting', 'https://www.cnblogs.com/sxzhou/p/8530454.html', 2, NULL, '2018-03-08 21:59:17', NULL);
+INSERT INTO `user_access`(`id`, `user_access_id`, `classification`, `title`, `url`, `website_type`, `user_id`, `gmt_create`, `gmt_modified`) VALUES ('d5a765d4-428a-40f4-81e5-9a4a126f8e97', NULL, NULL, '码云周刊 | 五花八门的验证码程序，你遇过几个？', 'https://my.oschina.net/gitosc/blog/1627438', 3, '8a2153bb-d5ec-4678-9f50-0709126b2a73', '2018-03-07 21:47:07', NULL);
+INSERT INTO `user_access`(`id`, `user_access_id`, `classification`, `title`, `url`, `website_type`, `user_id`, `gmt_create`, `gmt_modified`) VALUES ('e5b717be-04ae-43e0-bd29-6768ce31b53b', NULL, NULL, '为什么你应该停止阅读新闻?', 'https://www.cnblogs.com/IcanFixIt/p/8524843.html', 2, '8a2153bb-d5ec-4678-9f50-0709126b2a73', '2018-03-07 21:46:37', NULL);

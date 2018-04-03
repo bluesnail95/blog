@@ -15,14 +15,14 @@ public interface UserMapper {
 	 * 查询全部的用户
 	 * @return
 	 */
-	public List<User> findAll();
+	public List<User> findAllUser();
 	
 	/**
 	 * 根据用户主键查找用户
 	 * @param id
 	 * @return
 	 */
-	public User fingOneById(long id);
+	public User fingUserById(long id);
 	
 	/**
 	 * 保存用户

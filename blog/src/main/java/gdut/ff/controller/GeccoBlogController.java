@@ -1,4 +1,4 @@
-package gdut.ff.web;
+package gdut.ff.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -24,7 +24,7 @@ public class UserMapperTest {
 	
 	@Test
 	public void testFindAllXml() {
-		List<User> users = userMapper.findAll();
+		List<User> users = userMapper.findAllUser();
 		if(null != users && users.size() > 0) {
 			for(int i = 0;i < users.size();i++) {
 				User user = users.get(i);
@@ -38,7 +38,7 @@ public class UserMapperTest {
 	@Test
 	public void testFindOneUser() {
 		long id = 1;
-		User user = userMapper.fingOneById(id);
+		User user = userMapper.fingUserById(id);
 		System.out.println("id = "+user.getId()+",name = "+user.getName()
 		+",birthday="+sdf.format(user.getBirthday())+",loginName="+user.getLoginName()
 		+",passWord="+user.getPassword()+",signature="+user.getSignature());

@@ -1,4 +1,4 @@
-package gdut.ff.web;
+package gdut.ff.controller;
 
 import java.io.FileNotFoundException;
 

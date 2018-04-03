@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * 用于创建博客的实体
  * @author liuffei
- *
+ * @date 2018-04-03 update
  */
 public class Blog implements Serializable{
 
@@ -16,6 +16,11 @@ public class Blog implements Serializable{
 	 * 主键
 	 */
 	private String id;
+	
+	/**
+	 * 具有业务标识的博客id
+	 */
+	private String blogId;
 	
 	/**
 	 * 标题
@@ -56,6 +61,11 @@ public class Blog implements Serializable{
 	 * 修改时间
 	 */
 	private Date gmtModified;
+	
+	/**
+	 * 是否是草稿 0 是 1 否
+	 */
+	private String isDraft;
 
 	public String getId() {
 		return id;
@@ -128,13 +138,28 @@ public class Blog implements Serializable{
 	public void setGmtModified(Date gmtModified) {
 		this.gmtModified = gmtModified;
 	}
+	
+	public String getBlogId() {
+		return blogId;
+	}
+
+	public void setBlogId(String blogId) {
+		this.blogId = blogId;
+	}
+
+	public String getIsDraft() {
+		return isDraft;
+	}
+
+	public void setIsDraft(String isDraft) {
+		this.isDraft = isDraft;
+	}
 
 	@Override
 	public String toString() {
-		return "Blog [id=" + id + ", title=" + title + ", summary=" + summary + ", keywords=" + keywords + ", content="
-				+ content + ", classification=" + classification + ", creator=" + creator + "]";
+		return "Blog [id=" + id + ", blogId=" + blogId + ", title=" + title + ", summary=" + summary + ", keywords="
+				+ keywords + ", content=" + content + ", classification=" + classification + ", creator=" + creator
+				+ ", gmtCreate=" + gmtCreate + ", gmtModified=" + gmtModified + ", isDraft=" + isDraft + "]";
 	}
-	
-	
 	
 }

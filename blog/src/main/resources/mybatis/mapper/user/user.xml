@@ -4,6 +4,7 @@
     
     <resultMap id="userMap" type="gdut.ff.domain.User">
         <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
         <result column="name" property="name"/>
         <result column="email" property="email"/>
         <result column="birthday" property="birthday" />
@@ -11,31 +12,37 @@
         <result column="password" property="password"/>
         <result column="img" property="img"/>
         <result column="signature" property="signature"/>
+        <result column="is_admin" property="isAdmin"/>
+        <result column="gmt_created" property="gmtCreated"/>
+        <result column="gmt_modified" property="gmtModified"/>
     </resultMap>
     
     <!-- 查找全部用户 -->
-    <select id="findAll" resultMap="userMap">
-        SELECT *
+    <select id="findAllUser" resultMap="userMap">
+        SELECT id,user_id,name,email,birthday,login_name,password,signature,img,is_admin,gmt_created,gmt_modified
         FROM user
     </select>
     
     <!-- 查询指定的用户 -->
-    <select id="findOneById" resultMap="userMap">
-        SELECT * 
+    <select id="findUserById" resultMap="userMap">
+        SELECT id,user_id,name,email,birthday,login_name,password,signature,img,is_admin,gmt_created,gmt_modified 
         FROM user 
         WHERE id = #{id}
     </select>
     
     <!-- 保存用户 -->
     <insert id="saveUser" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user(id,name,email,birthday,login_name,password,signature,img)
-        VALUES(#{id},#{name},#{email},#{birthday},#{loginName},#{password},#{signature},#{img})
+        INSERT INTO user(id,name,email,birthday,login_name,password,signature,img,is_admin,gmt_created,gmt_modified)
+        VALUES(#{id},#{name},#{email},#{birthday},#{loginName},#{password},#{signature},#{img},#{isAdmin},#{gmtCreated},#{gmtModified})
     </insert>
     
     <!-- 更新用户 -->
     <update id="updateUser">
         UPDATE user 
         <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
             <if test="name != null">
                 name = #{name},
             </if>
@@ -55,15 +62,24 @@
             	signature = #{signature},
             </if>
             <if test="img != null">
-                img = #{img}
+                img = #{img},
             </if>
+            <if test="is_admin != null">
+                isAdmin = #{isAdmin}
+            </if>
+            <if test=gmt_created != null">
+                gmtCreated = #{gmtCreated},
+            </if>
+            <if test="gmt_modified != null">
+            	gmtModified = #{gmtModified}
+            </if>         
         </set>
         WHERE id = #{id}
     </update>
     
     <!-- 根据登录名或邮箱和密码登录 -->
     <select id="loginUser" resultMap="userMap">
-        SELECT *
+        SELECT id,user_id,name,email,birthday,login_name,password,signature,img,is_admin,gmt_created,gmt_modified
         FROM user
         WHERE (login_name = #{loginName} or email = #{email}) AND password = #{password}
     </select>

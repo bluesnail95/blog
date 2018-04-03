@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * 用户访问记录表
  * @author liuffei
- * @date 2018-02-07
+ * @date 2018-04-03 update
  */
 @Component
 public class UserAccess implements Serializable {
@@ -19,16 +19,16 @@ public class UserAccess implements Serializable {
 	 * 主键
 	 */
 	private String id;
+	
+	/**
+	 * 具有业务意义的标识
+	 */
+	private String userAccessId;
 
 	/**
 	 * 分类
 	 */
 	private String classification;
-
-	/**
-	 * 创建时间
-	 */
-	private Date createTime;
 
 	/**
 	 * 标题
@@ -45,7 +45,20 @@ public class UserAccess implements Serializable {
 	 */
 	private int websiteType;
 	
+	/**
+	 * 用户
+	 */
 	private String userId;
+	
+	/**
+	 * 创建时间
+	 */
+	private Date gmtCreate;
+	
+	/**
+	 * 修改时间
+	 */
+	private Date gmtModified;
 
 	public UserAccess() {
 	}
@@ -64,14 +77,6 @@ public class UserAccess implements Serializable {
 
 	public void setClassification(String classification) {
 		this.classification = classification;
-	}
-
-	public Date getCreateTime() {
-		return this.createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
 	}
 
 	public String getTitle() {
@@ -104,6 +109,13 @@ public class UserAccess implements Serializable {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	@Override
+	public String toString() {
+		return "UserAccess [id=" + id + ", userAccessId=" + userAccessId + ", classification=" + classification
+				+ ", title=" + title + ", url=" + url + ", websiteType=" + websiteType + ", userId=" + userId
+				+ ", gmtCreate=" + gmtCreate + ", gmtModified=" + gmtModified + "]";
 	}
 
 }
