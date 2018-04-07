@@ -67,7 +67,7 @@
             <if test="is_admin != null">
                 isAdmin = #{isAdmin}
             </if>
-            <if test=gmt_created != null">
+            <if test="gmt_created != null">
                 gmtCreated = #{gmtCreated},
             </if>
             <if test="gmt_modified != null">

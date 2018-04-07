@@ -1,145 +1,198 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-  <meta charset="UTF-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>liuffei's blog</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
-  <link rel="stylesheet" type="text/css" href="assets/css/index.css">
-</head>
-<body>
-<header class="am-g my-head">
-  <div class="am-u-sm-12 am-article">
-    <h1 class="am-article-title">liuffei's blog</h1>
-    <p class="am-article-meta">liuffei(GuangZhou)</p>
-  </div>
-</header>
-<hr class="am-article-divider"/>
-<div class="am-g am-g-fixed">
-  <div class="am-u-md-9 am-u-md-push-3">
-    <div class="am-g">
-      <div class="am-u-sm-11 am-u-sm-centered">
-        <div class="am-cf am-article" id="blog">
-          <textarea id="title" rows="1" cols="100" >{{blog.title}}</textarea>
-          <hr/>
-          <textarea id="text-input" @input="update();" rows="10" cols="100" v-model="blog.content"></textarea>
-          <button class="btn btn-primary" @click="draftBlog();">存草稿</button>
-          <button class="btn btn-primary" @click="saveBlog();">保存</button>
-          <hr/>
-          <div>预览</div>
-          <hr/>
-          <div id="preview"></div>
+    <head lang="en">
+        <meta charset="utf-8">
+            <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+            <title>
+                liuffei's blog
+            </title>
+            <meta content="IE=edge" http-equiv="X-UA-Compatible">
+                <meta content="width=device-width, initial-scale=1" name="viewport">
+                    <meta content="telephone=no" name="format-detection">
+                        <meta content="webkit" name="renderer">
+                            <meta content="no-siteapp" http-equiv="Cache-Control"/>
+                            <link href="assets/css/amazeui.min.css" rel="stylesheet"/>
+                            <link href="assets/css/index.css" rel="stylesheet" type="text/css">
+                            </link>
+                        </meta>
+                    </meta>
+                </meta>
+            </meta>
+        </meta>
+    </head>
+    <body>
+        <header class="am-g my-head">
+            <div class="am-u-sm-12 am-article">
+                <h1 class="am-article-title">
+                    liuffei's blog
+                </h1>
+                <p class="am-article-meta">
+                    liuffei(GuangZhou)
+                </p>
+            </div>
+        </header>
+        <hr class="am-article-divider"/>
+        <div class="am-g am-g-fixed">
+            <div class="am-u-md-9 am-u-md-push-3">
+                <div class="am-g">
+                    <div class="am-u-sm-11 am-u-sm-centered">
+                        <div class="am-cf am-article" id="blog">
+                            <textarea cols="100" id="title" rows="1">
+                                {{blog.title}}
+                            </textarea>
+                            <hr/>
+                            <textarea @input="update();" cols="100" id="text-input" rows="10" v-model="blog.content">
+                            </textarea>
+                            <button @click="draftBlog();" class="btn btn-primary">
+                                存草稿
+                            </button>
+                            <button @click="saveBlog();" class="btn btn-primary">
+                                保存
+                            </button>
+                            <hr/>
+                            <div>
+                                预览
+                            </div>
+                            <hr/>
+                            <div id="preview">
+                            </div>
+                        </div>
+                        <hr/>
+                    </div>
+                </div>
+            </div>
+            <div class="am-u-md-3 am-u-md-pull-9 my-sidebar">
+                <div class="am-offcanvas" id="sidebar">
+                    <div class="am-offcanvas-bar">
+                        <ul class="am-nav">
+                            <li>
+                                <a href="index.html">
+                                    首页
+                                </a>
+                            </li>
+                            <li>
+                                <a href="menu.html">
+                                    目录
+                                </a>
+                            </li>
+                            <li>
+                                <a href="edit.html">
+                                    写博客
+                                </a>
+                            </li>
+                            <li>
+                                <a href="about.html">
+                                    关于我
+                                </a>
+                            </li>
+                            <li>
+                                <a href="message.html">
+                                    留言
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- 按钮触发器， 需要指定 target -->
+            <a class="am-btn am-btn-sm am-btn-success am-icon-bars am-show-sm-only my-button" data-am-offcanvas="{target: '#sidebar', effect: 'push'}">
+                <span class="am-sr-only">
+                    侧栏导航
+                </span>
+            </a>
         </div>
-        <hr/>
-      </div>
-    </div>
-  </div>
-  <div class="am-u-md-3 am-u-md-pull-9 my-sidebar">
-    <div class="am-offcanvas" id="sidebar">
-      <div class="am-offcanvas-bar">
-        <ul class="am-nav">
-          <li><a href="index.html">首页</a></li>
-          <li><a href="menu.html">目录</a></li>
-          <li><a href="edit.html">写博客</a></li> 
-          <li><a href="about.html">关于我</a></li>
-          <li><a href="message.html">留言</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <!-- 按钮触发器， 需要指定 target -->
-  <a class="am-btn am-btn-sm am-btn-success am-icon-bars am-show-sm-only my-button" data-am-offcanvas="{target: '#sidebar', effect: 'push'}">
-      <span class="am-sr-only">侧栏导航</span>
-  </a>
-</div>
-
-<footer class="my-footer">
-  <p>sidebar template<br><small>© Copyright XXX. by the AmazeUI Team.</small></p>
-</footer>
-
-<!--[if lt IE 9]>
+        <footer class="my-footer">
+            <p>
+                sidebar template
+                <br>
+                    <small>
+                        © Copyright XXX. by the AmazeUI Team.
+                    </small>
+                </br>
+            </p>
+        </footer>
+        <!--[if lt IE 9]>
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
 <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
 <![endif]-->
-
-<!--[if (gte IE 9)|!(IE)]><!
+        <!--[if (gte IE 9)|!(IE)]><!
 <script src="assets/js/jquery.min.js"></script>
 -->
-<!--<![endif]
+        <!--<![endif]
 <script src="assets/js/amazeui.min.js"></script>
 -->
-  <script src="assets/js/jquery-3.3.1.js"></script>
-  <script src="assets/js/amazeui.js"></script>
-  <script src="assets/js/markdown.js"></script>
-  <script src="assets/js/vue.js"></script>
-  <script src="assets/js/axios.min.js"></script>
-  <script src="assets/js/comm.js"></script>
-  <script type="text/javascript">
-    var vm = new Vue({
-      el: "#blog",
-      data: function() {
-        return {
-          blog: {
-            id: null,
-            title: "",
-            content: ""
-          } 
-        };        
-      },
-      created: function() {
-         //this.$nextTick(function () {
-           this.init(this.blog,this.update);
-        // })
-      },
-      methods: {
-        init(blog,func){
-          blog.id = sessionStorage.getItem("blogId");
-          if(blog.id){
-            axios.get(SERVER_URL+"/blog/"+blog.id,{
-                   
-            })
-            .then(function(response){
-              blog.title = response.data.content.title;
-              blog.content = response.data.content.content;
-              //$("article").innerHTML += blog.content;
-              $("preview").innerHTML = markdown.toHTML(blog.content, 'Maruku');
-            })
-            .catch(function(error){
-              console.log(error);
-            })  
-          }
-        },
-        draftBlog(){
+        <script src="assets/js/jquery-3.3.1.js">
+        </script>
+        <script src="assets/js/amazeui.js">
+        </script>
+        <script src="assets/js/markdown.js">
+        </script>
+        <script src="assets/js/vue.js">
+        </script>
+        <script src="assets/js/axios.min.js">
+        </script>
+        <script src="assets/js/comm.js">
+        </script>
+        <script type="text/javascript">
+            var vm = new Vue({
+                el: "#blog",
+                data: function() {
+                  return {
+                    blog: {
+                      id: null,
+                      title: "",
+                      content: ""
+                    } 
+                  };        
+                },
+                created: function() {
+                   //this.$nextTick(function () {
+                     this.init(this.blog,this.update);
+                  // })
+                },
+                methods: {
+                  init(blog,func){
+                    blog.id = sessionStorage.getItem("blogId");
+                    if(blog.id){
+                      axios.get(SERVER_URL+"/blog/"+blog.id,{
+                             
+                      })
+                      .then(function(response){
+                        blog.title = response.data.content.title;
+                        blog.content = response.data.content.content;
+                        //$("article").innerHTML += blog.content;
+                        $("preview").innerHTML = markdown.toHTML(blog.content, 'Maruku');
+                      })
+                      .catch(function(error){
+                        console.log(error);
+                      })  
+                    }
+                  },
+                  draftBlog(){
 
-        },
-        saveBlog(){
-          axios.post(SERVER_URL+"/blog",{
-                //"content": $("preview").innerHTML
-                "content": $("text-input").value,
-                "title": $("title").value,
-                "id":this.blog.id
-          })
-          .then(function(response){
-              
-          })
-          .catch(function(error){
+                  },
+                  saveBlog(){
+                    axios.post(SERVER_URL+"/blog",{
+                          //"content": $("preview").innerHTML
+                          "content": $("text-input").value,
+                          "title": $("title").value,
+                          "id":this.blog.id
+                    })
+                    .then(function(response){
+                        
+                    })
+                    .catch(function(error){
 
-          })     
-        },
-        update(){
-          //Maruku 这里加上是为了可以显示table
-          debugger
-          $("preview").innerHTML = markdown.toHTML($("text-input").value, 'Maruku');
-        }
-      } 
-    });
-
-  </script>
-</body>
+                    })     
+                  },
+                  update(){
+                    //Maruku 这里加上是为了可以显示table
+                    debugger
+                    $("preview").innerHTML = markdown.toHTML($("text-input").value, 'Maruku');
+                  }
+                } 
+              });
+        </script>
+    </body>
 </html>

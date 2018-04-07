@@ -59,10 +59,14 @@ public class BlogController {
 			}
 		}
 		*/
-		if(StringUtil.isNotBlank(blog.getId())) {
-			blogServiceImpl.updateBlog(blog);
-		}else {
-			blogServiceImpl.insertBlog(blog);
+		try {
+			if(StringUtil.isNotBlank(blog.getId())) {
+				blogServiceImpl.updateBlog(blog);
+			}else {
+				blogServiceImpl.insertBlog(blog);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
 		result.put("status", 1);
 		return result;
@@ -74,11 +78,14 @@ public class BlogController {
 	 */
 	@GetMapping(value = "/blog/{id}")
 	public ObjectNode findBlogById(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
-		response.setCharacterEncoding("UTF-8");
 		ObjectNode result = NodeUtil.create();
-		Blog blog = blogServiceImpl.fingOneById(id);
-		result.putPOJO("content", blog);
-		result.put("status", 1);
+		try {
+			Blog blog = blogServiceImpl.fingOneById(id);
+			result.putPOJO("content", blog);
+			result.put("status", 1);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 	
@@ -90,8 +97,12 @@ public class BlogController {
 	@PutMapping(value = "/blog/{id}")
 	public ObjectNode updateBlogById(@PathVariable String id, @RequestBody Blog blog) {
 		ObjectNode result = NodeUtil.create();
-		blogServiceImpl.updateBlog(blog);
-		result.put("status", 1);
+		try {
+			blogServiceImpl.updateBlog(blog);
+			result.put("status", 1);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 	
@@ -103,8 +114,12 @@ public class BlogController {
 	@DeleteMapping(value = "/blog/{id}")
 	public ObjectNode deleteBlogById(@PathVariable String id) {
 		ObjectNode result = NodeUtil.create();
-		blogServiceImpl.deleteBlogById(id);
-		result.put("status", 1);
+		try {
+			blogServiceImpl.deleteBlogById(id);
+			result.put("status", 1);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 	
@@ -116,9 +131,13 @@ public class BlogController {
 	@GetMapping(value = "/blogs")
 	public ObjectNode finaAllBlogs() {
 		ObjectNode result = NodeUtil.create();
-		List<Blog> blogs = blogServiceImpl.findAllBlog();
-		result.putPOJO("blogs", blogs);
-		result.put("status", 1);
+		try {
+			List<Blog> blogs = blogServiceImpl.findAllBlog();
+			result.putPOJO("blogs", blogs);
+			result.put("status", 1);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 }

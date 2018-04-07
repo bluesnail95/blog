@@ -19,6 +19,7 @@ public class GeccoBlogController {
 	private Constant constant;
 	
 	static {
+		/*
 		GeccoEngine.create()
 	        .classpath("gdut.ff.gecco")
 	        .start("https://www.cnblogs.com/")
@@ -39,6 +40,7 @@ public class GeccoBlogController {
 	        .thread(5)
 	        .interval(2000)
 	        .run();
+	   */
 	}
 	
 	@GetMapping(value = "/csdn/blogs")
