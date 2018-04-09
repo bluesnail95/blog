@@ -13,27 +13,27 @@
         <result column="img" property="img"/>
         <result column="signature" property="signature"/>
         <result column="is_admin" property="isAdmin"/>
-        <result column="gmt_created" property="gmtCreated"/>
-        <result column="gmt_modified" property="gmtModified"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
     </resultMap>
     
     <!-- 查找全部用户 -->
     <select id="findAllUser" resultMap="userMap">
-        SELECT id,user_id,name,email,birthday,login_name,password,signature,img,is_admin,gmt_created,gmt_modified
+        SELECT id,user_id,name,email,birthday,login_name,password,signature,img,is_admin,gmt_create,gmt_modified
         FROM user
     </select>
     
     <!-- 查询指定的用户 -->
     <select id="findUserById" resultMap="userMap">
-        SELECT id,user_id,name,email,birthday,login_name,password,signature,img,is_admin,gmt_created,gmt_modified 
+        SELECT id,user_id,name,email,birthday,login_name,password,signature,img,is_admin,gmt_create,gmt_modified 
         FROM user 
         WHERE id = #{id}
     </select>
     
     <!-- 保存用户 -->
     <insert id="saveUser" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user(id,name,email,birthday,login_name,password,signature,img,is_admin,gmt_created,gmt_modified)
-        VALUES(#{id},#{name},#{email},#{birthday},#{loginName},#{password},#{signature},#{img},#{isAdmin},#{gmtCreated},#{gmtModified})
+        INSERT INTO user(id,name,email,birthday,login_name,password,signature,img,is_admin,gmt_create,gmt_modified)
+        VALUES(#{id},#{name},#{email},#{birthday},#{loginName},#{password},#{signature},#{img},#{isAdmin},#{gmtCreate},#{gmtModified})
     </insert>
     
     <!-- 更新用户 -->
@@ -67,8 +67,8 @@
             <if test="is_admin != null">
                 isAdmin = #{isAdmin}
             </if>
-            <if test="gmt_created != null">
-                gmtCreated = #{gmtCreated},
+            <if test="gmt_create != null">
+                gmtCreate = #{gmtCreate},
             </if>
             <if test="gmt_modified != null">
             	gmtModified = #{gmtModified}
@@ -79,7 +79,7 @@
     
     <!-- 根据登录名或邮箱和密码登录 -->
     <select id="loginUser" resultMap="userMap">
-        SELECT id,user_id,name,email,birthday,login_name,password,signature,img,is_admin,gmt_created,gmt_modified
+        SELECT id,user_id,name,email,birthday,login_name,password,signature,img,is_admin,gmt_create,gmt_modified
         FROM user
         WHERE (login_name = #{loginName} or email = #{email}) AND password = #{password}
     </select>

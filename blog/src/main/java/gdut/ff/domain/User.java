@@ -46,7 +46,7 @@ public class User implements Serializable{
 	private String isAdmin;
 	
 	//创建时间
-	private Date gmtCreated;
+	private Date gmtCreate;
 	
 	//修改时间
 	private Date gmtModified;
@@ -131,12 +131,12 @@ public class User implements Serializable{
 		this.isAdmin = isAdmin;
 	}
 
-	public Date getGmtCreated() {
-		return gmtCreated;
+	public Date getGmtCreate() {
+		return gmtCreate;
 	}
 
-	public void setGmtCreated(Date gmtCreated) {
-		this.gmtCreated = gmtCreated;
+	public void setGmtCreate(Date gmtCreate) {
+		this.gmtCreate = gmtCreate;
 	}
 
 	public Date getGmtModified() {
@@ -151,7 +151,7 @@ public class User implements Serializable{
 	public String toString() {
 		return "User [id=" + id + ", userId=" + userId + ", name=" + name + ", email=" + email + ", birthday="
 				+ birthday + ", loginName=" + loginName + ", password=" + password + ", signature=" + signature
-				+ ", img=" + img + ", isAdmin=" + isAdmin + ", gmtCreated=" + gmtCreated + ", gmtModified="
+				+ ", img=" + img + ", isAdmin=" + isAdmin + ", gmtCreate=" + gmtCreate + ", gmtModified="
 				+ gmtModified + "]";
 	}
 	

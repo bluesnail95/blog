@@ -38,7 +38,7 @@ import gdut.ff.utils.NodeUtil;
 import gdut.ff.utils.TokenUtil;
 
 @RestController
-public class UserController {
+public class UserController extends CommController{
 	
 	@Autowired
 	private UserServiceImpl userServiceImpl;
@@ -57,14 +57,17 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping(value = "/users")
-	public ObjectNode findAllUsers() {
-		ObjectMapper objectMapper = new ObjectMapper();
-		ObjectNode result = objectMapper.createObjectNode();
-		List<User> users = userServiceImpl.findAllUser();
-		ArrayNode content = result.putArray("users");
-		content.addAll(objectMapper.convertValue(users, ArrayNode.class));
-		result.put("status",1);
-		return result;
+	public ObjectNode findAllUsers(HttpServletRequest request) {
+		try {
+			requireAuth(request);
+			List<User> users =  userServiceImpl.findAllUser();
+			ObjectNode result = NodeUtil.successNode();
+			result.putPOJO("users", users);
+			return result;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return NodeUtil.errorNode(e.getMessage());
+		}
 	}
 	
 	/**
@@ -73,67 +76,17 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping(value = "/user/{id}")
-	public ObjectNode getUser(@PathVariable long id) {
-		ObjectMapper objectMapper = new ObjectMapper();
-		ObjectNode result = objectMapper.createObjectNode();
-		User user = userServiceImpl.fingUserById(id);
-		result.putPOJO("user",user);
-		result.put("status",1);
-		return result;
-	}
-	
-	/**
-	 * 修改用户头像
-	 * @param file
-	 * @param req
-	 * @return
-	 */
-	@PostMapping(value = "/upload/user")
-	public ObjectNode singleFileUpload(@RequestParam("file")MultipartFile file,HttpServletRequest req) {
-		ObjectNode result = NodeUtil.create();
-		if(file.isEmpty()) {
-			result.put("message","Please select a file to upload");
-		    return result;
-		}
+	public ObjectNode getUser(HttpServletRequest request, @PathVariable long id) {
 		try {
-			//获取登录token			
-			String token = req.getHeader("token");
-			if(StringUtil.isNotBlank(token)) {
-				User user = TokenUtil.verifyUser(token,SECERT);
-				if(null == user) {
-					result.put("status",2);
-					result.put("message","请确认登录!!!");
-					return result;
-				}
-				String imgName = user.getLoginName();
-				byte[] bytes = file.getBytes();
-				String root = ResourceUtils.getURL("classpath:").getPath() + "/upload";
-				File parent = new File(root);
-				if(!parent.exists()) {
-					parent.mkdirs();
-				}
-				int split = file.getOriginalFilename().lastIndexOf(".");
-				String fileName = file.getOriginalFilename().replace(file.getOriginalFilename().substring(0,split),imgName);
-				BufferedOutputStream bos =    
-	                    new BufferedOutputStream(new FileOutputStream(new File(parent,fileName)));    
-				bos.write(bytes);    
-				bos.close();
-				//保存用户头像信息
-				user.setImg(root+"/"+fileName);
-				userServiceImpl.updateUser(user);
-				result.put("status", 1);
-				result.put("url",root+"/"+fileName);
-			    result.put("message","successfully upload "+file.getOriginalFilename());
-			}else {
-				result.put("status",2);
-				result.put("message","请确认登录!!!");
-				return result;
-			}
+			requireAuth(request);
+			User user = userServiceImpl.fingUserById(id);
+			ObjectNode result = NodeUtil.successNode();
+			result.putPOJO("user",user);
+			return result;
 		}catch(Exception e) {
 			e.printStackTrace();
-			result.put("error","error");
+			return NodeUtil.errorNode(e.getMessage());
 		}
-		return result;
 	}
 
 	/**
@@ -143,23 +96,29 @@ public class UserController {
 	 */
 	@PostMapping("/user/login")
 	public ObjectNode userLogin(@RequestBody JsonNode param) {
-		ObjectNode result = NodeUtil.create();
 		User userValidate = NodeUtil.transToPOJO(param, User.class);
-		//根据邮箱和密码查找用户
-		User user = userServiceImpl.loginUser(userValidate);
-		if(null == user) {
-			result.put("error","用户名/邮箱或密码错误");
-			return result;
-		}
+		User user = null;
 		try {
-			String token = TokenUtil.token(SECERT, user, expireMinutes);
-			result.put("token",token);
+			//根据邮箱和密码查找用户
+			user = userServiceImpl.loginUser(userValidate);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return NodeUtil.errorNode(e.getMessage());
+		}
+		if(null == user) {
+			NodeUtil.errorNode("用户名/邮箱或密码错误");
+		}
+		String token = null;
+		try {
+			token = TokenUtil.token(SECERT, user, expireMinutes);
 		} catch (Exception e) {
 			e.printStackTrace();
+			return NodeUtil.errorNode(e.getMessage());
 		}
+		ObjectNode result = NodeUtil.successNode();
+		result.put("token", token);
 		//不返回用户密码
 		result.putPOJO("user", new AjaxResult(NodeUtil.transFromPOJO(user)).blacksProps("password").filter());
-		result.put("status", 1);
 		return result;
 	}
 	
@@ -170,46 +129,22 @@ public class UserController {
 	 */
 	@PostMapping("/user/regist")
 	public ObjectNode userRegist(@RequestBody JsonNode param) {
-		ObjectNode result = NodeUtil.create();
 		String passwordConfirm = param.has("passwordConfirm") ? param.get("passwordConfirm").asText() :"";
 		String password = param.has("password") ? param.get("password").asText() : "";
 		//判断密码是否相等
 		if(StringUtil.isBlank(passwordConfirm) || StringUtil.isBlank(password) 
 				|| !passwordConfirm.equals(password)) {
-			result.put("error","两次输入密码不一致，请重新输入");
-		    return result;	
+		    NodeUtil.errorNode("两次输入密码不一致，请重新输入");
 		}
 		User user = NodeUtil.transToPOJO(param,User.class);
 		user.setId(UUID.randomUUID().toString());
-		userServiceImpl.saveUser(user);
-		result.put("status",1);
-		return result;
-	}
-	
-	/**
-	 * 用户校验token测试
-	 * @param param
-	 * @return
-	 */
-	@PostMapping("/user/verify")
-	public ObjectNode userVerify(@RequestBody JsonNode param) {
-		ObjectNode result = NodeUtil.create();
-		String token = param.has("token") ? param.get("token").asText() : "";
-		if(StringUtil.isNotBlank(token)) {
-			try {
-				User user = TokenUtil.verifyUser(token, SECERT);
-				if(null == user) {
-					result.put("error","登录失败");
-				}
-				result.putPOJO("user",user);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}else {
-			result.put("error","登录失败");
+		try {
+			userServiceImpl.saveUser(user);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return NodeUtil.errorNode(e.getMessage());
 		}
-		result.put("status",1);
-		return result;
+		return NodeUtil.successNode();
 	}
 	
 	/**
@@ -219,24 +154,18 @@ public class UserController {
 	 */
 	@PostMapping("/user/access")
 	public ObjectNode userAccess(@RequestBody UserAccess userAccess,HttpServletRequest request) {
-		ObjectNode result = NodeUtil.create();
+		
 		//设置主键和创建时间 保存
 		userAccess.setId(UUID.randomUUID().toString());
-		//判断token是否有效，有效取出用户的主键
-		String token = request.getHeader("token");
 		try {
-			User user = TokenUtil.verifyUser(token, SECERT);
-			if(null != user) {
-				userAccess.setUserId(user.getId());
-			}
-		} catch (Exception e) {
+			User user = getUser(request);
+			userAccess.setUserId(user.getUserId());
+			userAccessServiceImpl.saveUserAccess(userAccess);
+		}catch(Exception e) {
 			e.printStackTrace();
-			result.put("error","出错啦!!!");
-			return result;
+			return NodeUtil.errorNode(e.getMessage());
 		}
-		userAccessServiceImpl.saveUserAccess(userAccess);
-		result.put("status",1);
-		return result;
+		return NodeUtil.successNode();
 	}
 	
 	/**
@@ -245,41 +174,33 @@ public class UserController {
 	 * @return
 	 */
 	@PutMapping(value="/user/password")
-	public ObjectNode updatePassword(@RequestBody JsonNode param,HttpServletRequest req) {
-		ObjectNode result = NodeUtil.create();
-		String token = req.getHeader("token");
+	public ObjectNode updatePassword(@RequestBody JsonNode param,HttpServletRequest request) {
+		User user = null;
 		try {
-			User user = TokenUtil.verifyUser(token, SECERT);
-			if(null == user) {
-				result.put("status", 2);
-				result.put("msg", "token失效，请登录!!!");
-				return result;
-			}
-			String password = param.has("password") ? param.get("password").asText() : "";
-			if(StringUtil.isBlank(password) || !password.equals(user.getPassword())) {
-				result.put("status", 2);
-				result.put("msg", "当前密码输入有误，请重新输入");
-				return result;
-			}
-			String newPassword = param.has("newPassword") ? param.get("newPassword").asText() : "";
-			String comfirmPassword = param.has("comfirmPassword") ? param.get("comfirmPassword").asText() : "";
-			if(StringUtil.isBlank(newPassword) || StringUtil.isBlank(comfirmPassword) || !newPassword.equals(comfirmPassword) ) {
-				result.put("status", 2);
-				result.put("msg","新密码或重复输入的新密码为空，或两次输入的密码不一致");
-				return result;
-			}
-			user.setPassword(newPassword);
-			userServiceImpl.updateUser(user);
-			String newToken = TokenUtil.token(SECERT, user, expireMinutes);
-			result.put("token",newToken);
-			user.setPassword(null);
-			result.putPOJO("user", user);
-			result.put("status", 1);
+			user = getUser(request);
 		} catch (Exception e) {
-			result.put("error","error");
-			e.printStackTrace();
-			return result;
+			return NodeUtil.errorNode(e.getMessage());
 		}
+		if(null == user) NodeUtil.errorNode("请重新登录");
+		String password = param.has("password") ? param.get("password").asText() : "";
+		if(StringUtil.isBlank(password) || !password.equals(user.getPassword())) NodeUtil.errorNode("当前密码输入有误，请重新输入");
+		String newPassword = param.has("newPassword") ? param.get("newPassword").asText() : "";
+		String comfirmPassword = param.has("comfirmPassword") ? param.get("comfirmPassword").asText() : "";
+		if(StringUtil.isBlank(newPassword) || StringUtil.isBlank(comfirmPassword) || !newPassword.equals(comfirmPassword) ) NodeUtil.errorNode("新密码或重复输入的新密码为空，或两次输入的密码不一致");
+		user.setPassword(newPassword);
+		String newToken = null;
+		try {
+			userServiceImpl.updateUser(user);
+			newToken = TokenUtil.token(SECERT, user, expireMinutes);
+		}catch(Exception e) {
+			return NodeUtil.errorNode(e.getMessage());
+		}
+		ObjectNode result = NodeUtil.successNode();
+		result.put("token",newToken);
+		user.setPassword(null);
+		result.putPOJO("user", user);
 		return result;
 	}
+	
+	
 }

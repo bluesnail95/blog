@@ -21,13 +21,27 @@ public class NodeUtil {
 	
 	public static ObjectNode create() {
 		ObjectNode objectNode = objectMapper.createObjectNode();
-		objectNode.put("status", 0);
 		return objectNode;
 	}
 	
 	public static  ArrayNode createArr() {
 		return objectMapper.createArrayNode();
 	}
+	
+	public static ObjectNode errorNode(String msg) {
+		ObjectNode objectNode = create();
+		objectNode.put("status", 0);
+		objectNode.put("msg", msg);
+		return objectNode;
+	}
+	
+	public static ObjectNode successNode() {
+		ObjectNode objectNode = create();
+		objectNode.put("status", 1);
+		objectNode.put("msg", "操作成功");
+		return objectNode;
+	}
+	
 	
 	/**
 	 * 将List转成ArrayNode

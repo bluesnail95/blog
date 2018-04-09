@@ -71,34 +71,23 @@
                     </div>
                     <br>
                         <br>
-                            <form class="am-form" method="post">
-                                <label for="email">
-                                    邮箱:
+                            <div class="am-form"  id="login">
+                                <label for="email">邮箱:</label>
+                                <input id="email" name="" type="email" value="" v-model="email"/>
+                                <br>
+                                <label for="password">密码:</label>
+                                <input id="password" name="" type="password" value="" v-model="password"/>
+                                <br>
+                                <label for="remember-me">
+                                    <input id="remember-me" type="checkbox"/>记住密码    
                                 </label>
-                                <input id="email" name="" type="email" value="">
-                                    <br>
-                                        <label for="password">
-                                            密码:
-                                        </label>
-                                        <input id="password" name="" type="password" value="">
-                                            <br>
-                                                <label for="remember-me">
-                                                    <input id="remember-me" type="checkbox">
-                                                        记住密码
-                                                    </input>
-                                                </label>
-                                                <br/>
-                                                <div class="am-cf">
-                                                    <input class="am-btn am-btn-primary am-btn-sm am-fl" name="" type="submit" value="登 录">
-                                                        <input class="am-btn am-btn-default am-btn-sm am-fr" name="" type="submit" value="忘记密码 ^_^? ">
-                                                        </input>
-                                                    </input>
-                                                </div>
-                                            </br>
-                                        </input>
-                                    </br>
-                                </input>
-                            </form>
+                                <br/>
+                                <div class="am-cf">
+                                    <input class="am-btn am-btn-primary am-btn-sm am-fl" name="" type="button" value="登 录" @click="login();"/>
+                                    <input class="am-btn am-btn-default am-btn-sm am-fr" name="" type="button" value="忘记密码 ^_^? "/>
+                                </div>
+                                </br>
+                            </div>
                             <hr>
                                 <p>
                                     © liuffei 2018.
@@ -109,5 +98,36 @@
                 </hr>
             </div>
         </div>
+        <script src="../assets/js/axios.min.js"></script>
+        <script src="../assets/js/vue.js"></script>
+        <script src="../assets/js/comm.js"></script>
+        <script src="../assets/js/md5.min.js"></script>
+        <script type="text/javascript">
+            new Vue({
+                el: "#login",
+                data: function() {
+                    return {
+                        email: "",
+                        password: ""
+                    };
+                },
+                methods: {
+                    login(){
+                        axios.post(SERVER_URL+"/user/login",{
+                             email:this.email,
+                             password:md5(this.password)
+                        })
+                        .then(function(response){
+                            window.localStorage.setItem("token",response.data.token);
+                            window.localStorage.setItem("user",JSON.stringify(response.data.user));
+                            window.location.href = "admin-index.html";
+                        })
+                        .catch(function(error){
+                            console.log(error);
+                        })  
+                    }
+                }
+            })
+        </script>
     </body>
 </html>

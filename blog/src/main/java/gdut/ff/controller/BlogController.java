@@ -31,7 +31,7 @@ import gdut.ff.utils.TokenUtil;
  * @date 2018-01-25
  */
 @RestController
-public class BlogController {
+public class BlogController extends CommController{
 	
 	@Autowired
 	private BlogServiceImpl blogServiceImpl;
@@ -46,31 +46,20 @@ public class BlogController {
 	 */
 	@PostMapping(value = "/blog")
 	public ObjectNode insertBlog(@RequestBody Blog blog,HttpServletRequest request) throws Exception {
-		ObjectNode result = NodeUtil.create();
-		//TODO:要求具有管理员权限的用户才能发表博客
-		/*
-		String token = request.getHeader("token");
-		if(StringUtil.isNotBlank(token)) {
-			User user = TokenUtil.verifyUser(token,SECERT);
-			if(null == user) {
-				result.put("status",2);
-				result.put("message","请确认登录!!!");
-				return result;
-			}
-		}
-		*/
 		try {
+			requireAuth(request);
 			if(StringUtil.isNotBlank(blog.getId())) {
 				blogServiceImpl.updateBlog(blog);
 			}else {
 				blogServiceImpl.insertBlog(blog);
 			}
+			return NodeUtil.successNode();
 		}catch(Exception e) {
 			e.printStackTrace();
+			return NodeUtil.errorNode(e.getMessage());
 		}
-		result.put("status", 1);
-		return result;
 	}
+	
 	/**
 	 * 
 	 * @param id
@@ -78,15 +67,15 @@ public class BlogController {
 	 */
 	@GetMapping(value = "/blog/{id}")
 	public ObjectNode findBlogById(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
-		ObjectNode result = NodeUtil.create();
 		try {
 			Blog blog = blogServiceImpl.fingOneById(id);
+			ObjectNode result = NodeUtil.successNode();
 			result.putPOJO("content", blog);
-			result.put("status", 1);
+			return result;
 		}catch(Exception e) {
 			e.printStackTrace();
+			return NodeUtil.errorNode(e.getMessage());
 		}
-		return result;
 	}
 	
 	/**
@@ -95,15 +84,14 @@ public class BlogController {
 	 * @return
 	 */
 	@PutMapping(value = "/blog/{id}")
-	public ObjectNode updateBlogById(@PathVariable String id, @RequestBody Blog blog) {
-		ObjectNode result = NodeUtil.create();
+	public ObjectNode updateBlogById(@PathVariable String id, @RequestBody Blog blog, HttpServletRequest request) {
 		try {
 			blogServiceImpl.updateBlog(blog);
-			result.put("status", 1);
+			return NodeUtil.successNode();
 		}catch(Exception e) {
 			e.printStackTrace();
+			return NodeUtil.errorNode(e.getMessage());
 		}
-		return result;
 	}
 	
 	/**
@@ -112,15 +100,15 @@ public class BlogController {
 	 * @return
 	 */
 	@DeleteMapping(value = "/blog/{id}")
-	public ObjectNode deleteBlogById(@PathVariable String id) {
-		ObjectNode result = NodeUtil.create();
+	public ObjectNode deleteBlogById(@PathVariable String id, HttpServletRequest request) {
 		try {
+			requireAuth(request);
 			blogServiceImpl.deleteBlogById(id);
-			result.put("status", 1);
+			return NodeUtil.successNode();
 		}catch(Exception e) {
 			e.printStackTrace();
+			return NodeUtil.errorNode(e.getMessage());
 		}
-		return result;
 	}
 	
 	/**
@@ -130,14 +118,14 @@ public class BlogController {
 	 */
 	@GetMapping(value = "/blogs")
 	public ObjectNode finaAllBlogs() {
-		ObjectNode result = NodeUtil.create();
 		try {
 			List<Blog> blogs = blogServiceImpl.findAllBlog();
+			ObjectNode result = NodeUtil.successNode();
 			result.putPOJO("blogs", blogs);
-			result.put("status", 1);
+			return result;
 		}catch(Exception e) {
 			e.printStackTrace();
+			return NodeUtil.errorNode(e.getMessage());
 		}
-		return result;
 	}
 }
