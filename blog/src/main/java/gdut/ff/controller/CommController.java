@@ -1,19 +1,12 @@
 package gdut.ff.controller;
 
-import java.io.FileNotFoundException;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.util.ResourceUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import gdut.ff.domain.User;
-import gdut.ff.utils.NodeUtil;
 import gdut.ff.utils.TokenUtil;
 
 /**
@@ -45,7 +38,6 @@ public class CommController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//request.getSession().setAttribute(token, user);
 	}
 	
 	public User getUser(HttpServletRequest request) {

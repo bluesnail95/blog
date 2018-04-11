@@ -3,14 +3,20 @@ package gdut.ff.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
  * 用于创建博客的实体
  * @author liuffei
  * @date 2018-04-03 update
  */
+@JsonSerialize
+@JsonNaming(PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy.class)
 public class Blog implements Serializable{
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 111111L;
 	
 	/**
 	 * 主键

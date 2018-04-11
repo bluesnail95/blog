@@ -8,22 +8,23 @@ import javax.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import gdut.ff.domain.Blog;
-import gdut.ff.domain.User;
 import gdut.ff.service.BlogServiceImpl;
 import gdut.ff.utils.NodeUtil;
-import gdut.ff.utils.TokenUtil;
 
 /**
  * 用于获取我的博客的数据
@@ -65,9 +66,10 @@ public class BlogController extends CommController{
 	 * @param id
 	 * @return
 	 */
+	@Cacheable(key="#id", value="blog")
 	@GetMapping(value = "/blog/{id}")
 	public ObjectNode findBlogById(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
-		try {
+		try {	
 			Blog blog = blogServiceImpl.fingOneById(id);
 			ObjectNode result = NodeUtil.successNode();
 			result.putPOJO("content", blog);
@@ -117,11 +119,13 @@ public class BlogController extends CommController{
 	 * @return
 	 */
 	@GetMapping(value = "/blogs")
-	public ObjectNode finaAllBlogs() {
+	@Cacheable(value = "blogs-key")
+	public ObjectNode findAllBlogs() {
 		try {
 			List<Blog> blogs = blogServiceImpl.findAllBlog();
 			ObjectNode result = NodeUtil.successNode();
-			result.putPOJO("blogs", blogs);
+			ArrayNode content = NodeUtil.transFromList(blogs);
+			result.putPOJO("blogs", content);
 			return result;
 		}catch(Exception e) {
 			e.printStackTrace();

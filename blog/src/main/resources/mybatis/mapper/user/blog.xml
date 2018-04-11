@@ -24,9 +24,9 @@
 	    #{gmtModified,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARBINARY},#{isDraft,jdbcType=CHAR})
   </insert>
   
-  <!-- 查找博客记录 -->
+  <!-- 查找博客记录 gmt_create, gmt_modified, -->
   <select id="findBlogById" resultMap="blogMap">
-  	  select id,blog_id,title, summary, keywords, classification, creator, gmt_create, gmt_modified, content,is_draft 
+  	  select id,blog_id,title, summary, keywords, classification, creator, content,is_draft 
   	  from blog 
   	  where id = #{id}
   </select>
