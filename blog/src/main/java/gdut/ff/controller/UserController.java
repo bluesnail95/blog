@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -34,6 +35,7 @@ import gdut.ff.mapper.UserMapper;
 import gdut.ff.service.UserAccessServiceImpl;
 import gdut.ff.service.UserServiceImpl;
 import gdut.ff.utils.AjaxResult;
+import gdut.ff.utils.JsonUtil;
 import gdut.ff.utils.NodeUtil;
 import gdut.ff.utils.TokenUtil;
 
@@ -57,16 +59,16 @@ public class UserController extends CommController{
 	 * @return
 	 */
 	@GetMapping(value = "/users")
-	public ObjectNode findAllUsers(HttpServletRequest request) {
+	public JSONObject findAllUsers(HttpServletRequest request) {
 		try {
 			requireAuth(request);
 			List<User> users =  userServiceImpl.findAllUser();
-			ObjectNode result = NodeUtil.successNode();
-			result.putPOJO("users", users);
+			JSONObject result = JsonUtil.successJson();
+			result.put("users", users);
 			return result;
 		}catch(Exception e) {
 			e.printStackTrace();
-			return NodeUtil.errorNode(e.getMessage());
+			return JsonUtil.errorJson(e.getMessage());
 		}
 	}
 	
@@ -76,16 +78,16 @@ public class UserController extends CommController{
 	 * @return
 	 */
 	@GetMapping(value = "/user/{id}")
-	public ObjectNode getUser(HttpServletRequest request, @PathVariable long id) {
+	public JSONObject getUser(HttpServletRequest request, @PathVariable long id) {
 		try {
 			requireAuth(request);
 			User user = userServiceImpl.fingUserById(id);
-			ObjectNode result = NodeUtil.successNode();
-			result.putPOJO("user",user);
+			JSONObject result = JsonUtil.successJson();
+			result.put("user",user);
 			return result;
 		}catch(Exception e) {
 			e.printStackTrace();
-			return NodeUtil.errorNode(e.getMessage());
+			return JsonUtil.errorJson(e.getMessage());
 		}
 	}
 
@@ -95,7 +97,7 @@ public class UserController extends CommController{
 	 * @return
 	 */
 	@PostMapping("/user/login")
-	public ObjectNode userLogin(@RequestBody JsonNode param) {
+	public JSONObject userLogin(@RequestBody JsonNode param) {
 		User userValidate = NodeUtil.transToPOJO(param, User.class);
 		User user = null;
 		try {
@@ -103,7 +105,7 @@ public class UserController extends CommController{
 			user = userServiceImpl.loginUser(userValidate);
 		}catch(Exception e) {
 			e.printStackTrace();
-			return NodeUtil.errorNode(e.getMessage());
+			return JsonUtil.errorJson(e.getMessage());
 		}
 		if(null == user) {
 			NodeUtil.errorNode("用户名/邮箱或密码错误");
@@ -113,12 +115,13 @@ public class UserController extends CommController{
 			token = TokenUtil.token(SECERT, user, expireMinutes);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return NodeUtil.errorNode(e.getMessage());
+			return JsonUtil.errorJson(e.getMessage());
 		}
-		ObjectNode result = NodeUtil.successNode();
+		JSONObject result = JsonUtil.successJson();
 		result.put("token", token);
 		//不返回用户密码
-		result.putPOJO("user", new AjaxResult(NodeUtil.transFromPOJO(user)).blacksProps("password").filter());
+		user.setPassword(null);
+		result.put("user", user);
 		return result;
 	}
 	
@@ -128,7 +131,7 @@ public class UserController extends CommController{
 	 * @return
 	 */
 	@PostMapping("/user/regist")
-	public ObjectNode userRegist(@RequestBody JsonNode param) {
+	public JSONObject userRegist(@RequestBody JsonNode param) {
 		String passwordConfirm = param.has("passwordConfirm") ? param.get("passwordConfirm").asText() :"";
 		String password = param.has("password") ? param.get("password").asText() : "";
 		//判断密码是否相等
@@ -142,9 +145,9 @@ public class UserController extends CommController{
 			userServiceImpl.saveUser(user);
 		}catch(Exception e) {
 			e.printStackTrace();
-			return NodeUtil.errorNode(e.getMessage());
+			return JsonUtil.errorJson(e.getMessage());
 		}
-		return NodeUtil.successNode();
+		return JsonUtil.successJson();
 	}
 	
 	/**
@@ -153,7 +156,7 @@ public class UserController extends CommController{
 	 * @return
 	 */
 	@PostMapping("/user/access")
-	public ObjectNode userAccess(@RequestBody UserAccess userAccess,HttpServletRequest request) {
+	public JSONObject userAccess(@RequestBody UserAccess userAccess,HttpServletRequest request) {
 		
 		//设置主键和创建时间 保存
 		userAccess.setId(UUID.randomUUID().toString());
@@ -163,9 +166,9 @@ public class UserController extends CommController{
 			userAccessServiceImpl.saveUserAccess(userAccess);
 		}catch(Exception e) {
 			e.printStackTrace();
-			return NodeUtil.errorNode(e.getMessage());
+			return JsonUtil.errorJson(e.getMessage());
 		}
-		return NodeUtil.successNode();
+		return JsonUtil.successJson();
 	}
 	
 	/**
@@ -174,12 +177,12 @@ public class UserController extends CommController{
 	 * @return
 	 */
 	@PutMapping(value="/user/password")
-	public ObjectNode updatePassword(@RequestBody JsonNode param,HttpServletRequest request) {
+	public JSONObject updatePassword(@RequestBody JsonNode param,HttpServletRequest request) {
 		User user = null;
 		try {
 			user = getUser(request);
 		} catch (Exception e) {
-			return NodeUtil.errorNode(e.getMessage());
+			return JsonUtil.errorJson(e.getMessage());
 		}
 		if(null == user) NodeUtil.errorNode("请重新登录");
 		String password = param.has("password") ? param.get("password").asText() : "";
@@ -193,12 +196,13 @@ public class UserController extends CommController{
 			userServiceImpl.updateUser(user);
 			newToken = TokenUtil.token(SECERT, user, expireMinutes);
 		}catch(Exception e) {
-			return NodeUtil.errorNode(e.getMessage());
+			e.printStackTrace();
+			return JsonUtil.errorJson(e.getMessage());
 		}
-		ObjectNode result = NodeUtil.successNode();
+		JSONObject result = JsonUtil.successJson();
 		result.put("token",newToken);
 		user.setPassword(null);
-		result.putPOJO("user", user);
+		result.put("user", user);
 		return result;
 	}
 	

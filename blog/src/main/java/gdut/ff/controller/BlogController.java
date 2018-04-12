@@ -17,13 +17,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import gdut.ff.domain.Blog;
 import gdut.ff.service.BlogServiceImpl;
+import gdut.ff.utils.JsonUtil;
 import gdut.ff.utils.NodeUtil;
 
 /**
@@ -46,7 +48,7 @@ public class BlogController extends CommController{
 	 * @throws Exception 
 	 */
 	@PostMapping(value = "/blog")
-	public ObjectNode insertBlog(@RequestBody Blog blog,HttpServletRequest request) throws Exception {
+	public JSONObject insertBlog(@RequestBody Blog blog,HttpServletRequest request) throws Exception {
 		try {
 			requireAuth(request);
 			if(StringUtil.isNotBlank(blog.getId())) {
@@ -54,10 +56,10 @@ public class BlogController extends CommController{
 			}else {
 				blogServiceImpl.insertBlog(blog);
 			}
-			return NodeUtil.successNode();
+			return JsonUtil.successJson();
 		}catch(Exception e) {
 			e.printStackTrace();
-			return NodeUtil.errorNode(e.getMessage());
+			return JsonUtil.errorJson(e.getMessage());
 		}
 	}
 	
@@ -66,17 +68,17 @@ public class BlogController extends CommController{
 	 * @param id
 	 * @return
 	 */
-	@Cacheable(key="#id", value="blog")
 	@GetMapping(value = "/blog/{id}")
-	public ObjectNode findBlogById(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
+	@Cacheable(value="blog",key="#id")
+	public JSONObject findBlogById(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
 		try {	
 			Blog blog = blogServiceImpl.fingOneById(id);
-			ObjectNode result = NodeUtil.successNode();
-			result.putPOJO("content", blog);
+			JSONObject result = JsonUtil.successJson();
+			result.put("content", blog);
 			return result;
 		}catch(Exception e) {
 			e.printStackTrace();
-			return NodeUtil.errorNode(e.getMessage());
+			return JsonUtil.errorJson(e.getMessage());
 		}
 	}
 	
@@ -86,13 +88,13 @@ public class BlogController extends CommController{
 	 * @return
 	 */
 	@PutMapping(value = "/blog/{id}")
-	public ObjectNode updateBlogById(@PathVariable String id, @RequestBody Blog blog, HttpServletRequest request) {
+	public JSONObject updateBlogById(@PathVariable String id, @RequestBody Blog blog, HttpServletRequest request) {
 		try {
 			blogServiceImpl.updateBlog(blog);
-			return NodeUtil.successNode();
+			return JsonUtil.successJson();
 		}catch(Exception e) {
 			e.printStackTrace();
-			return NodeUtil.errorNode(e.getMessage());
+			return JsonUtil.errorJson(e.getMessage());
 		}
 	}
 	
@@ -102,14 +104,14 @@ public class BlogController extends CommController{
 	 * @return
 	 */
 	@DeleteMapping(value = "/blog/{id}")
-	public ObjectNode deleteBlogById(@PathVariable String id, HttpServletRequest request) {
+	public JSONObject deleteBlogById(@PathVariable String id, HttpServletRequest request) {
 		try {
 			requireAuth(request);
 			blogServiceImpl.deleteBlogById(id);
-			return NodeUtil.successNode();
+			return JsonUtil.successJson();
 		}catch(Exception e) {
 			e.printStackTrace();
-			return NodeUtil.errorNode(e.getMessage());
+			return JsonUtil.errorJson(e.getMessage());
 		}
 	}
 	
@@ -119,17 +121,17 @@ public class BlogController extends CommController{
 	 * @return
 	 */
 	@GetMapping(value = "/blogs")
-	@Cacheable(value = "blogs-key")
-	public ObjectNode findAllBlogs() {
+	@Cacheable(value = "blogs")
+	public JSONObject findAllBlogs() {
 		try {
 			List<Blog> blogs = blogServiceImpl.findAllBlog();
-			ObjectNode result = NodeUtil.successNode();
-			ArrayNode content = NodeUtil.transFromList(blogs);
-			result.putPOJO("blogs", content);
+			JSONObject result = JsonUtil.successJson();
+			result.put("blogs", blogs);
 			return result;
 		}catch(Exception e) {
 			e.printStackTrace();
-			return NodeUtil.errorNode(e.getMessage());
+			return JsonUtil.errorJson(e.getMessage());
 		}
 	}
+	
 }
