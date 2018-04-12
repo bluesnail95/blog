@@ -1,6 +1,6 @@
 url : http://193.112.47.238:8088
 
-update date : 2018-03-27 
+update date : 2018-04-12 
 
 Author : liuffei
 
@@ -8,9 +8,9 @@ Project : blog
 
 一：这个项目将会使用哪些技术？
 
-(1)后台:maven+springboot+mybatis
+(1)后台:maven+springboot+mybatis+redis
 
-(2)前端:vue+axios+js
+(2)前端:vue+axios+js+amazeui
 
 (3)数据库:mysql
 
@@ -26,6 +26,10 @@ Project : blog
 (4)仿segmengfault的上传头像功能。
 
 (5)使用amazeui重构页面，完成markdown编辑器的增删改查,存草稿待完成。(2018-04-03)
+
+(6)完成后台登录验证(2018-04-09)
+
+(7)引入spring-data-redis,修改接口的返回值是JSONObject(原来的ObjectMapper不支持Redis的序列化)(2018-04-12)
 
 三：部署
 
