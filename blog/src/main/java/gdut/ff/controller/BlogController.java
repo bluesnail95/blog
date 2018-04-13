@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import gdut.ff.domain.Blog;
+import gdut.ff.exception.LoginException;
 import gdut.ff.service.BlogServiceImpl;
 import gdut.ff.utils.JsonUtil;
 import gdut.ff.utils.NodeUtil;
@@ -51,12 +52,16 @@ public class BlogController extends CommController{
 	public JSONObject insertBlog(@RequestBody Blog blog,HttpServletRequest request) throws Exception {
 		try {
 			requireAuth(request);
+			//添加blogId的值
 			if(StringUtil.isNotBlank(blog.getId())) {
 				blogServiceImpl.updateBlog(blog);
 			}else {
 				blogServiceImpl.insertBlog(blog);
 			}
 			return JsonUtil.successJson();
+		}catch(LoginException ex) {
+			ex.printStackTrace();
+			return JsonUtil.loginJson();
 		}catch(Exception e) {
 			e.printStackTrace();
 			return JsonUtil.errorJson(e.getMessage());
@@ -109,6 +114,9 @@ public class BlogController extends CommController{
 			requireAuth(request);
 			blogServiceImpl.deleteBlogById(id);
 			return JsonUtil.successJson();
+		}catch(LoginException ex) {
+			ex.printStackTrace();
+			return JsonUtil.loginJson();
 		}catch(Exception e) {
 			e.printStackTrace();
 			return JsonUtil.errorJson(e.getMessage());

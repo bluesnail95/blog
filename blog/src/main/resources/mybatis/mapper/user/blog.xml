@@ -19,7 +19,7 @@
   <!-- 插入一条博客记录 -->
   <insert id="insertBlog" parameterType="gdut.ff.domain.Blog">
 	  insert into blog (id,blog_id,title, summary, keywords, classification, creator, gmt_create, gmt_modified, content,is_draft)
-	  values (#{id,jdbcType=VARCHAR},#{blog_id,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR}, 
+	  values (#{id,jdbcType=VARCHAR},#{blogId,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR}, 
 	    #{classification,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
 	    #{gmtModified,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARBINARY},#{isDraft,jdbcType=CHAR})
   </insert>

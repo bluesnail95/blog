@@ -30,6 +30,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import gdut.ff.domain.User;
 import gdut.ff.domain.UserAccess;
+import gdut.ff.exception.LoginException;
 import gdut.ff.mapper.UserAccessMapper;
 import gdut.ff.mapper.UserMapper;
 import gdut.ff.service.UserAccessServiceImpl;
@@ -66,6 +67,9 @@ public class UserController extends CommController{
 			JSONObject result = JsonUtil.successJson();
 			result.put("users", users);
 			return result;
+		}catch(LoginException ex) {
+			ex.printStackTrace();
+			return JsonUtil.loginJson();
 		}catch(Exception e) {
 			e.printStackTrace();
 			return JsonUtil.errorJson(e.getMessage());
@@ -85,6 +89,9 @@ public class UserController extends CommController{
 			JSONObject result = JsonUtil.successJson();
 			result.put("user",user);
 			return result;
+		}catch(LoginException ex) {
+			ex.printStackTrace();
+			return JsonUtil.loginJson();
 		}catch(Exception e) {
 			e.printStackTrace();
 			return JsonUtil.errorJson(e.getMessage());

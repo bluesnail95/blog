@@ -136,6 +136,11 @@
                                         博客管理
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="admin-edit.html">
+                                        <span class="am-icon-calendar"></span> 写博客
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -405,8 +410,17 @@
                             }
                         })
                         .then(function(response){
-                            for(var i = 0;i < response.data.users.length;i++) {
-                                users.push(response.data.users[i]);
+                            if(response.data.state == 2) {
+                                window.location.href = "admin-login.html";
+                                return;
+                            }
+                            if(response.data.state == 0) {
+                                alert("请求失败!");
+                            }
+                            if(response.data.state == 1) {
+                                for(var i = 0;i < response.data.users.length;i++) {
+                                    users.push(response.data.users[i]);
+                                }
                             }
                         })
                         .catch(function(error){

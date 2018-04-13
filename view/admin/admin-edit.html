@@ -147,6 +147,12 @@
                                         博客管理
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="admin-edit.html">
+                                        <span class="am-icon-calendar">
+                                        </span> 写博客
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -304,9 +310,13 @@
                           "content": $("blog-content").value,
                           "title": $("blog-title").value,
                           "id":this.blog.id
+                    },{
+                        "headers": {
+                            "token": localStorage.getItem("token")
+                        }
                     })
                     .then(function(response){
-                        
+                        alert("保存成功");
                     })
                     .catch(function(error){
 

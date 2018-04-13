@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 
 import gdut.ff.domain.User;
+import gdut.ff.exception.LoginException;
 import gdut.ff.utils.TokenUtil;
 
 /**
@@ -28,16 +29,11 @@ public class CommController {
 	 * @return
 	 * @throws Exception 
 	 */
-	public void requireAuth(HttpServletRequest request){
+	public void requireAuth(HttpServletRequest request) throws Exception{
 		String token = request.getHeader("token");
-		User user = null;
-		try {
-			if(StringUtils.isBlank(token)) throw new Exception("请传入token");
-			user = TokenUtil.verifyUser(token, SECERT);
-			if(null == user) throw new Exception("用户登录失败，请重新登录");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		if(StringUtils.isBlank(token)) throw new Exception("请传入token");
+		User user = TokenUtil.verifyUser(token, SECERT);
+		if(null == user) throw new LoginException("用户登录失败，请重新登录");
 	}
 	
 	public User getUser(HttpServletRequest request) {
