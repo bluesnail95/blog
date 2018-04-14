@@ -100,9 +100,9 @@
             <!-- sidebar start -->
             <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
                 <div class="am-offcanvas-bar admin-offcanvas-bar">
-                    <ul class="am-list admin-sidebar-list">
+                    <ul class="am-list admin-sidebar-list" id="admin-menu">
                         <li>
-                            <a href="admin-person.html">
+                            <a href="admin-index.html">
                                 <span class="am-icon-home">
                                 </span>
                                 首页
@@ -148,7 +148,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="admin-edit.html">
+                                    <a href="#" @click="write();">
                                         <span class="am-icon-calendar">
                                         </span> 写博客
                                     </a>
@@ -263,9 +263,10 @@
         <!--<![endif]-->
         <script src="../assets/js/amazeui.js"></script>        
         <script src="../assets/js/markdown.js"></script>       
-        <script src="../assets/js/vue.js"></script>       
-        <script src="../assets/js/axios.min.js"></script>       
-        <script src="../assets/js/comm.js"></script>       
+        <script src="../assets/js/axios.min.js"></script>
+        <script src="../assets/js/vue.js"></script>
+        <script src="../assets/js/comm.js"></script>
+        <script src="../assets/js/admin-comm.js"></script>     
         <script type="text/javascript">
             var vm = new Vue({
                 el: "#blog",

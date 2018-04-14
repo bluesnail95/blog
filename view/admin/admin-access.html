@@ -49,7 +49,7 @@
   <!-- sidebar start -->
   <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
     <div class="am-offcanvas-bar admin-offcanvas-bar">
-      <ul class="am-list admin-sidebar-list">
+      <ul class="am-list admin-sidebar-list" id="admin-menu">
         <li><a href="admin-index.html"><span class="am-icon-home"></span> 首页</a></li>
         <li class="admin-parent">
           <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span class="am-icon-file"></span> 页面模块 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
@@ -58,7 +58,7 @@
             <li><a href="admin-user.html"><span class="am-icon-calendar"></span> 用户管理</a></li>
             <li><a href="admin-access.html"><span class="am-icon-calendar"></span> 历史管理</a></li>
             <li><a href="admin-blog.html"><span class="am-icon-calendar"></span> 博客管理</a></li>
-            <li><a href="admin-edit.html"><span class="am-icon-calendar"></span> 写博客</a></li>
+            <li><a href="#" @click="write();"><span class="am-icon-calendar"></span> 写博客</a></li>
           </ul>
         </li>
       </ul>
@@ -197,5 +197,9 @@
 <!--<![endif]-->
 <script src="../assets/js/amazeui.min.js"></script>
 <script src="../assets/js/amazeui.app.js"></script>
+<script src="../assets/js/axios.min.js"></script>
+<script src="../assets/js/vue.js"></script>
+<script src="../assets/js/comm.js"></script>
+<script src="../assets/js/admin-comm.js"></script>
 </body>
 </html>

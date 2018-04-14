@@ -49,7 +49,7 @@
   <!-- sidebar start -->
   <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
     <div class="am-offcanvas-bar admin-offcanvas-bar">
-      <ul class="am-list admin-sidebar-list">
+      <ul class="am-list admin-sidebar-list" id="admin-menu">
         <li><a href="admin-index.html"><span class="am-icon-home"></span> 首页</a></li>
         <li class="admin-parent">
           <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span class="am-icon-file"></span> 页面模块 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
@@ -58,7 +58,7 @@
             <li><a href="admin-user.html"><span class="am-icon-calendar"></span> 用户管理</a></li>
             <li><a href="admin-access.html"><span class="am-icon-calendar"></span> 历史管理</a></li>
             <li><a href="admin-blog.html"><span class="am-icon-calendar"></span> 博客管理</a></li>
-            <li><a href="admin-edit.html"><span class="am-icon-calendar"></span> 写博客</a></li>
+            <li><a href="#" @click="write();"><span class="am-icon-calendar"></span> 写博客</a></li>
           </ul>
         </li>
       </ul>
@@ -126,26 +126,31 @@
       <div class="am-g">
         <div class="am-u-sm-12">
           <form class="am-form">
-            <table class="am-table am-table-striped am-table-hover table-main">
+            <table class="am-table am-table-striped am-table-hover table-main" id="admin-blogs">
               <thead>
               <tr>
-                <th class="table-check"><input type="checkbox" /></th><th class="table-id">ID</th><th class="table-title">标题</th><th class="table-type">类别</th><th class="table-author am-hide-sm-only">作者</th><th class="table-date am-hide-sm-only">修改日期</th><th class="table-set">操作</th>
+                <th class="table-check"><input type="checkbox" /></th>
+                <th class="table-id">博客编号</th>
+                <th class="table-title">标题</th>
+                <th class="table-type">类别</th>
+                <th class="table-author am-hide-sm-only">作者</th>
+                <th class="table-date am-hide-sm-only">修改日期</th>
+                <th class="table-set">操作</th>
               </tr>
               </thead>
               <tbody>
-              <tr>
+              <tr v-for="blog in blogs">
                 <td><input type="checkbox" /></td>
-                <td>10</td>
-                <td><a href="#">Business management</a></td>
-                <td>default</td>
-                <td class="am-hide-sm-only">测试1号</td>
-                <td class="am-hide-sm-only">2014年9月4日 7:28:47</td>
+                <td>{{blog.blogId}}</td>
+                <td>{{blog.title}}</td>
+                <td>{{blog.classification}}</td>
+                <td class="am-hide-sm-only">{{blog.creator}}</td>
+                <td class="am-hide-sm-only">{{blog.gmtModified}}</td>
                 <td>
                   <div class="am-btn-toolbar">
                     <div class="am-btn-group am-btn-group-xs">
-                      <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-                      <button class="am-btn am-btn-default am-btn-xs am-hide-sm-only"><span class="am-icon-copy"></span> 复制</button>
-                      <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
+                      <a class="am-btn am-btn-default am-btn-xs am-text-secondary" @click="editBlog(blog);"><span class="am-icon-pencil-square-o"></span> 编辑</a>
+                      <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" @click="draftBlog(blog);"><span class="am-icon-trash-o"></span> 置为草稿</button>
                     </div>
                   </div>
                 </td>
@@ -197,5 +202,48 @@
 <!--<![endif]-->
 <script src="../assets/js/amazeui.min.js"></script>
 <script src="../assets/js/amazeui.app.js"></script>
+<script src="../assets/js/axios.min.js"></script>
+<script src="../assets/js/vue.js"></script>
+<script src="../assets/js/comm.js"></script>
+<script src="../assets/js/admin-comm.js"></script>
+<script>   
+    var vm = new Vue({
+        el: "#admin-blogs",
+        data: function() {
+          return {
+            blogs: []
+          };
+        },
+        mounted: function() {
+           this.$nextTick(function () {
+             this.init(this.blogs);
+           })
+        },
+        methods: {
+          init(value) {
+            axios.get(SERVER_URL+"/blogs",{
+                     
+            })
+            .then(function(response){
+              for(var i = 0;i < response.data.blogs.length;i++){
+                value.push(response.data.blogs[i]);
+              }
+            })
+            .catch(function(error){
+              console.log(error);
+            })  
+          },
+          editBlog(blog) {
+            debugger
+            sessionStorage.setItem("blogId",blog.id);
+            window.location.href = "../admin/admin-edit.html";
+          },
+          draftBlog(blog) {
+
+          }
+        }
+    });
+    
+</script>
 </body>
 </html>
