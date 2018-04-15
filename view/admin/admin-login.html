@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head lang="en">
-        <meta charset="utf-8">
-        <title> liuffei's blog</title>
+        <meta charset="utf-8"/>
+        <title>
+            liuffei's blog
+        </title>
         <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
         <meta content="telephone=no" name="format-detection"/>
@@ -10,19 +12,19 @@
         <meta content="no-siteapp" http-equiv="Cache-Control"/>
         <link href="../assets/img/favicon.png" rel="alternate icon" type="image/png"/>
         <link href="../assets/css/amazeui.min.css" rel="stylesheet"/>
-    <style>
-        .header {
-          text-align: center;
-        }
-        .header h1 {
-          font-size: 200%;
-          color: #333;
-          margin-top: 30px;
-        }
-        .header p {
-          font-size: 14px;
-        }
-    </style>
+        <style>
+            .header {
+                text-align: center;
+            }
+            .header h1 {
+                font-size: 200%;
+                color: #333;
+                margin-top: 30px;
+            }
+            .header p {
+                font-size: 14px;
+            }
+        </style>
     </head>
     <body>
         <div class="header">
@@ -30,70 +32,68 @@
                 <h1>
                     liuffei's 博客
                 </h1>
-                <p>
-                    Integrated Development Environment
-                    <br/>
-                    代码编辑，代码生成，界面设计，调试，编译
-                </p>
             </div>
             <hr/>
         </div>
         <div class="am-g">
             <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+                <!--
                 <h3>
                     登录
                 </h3>
-                <hr>
-                    <div class="am-btn-group">
-                        <a class="am-btn am-btn-secondary am-btn-sm" href="#">
-                            <i class="am-icon-github am-icon-sm">
-                            </i>
-                            Github
-                        </a>
-                        <a class="am-btn am-btn-success am-btn-sm" href="#">
-                            <i class="am-icon-google-plus-square am-icon-sm">
-                            </i>
-                            Google+
-                        </a>
-                        <a class="am-btn am-btn-primary am-btn-sm" href="#">
-                            <i class="am-icon-stack-overflow am-icon-sm">
-                            </i>
-                            stackOverflow
-                        </a>
+                <hr>                
+                <div class="am-btn-group">
+                    <a class="am-btn am-btn-secondary am-btn-sm" href="#">
+                        <i class="am-icon-github am-icon-sm">
+                        </i>
+                        Github
+                    </a>
+                    <a class="am-btn am-btn-success am-btn-sm" href="#">
+                        <i class="am-icon-google-plus-square am-icon-sm">
+                        </i>
+                        Google+
+                    </a>
+                    <a class="am-btn am-btn-primary am-btn-sm" href="#">
+                        <i class="am-icon-stack-overflow am-icon-sm">
+                        </i>
+                        stackOverflow
+                    </a>
+                </div>
+                -->
+                <div class="am-form" id="login">
+                    <label for="email">
+                        邮箱:
+                    </label>
+                    <input id="email" name="" type="email" v-model="email" value=""/>
+                    <br/>
+                    <label for="password">
+                        密码:
+                    </label>
+                    <input id="password" name="" type="password" v-model="password" value=""/>
+                    <br/>
+                    <label for="remember-me">
+                        <input id="remember-me" type="checkbox"/>
+                        记住密码
+                    </label>
+                    <br/>
+                    <div class="am-cf">
+                        <input @click="login();" class="am-btn am-btn-primary am-btn-sm am-fl" name="" type="button" value="登 录"/>
+                        <input class="am-btn am-btn-default am-btn-sm am-fr" name="" type="button" value="忘记密码 ^_^? "/>
                     </div>
-                    <br>
-                        <br>
-                            <div class="am-form"  id="login">
-                                <label for="email">邮箱:</label>
-                                <input id="email" name="" type="email" value="" v-model="email"/>
-                                <br>
-                                <label for="password">密码:</label>
-                                <input id="password" name="" type="password" value="" v-model="password"/>
-                                <br>
-                                <label for="remember-me">
-                                    <input id="remember-me" type="checkbox"/>记住密码    
-                                </label>
-                                <br/>
-                                <div class="am-cf">
-                                    <input class="am-btn am-btn-primary am-btn-sm am-fl" name="" type="button" value="登 录" @click="login();"/>
-                                    <input class="am-btn am-btn-default am-btn-sm am-fr" name="" type="button" value="忘记密码 ^_^? "/>
-                                </div>
-                                </br>
-                            </div>
-                            <hr>
-                                <p>
-                                    © liuffei 2018.
-                                </p>
-                            </hr>
-                        </br>
-                    </br>
-                </hr>
+                </div>
+                <p>
+                    © liuffei 2018.
+                </p>
             </div>
         </div>
-        <script src="../assets/js/axios.min.js"></script>
-        <script src="../assets/js/vue.js"></script>
-        <script src="../assets/js/comm.js"></script>
-        <script src="../assets/js/md5.min.js"></script>
+        <script src="../assets/js/axios.min.js">
+        </script>
+        <script src="../assets/js/vue.js">
+        </script>
+        <script src="../assets/js/comm.js">
+        </script>
+        <script src="../assets/js/md5.min.js">
+        </script>
         <script type="text/javascript">
             new Vue({
                 el: "#login",
@@ -110,9 +110,10 @@
                              password:md5(this.password)
                         })
                         .then(function(response){
+                            debugger
                             window.localStorage.setItem("token",response.data.token);
                             window.localStorage.setItem("user",JSON.stringify(response.data.user));
-                            window.location.href = "admin-index.html";
+                            window.location.href = "admin-blog.html";
                         })
                         .catch(function(error){
                             console.log(error);

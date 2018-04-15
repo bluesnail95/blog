@@ -3,7 +3,9 @@
     <head>
         <meta charset="utf-8"/>
         <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
-        <title>liuffei's blog 后台管理系统</title>
+        <title>
+            liuffei's blog 后台管理系统
+        </title>
         <meta content="这是一个form页面" name="description"/>
         <meta content="form" name="keywords"/>
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -17,9 +19,9 @@
     </head>
     <body>
         <!--[if lte IE 9]>
-<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
-  以获得更好的体验！</p>
-<![endif]-->
+        <p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+          以获得更好的体验！</p>
+        <![endif]-->
         <header class="am-topbar am-topbar-inverse admin-header">
             <div class="am-topbar-brand">
                 <strong>
@@ -90,13 +92,6 @@
             <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
                 <div class="am-offcanvas-bar admin-offcanvas-bar">
                     <ul class="am-list admin-sidebar-list" id="admin-menu">
-                        <li>
-                            <a href="admin-index.html">
-                                <span class="am-icon-home">
-                                </span>
-                                首页
-                            </a>
-                        </li>
                         <li class="admin-parent">
                             <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}">
                                 <span class="am-icon-file">
@@ -123,22 +118,17 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="admin-access.html">
-                                        <span class="am-icon-calendar">
-                                        </span>
-                                        历史管理
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" @click="write();">
+                                    <a href="admin-blog.html">
                                         <span class="am-icon-calendar">
                                         </span>
                                         博客管理
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="admin-edit.html">
-                                        <span class="am-icon-calendar"></span> 写博客
+                                    <a @click="write();" href="#">
+                                        <span class="am-icon-calendar">
+                                        </span>
+                                        写博客
                                     </a>
                                 </li>
                             </ul>
@@ -156,18 +146,6 @@
                             </p>
                         </div>
                     </div>
-                    <div class="am-panel am-panel-default admin-sidebar-panel">
-                        <div class="am-panel-bd">
-                            <p>
-                                <span class="am-icon-tag">
-                                </span>
-                                liuffei's blog
-                            </p>
-                            <p>
-                                Welcome to liuffei's blog
-                            </p>
-                        </div>
-                    </div>
                 </div>
             </div>
             <!-- sidebar end -->
@@ -177,199 +155,145 @@
                     <div class="am-cf am-padding am-padding-bottom-0">
                         <div class="am-fl am-cf">
                             <strong class="am-text-primary am-text-lg">
-                                表格
+                                用户管理
                             </strong>
                             /
                             <small>
-                                Table
+                                User management
                             </small>
                         </div>
                     </div>
-                    <hr>
-                        <div class="am-g">
-                            <div class="am-u-sm-12 am-u-md-6">
-                                <div class="am-btn-toolbar">
-                                    <div class="am-btn-group am-btn-group-xs">
-                                        <button class="am-btn am-btn-default" type="button">
-                                            <span class="am-icon-plus">
-                                            </span>
-                                            新增
-                                        </button>
-                                        <button class="am-btn am-btn-default" type="button">
-                                            <span class="am-icon-save">
-                                            </span>
-                                            保存
-                                        </button>
-                                        <button class="am-btn am-btn-default" type="button">
-                                            <span class="am-icon-archive">
-                                            </span>
-                                            审核
-                                        </button>
-                                        <button class="am-btn am-btn-default" type="button">
-                                            <span class="am-icon-trash-o">
-                                            </span>
-                                            删除
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="am-u-sm-12 am-u-md-3">
-                                <div class="am-form-group">
-                                    <select data-am-selected="{btnSize: 'sm'}">
-                                        <option value="option1">
-                                            所有类别
-                                        </option>
-                                        <option value="option2">
-                                            IT业界
-                                        </option>
-                                        <option value="option3">
-                                            数码产品
-                                        </option>
-                                        <option value="option3">
-                                            笔记本电脑
-                                        </option>
-                                        <option value="option3">
-                                            平板电脑
-                                        </option>
-                                        <option value="option3">
-                                            只能手机
-                                        </option>
-                                        <option value="option3">
-                                            超极本
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="am-u-sm-12 am-u-md-3">
-                                <div class="am-input-group am-input-group-sm">
-                                    <input class="am-form-field" type="text">
-                                        <span class="am-input-group-btn">
-                                            <button class="am-btn am-btn-default" type="button">
-                                                搜索
-                                            </button>
-                                        </span>
-                                    </input>
-                                </div>
+                    <hr/>
+                    <div class="am-g">
+                        <div class="am-u-sm-12 am-u-md-3">
+                            <div class="am-form-group">
+                                <select data-am-selected="{btnSize: 'sm'}">
+                                    <option value="option1">
+                                        所有类别
+                                    </option>
+                                </select>
                             </div>
                         </div>
-                        <div class="am-g">
-                            <div class="am-u-sm-12">
-                                <form class="am-form">
-                                    <table class="am-table am-table-striped am-table-hover table-main" id="users">
-                                        <thead>
-                                            <tr>
-                                                <th class="table-check">
-                                                    <input type="checkbox"/>
-                                                </th>
-                                                <th class="table-id">
-                                                    用户ID
-                                                </th>
-                                                <th class="table-title">
-                                                    姓名
-                                                </th>
-                                                <th class="table-type">
-                                                    邮箱
-                                                </th>
-                                                <th class="table-set">
-                                                    操作
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="user in users">
-                                                <td>
-                                                    <input type="checkbox"/>
-                                                </td>
-                                                <td>
-                                                    {{user.userId}}
-                                                </td>
-                                                <td>
-                                                    {{user.name}}
-                                                </td>
-                                                <td>
-                                                    {{user.email}}
-                                                </td>
-                                                <td>
-                                                    <div class="am-btn-toolbar">
-                                                        <div class="am-btn-group am-btn-group-xs">
-                                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary">
-                                                                <span class="am-icon-pencil-square-o">
-                                                                </span>
-                                                                编辑
-                                                            </button>
-                                                            <button class="am-btn am-btn-default am-btn-xs am-hide-sm-only">
-                                                                <span class="am-icon-copy">
-                                                                </span>
-                                                                复制
-                                                            </button>
-                                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
-                                                                <span class="am-icon-trash-o">
-                                                                </span>
-                                                                删除
-                                                            </button>
-                                                        </div>
+                        <div class="am-u-sm-12 am-u-md-3">
+                            <div class="am-input-group am-input-group-sm">
+                                <input class="am-form-field" type="text">
+                                    <span class="am-input-group-btn">
+                                        <button class="am-btn am-btn-default" type="button">
+                                            搜索
+                                        </button>
+                                    </span>
+                                </input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="am-g">
+                        <div class="am-u-sm-12">
+                            <form class="am-form">
+                                <table class="am-table am-table-striped am-table-hover table-main" id="users">
+                                    <thead>
+                                        <tr>
+                                            <th class="table-check">
+                                                <input type="checkbox"/>
+                                            </th>
+                                            <th class="table-id">
+                                                用户ID
+                                            </th>
+                                            <th class="table-title am-hide-sm-only">
+                                                姓名
+                                            </th>
+                                            <th class="table-type am-hide-sm-only">
+                                                邮箱
+                                            </th>
+                                            <th class="table-set">
+                                                操作
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="user in users">
+                                            <td>
+                                                <input type="checkbox"/>
+                                            </td>
+                                            <td>
+                                                {{user.userId}}
+                                            </td>
+                                            <td class="am-hide-sm-only">
+                                                {{user.name}}
+                                            </td>
+                                            <td class="am-hide-sm-only">
+                                                {{user.email}}
+                                            </td>
+                                            <td>
+                                                <div class="am-btn-toolbar">
+                                                    <div class="am-btn-group am-btn-group-xs">
+                                                        <button class="am-btn am-btn-default am-btn-xs am-text-secondary">
+                                                            <span class="am-icon-pencil-square-o">
+                                                            </span>
+                                                            编辑
+                                                        </button>
+                                                        <button class="am-btn am-btn-default am-btn-xs am-text-danger">
+                                                            <span class="am-icon-trash-o">
+                                                            </span>
+                                                            删除
+                                                        </button>
                                                     </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="am-cf">
-                                        共 15 条记录
-                                        <div class="am-fr">
-                                            <ul class="am-pagination">
-                                                <li class="am-disabled">
-                                                    <a href="#">
-                                                        «
-                                                    </a>
-                                                </li>
-                                                <li class="am-active">
-                                                    <a href="#">
-                                                        1
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        2
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        3
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        4
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        5
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        »
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="am-cf">
+                                    共 15 条记录
+                                    <div class="am-fr">
+                                        <ul class="am-pagination">
+                                            <li class="am-disabled">
+                                                <a href="#">
+                                                    «
+                                                </a>
+                                            </li>
+                                            <li class="am-active">
+                                                <a href="#">
+                                                    1
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    2
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    3
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    4
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    5
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    »
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <hr/>
-                                    <p>
-                                        注：.....
-                                    </p>
-                                </form>
-                            </div>
+                                </div>
+                                <hr/>
+                            </form>
                         </div>
-                    </hr>
+                    </div>
                 </div>
                 <footer class="admin-content-footer">
-                    <hr>
-                        <p class="am-padding-left">
-                            © 2018 liuffei.
-                        </p>
-                    </hr>
+                    <hr/>
+                    <p class="am-padding-left">
+                        © 2018 liuffei.
+                    </p>
                 </footer>
             </div>
             <!-- content end -->
@@ -382,14 +306,21 @@
         <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
         <![endif]-->
         <!--[if (gte IE 9)|!(IE)]><!-->
-        <script src="../assets/js/jquery-3.3.1.js"></script>        
+        <script src="../assets/js/jquery-3.3.1.js">
+        </script>
         <!--<![endif]-->
-        <script src="../assets/js/amazeui.min.js"></script>        
-        <script src="../assets/js/amazeui.app.js"></script>        
-        <script src="../assets/js/axios.min.js"></script>
-        <script src="../assets/js/vue.js"></script>
-        <script src="../assets/js/comm.js"></script>
-        <script src="../assets/js/admin-comm.js"></script> 
+        <script src="../assets/js/amazeui.min.js">
+        </script>
+        <script src="../assets/js/amazeui.app.js">
+        </script>
+        <script src="../assets/js/axios.min.js">
+        </script>
+        <script src="../assets/js/vue.js">
+        </script>
+        <script src="../assets/js/comm.js">
+        </script>
+        <script src="../assets/js/admin-comm.js">
+        </script>
         <script type="text/javascript">
             new Vue({
                 el: "#users",

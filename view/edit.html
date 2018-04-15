@@ -1,24 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head lang="en">
-        <meta charset="utf-8">
-            <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
-            <title>
-                liuffei's blog
-            </title>
-            <meta content="IE=edge" http-equiv="X-UA-Compatible">
-                <meta content="width=device-width, initial-scale=1" name="viewport">
-                    <meta content="telephone=no" name="format-detection">
-                        <meta content="webkit" name="renderer">
-                            <meta content="no-siteapp" http-equiv="Cache-Control"/>
-                            <link href="assets/css/amazeui.min.css" rel="stylesheet"/>
-                            <link href="assets/css/index.css" rel="stylesheet" type="text/css">
-                            </link>
-                        </meta>
-                    </meta>
-                </meta>
-            </meta>
-        </meta>
+        <meta charset="utf-8"/>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+        <title>
+            liuffei's blog
+        </title>
+        <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <meta content="telephone=no" name="format-detection"/>
+        <meta content="webkit" name="renderer"/>
+        <meta content="no-siteapp" http-equiv="Cache-Control"/>
+        <link href="assets/css/amazeui.min.css" rel="stylesheet"/>
+        <link href="assets/css/index.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <header class="am-g my-head">
@@ -99,24 +93,23 @@
         <footer class="my-footer">
             <p>
                 sidebar template
-                <br>
-                    <small>
-                        © Copyright XXX. by the AmazeUI Team.
-                    </small>
-                </br>
+                <br/>
+                <small>
+                    © Copyright XXX. by the AmazeUI Team.
+                </small>
             </p>
         </footer>
         <!--[if lt IE 9]>
-<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
-<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
-<![endif]-->
-        <!--[if (gte IE 9)|!(IE)]><!
-<script src="assets/js/jquery.min.js"></script>
--->
-        <!--<![endif]
-<script src="assets/js/amazeui.min.js"></script>
--->
+        <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+        <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+        <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+        <![endif]-->
+                <!--[if (gte IE 9)|!(IE)]><!
+        <script src="assets/js/jquery.min.js"></script>
+        -->
+                <!--<![endif]
+        <script src="assets/js/amazeui.min.js"></script>
+        -->
         <script src="assets/js/jquery-3.3.1.js">
         </script>
         <script src="assets/js/amazeui.js">
@@ -133,61 +126,61 @@
             var vm = new Vue({
                 el: "#blog",
                 data: function() {
-                  return {
-                    blog: {
-                      id: null,
-                      title: "",
-                      content: ""
-                    } 
-                  };        
+                    return {
+                        blog: {
+                            id: null,
+                            title: "",
+                            content: ""
+                        } 
+                    };        
                 },
                 created: function() {
-                   //this.$nextTick(function () {
-                     this.init(this.blog,this.update);
-                  // })
+                    //this.$nextTick(function () {
+                    this.init(this.blog,this.update);
+                    // })
                 },
                 methods: {
-                  init(blog,func){
-                    blog.id = sessionStorage.getItem("blogId");
-                    if(blog.id){
-                      axios.get(SERVER_URL+"/blog/"+blog.id,{
-                             
-                      })
-                      .then(function(response){
-                        blog.title = response.data.content.title;
-                        blog.content = response.data.content.content;
-                        //$("article").innerHTML += blog.content;
-                        $("preview").innerHTML = markdown.toHTML(blog.content, 'Maruku');
-                      })
-                      .catch(function(error){
-                        console.log(error);
-                      })  
+                    init(blog,func){
+                        blog.id = sessionStorage.getItem("blogId");
+                        if(blog.id){
+                            axios.get(SERVER_URL+"/blog/"+blog.id,{
+                                 
+                            })
+                            .then(function(response){
+                                blog.title = response.data.content.title;
+                                blog.content = response.data.content.content;
+                                //$("article").innerHTML += blog.content;
+                                $("preview").innerHTML = markdown.toHTML(blog.content, 'Maruku');
+                            })
+                            .catch(function(error){
+                                console.log(error);
+                            })  
+                        }
+                    },
+                    draftBlog(){
+
+                    },
+                    saveBlog(){
+                        axios.post(SERVER_URL+"/blog",{
+                              //"content": $("preview").innerHTML
+                              "content": $("text-input").value,
+                              "title": $("title").value,
+                              "id":this.blog.id
+                        })
+                        .then(function(response){
+                            
+                        })
+                        .catch(function(error){
+
+                        })     
+                    },
+                    update(){
+                        //Maruku 这里加上是为了可以显示table
+                        debugger
+                        $("preview").innerHTML = markdown.toHTML($("text-input").value, 'Maruku');
                     }
-                  },
-                  draftBlog(){
-
-                  },
-                  saveBlog(){
-                    axios.post(SERVER_URL+"/blog",{
-                          //"content": $("preview").innerHTML
-                          "content": $("text-input").value,
-                          "title": $("title").value,
-                          "id":this.blog.id
-                    })
-                    .then(function(response){
-                        
-                    })
-                    .catch(function(error){
-
-                    })     
-                  },
-                  update(){
-                    //Maruku 这里加上是为了可以显示table
-                    debugger
-                    $("preview").innerHTML = markdown.toHTML($("text-input").value, 'Maruku');
-                  }
                 } 
-              });
+            });
         </script>
     </body>
 </html>

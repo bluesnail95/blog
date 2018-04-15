@@ -1,33 +1,24 @@
 <!DOCTYPE doctype html>
 <html class="no-js">
     <head>
-        <meta charset="utf-8">
-            <meta content="IE=edge" http-equiv="X-UA-Compatible">
-                <title>
-                    liuffei's blog 后台管理系统
-                </title>
-                <meta content="这是一个 user 页面" name="description">
-                    <meta content="user" name="keywords">
-                        <meta content="width=device-width, initial-scale=1" name="viewport">
-                            <meta content="webkit" name="renderer">
-                                <meta content="no-siteapp" http-equiv="Cache-Control"/>
-                                <link href="../assets/img/favicon.png" rel="icon" type="image/png">
-                                    <link href="../assets/img/app-icon72x72@2x.png" rel="apple-touch-icon-precomposed">
-                                        <meta content="Amaze UI" name="apple-mobile-web-app-title"/>
-                                        <link href="../assets/css/amazeui.min.css" rel="stylesheet"/>
-                                        <link href="../assets/css/admin.css" rel="stylesheet">
-                                        </link>
-                                    </link>
-                                </link>
-                            </meta>
-                        </meta>
-                    </meta>
-                </meta>
-            </meta>
-        </meta>
+        <meta charset="utf-8"/>
+        <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+        <title>
+            liuffei's blog 后台管理系统
+        </title>
+        <meta content="这是一个 user 页面" name="description"/>
+        <meta content="user" name="keywords"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <meta content="webkit" name="renderer"/>
+        <meta content="no-siteapp" http-equiv="Cache-Control"/>
+        <link href="../assets/img/favicon.png" rel="icon" type="image/png"/>
+        <link href="../assets/img/app-icon72x72@2x.png" rel="apple-touch-icon-precomposed"/>
+        <meta content="Amaze UI" name="apple-mobile-web-app-title"/>
+        <link href="../assets/css/amazeui.min.css" rel="stylesheet"/>
+        <link href="../assets/css/admin.css" rel="stylesheet"/>
     </head>
     <body>
-    <!--[if lte IE 9]>
+        <!--[if lte IE 9]>
     <p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
       以获得更好的体验！</p>
     <![endif]-->
@@ -101,13 +92,6 @@
             <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
                 <div class="am-offcanvas-bar admin-offcanvas-bar">
                     <ul class="am-list admin-sidebar-list" id="admin-menu">
-                        <li>
-                            <a href="admin-index.html">
-                                <span class="am-icon-home">
-                                </span>
-                                首页
-                            </a>
-                        </li>
                         <li class="admin-parent">
                             <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}">
                                 <span class="am-icon-file">
@@ -134,13 +118,6 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="admin-access.html">
-                                        <span class="am-icon-calendar">
-                                        </span>
-                                        历史管理
-                                    </a>
-                                </li>
-                                <li>
                                     <a href="admin-blog.html">
                                         <span class="am-icon-calendar">
                                         </span>
@@ -148,9 +125,10 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" @click="write();">
+                                    <a @click="write();" href="#">
                                         <span class="am-icon-calendar">
-                                        </span> 写博客
+                                        </span>
+                                        写博客
                                     </a>
                                 </li>
                             </ul>
@@ -168,18 +146,6 @@
                             </p>
                         </div>
                     </div>
-                    <div class="am-panel am-panel-default admin-sidebar-panel">
-                        <div class="am-panel-bd">
-                            <p>
-                                <span class="am-icon-tag">
-                                </span>
-                                liuffei's blog
-                            </p>
-                            <p>
-                                Welcome to liuffei's blog
-                            </p>
-                        </div>
-                    </div>
                 </div>
             </div>
             <!-- sidebar end -->
@@ -193,14 +159,15 @@
                             </strong>
                             /
                             <small>
-                                Write Blog
+                                Write blog
                             </small>
                         </div>
                     </div>
                     <hr/>
                     <div class="am-g">
                         <div class="am-u-sm-12 am-u-md-6 am-u-md-push-6">
-                            <div class="am-form-group" id="preview"></div>
+                            <div class="am-form-group" id="preview">
+                            </div>
                         </div>
                         <div class="am-u-sm-12 am-u-md-6 am-u-md-pull-6" id="blog">
                             <form class="am-form am-form-horizontal">
@@ -218,11 +185,8 @@
                                         正文 / Content
                                     </label>
                                     <div class="am-u-sm-9">
-                                        <textarea @input="update();" class="" id="blog-content" placeholder="输入个人简介" rows="5" v-model="blog.content">
+                                        <textarea @input="update();" class="" id="blog-content" placeholder="输入个人简介" rows="20" v-model="blog.content">
                                         </textarea>
-                                        <small>
-                                            250字以内写出你的一生...
-                                        </small>
                                     </div>
                                 </div>
                                 <div class="am-form-group">
@@ -239,12 +203,11 @@
                         </div>
                     </div>
                 </div>
-
                 <footer class="admin-content-footer">
                     <hr>
-                    <p class="am-padding-left">
-                        © 2018 liuffei.
-                    </p>
+                        <p class="am-padding-left">
+                            © 2018 liuffei.
+                        </p>
                     </hr>
                 </footer>
             </div>
@@ -258,77 +221,91 @@
         <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
         <![endif]-->
         <!--[if (gte IE 9)|!(IE)]><!-->
-        <script src="../assets/js/jquery-3.3.1.js"></script>
-        
+        <script src="../assets/js/jquery-3.3.1.js">
+        </script>
         <!--<![endif]-->
-        <script src="../assets/js/amazeui.js"></script>        
-        <script src="../assets/js/markdown.js"></script>       
-        <script src="../assets/js/axios.min.js"></script>
-        <script src="../assets/js/vue.js"></script>
-        <script src="../assets/js/comm.js"></script>
-        <script src="../assets/js/admin-comm.js"></script>     
+        <script src="../assets/js/amazeui.js">
+        </script>
+        <script src="../assets/js/markdown.js">
+        </script>
+        <script src="../assets/js/axios.min.js">
+        </script>
+        <script src="../assets/js/vue.js">
+        </script>
+        <script src="../assets/js/comm.js">
+        </script>
+        <script src="../assets/js/admin-comm.js">
+        </script>
         <script type="text/javascript">
             var vm = new Vue({
                 el: "#blog",
                 data: function() {
-                  return {
-                    blog: {
-                      id: null,
-                      title: "",
-                      content: ""
-                    } 
-                  };        
+                    return {
+                        blog: {
+                            id: null,
+                            title: "",
+                            content: ""
+                        } 
+                    };        
                 },
                 created: function() {
-                   //this.$nextTick(function () {
-                     this.init(this.blog,this.update);
-                  // })
+                    this.init(this.blog,this.update);
                 },
                 methods: {
-                  init(blog,func){
-                    blog.id = sessionStorage.getItem("blogId");
-                    if(blog.id){
-                      axios.get(SERVER_URL+"/blog/"+blog.id,{
-                             
-                      })
-                      .then(function(response){
-                        blog.title = response.data.content.title;
-                        blog.content = response.data.content.content;
-                        //$("article").innerHTML += blog.content;
-                        $("preview").innerHTML = markdown.toHTML(blog.content, 'Maruku');
-                      })
-                      .catch(function(error){
-                        console.log(error);
-                      })  
-                    }
-                  },
-                  draftBlog(){
-
-                  },
-                  saveBlog(){
-                    axios.post(SERVER_URL+"/blog",{
-                          //"content": $("preview").innerHTML
-                          "content": $("blog-content").value,
-                          "title": $("blog-title").value,
-                          "id":this.blog.id
-                    },{
-                        "headers": {
-                            "token": localStorage.getItem("token")
+                    init(blog,func){
+                        blog.id = sessionStorage.getItem("blogId");
+                        if(blog.id){
+                            axios.get(SERVER_URL+"/blog/"+blog.id,{
+                                 
+                            })
+                            .then(function(response){
+                                if(response.data.state == 1){
+                                    blog.title = response.data.content.title;
+                                    blog.content = response.data.content.content;
+                                    //$("article").innerHTML += blog.content;
+                                    $("preview").innerHTML = markdown.toHTML(blog.content, 'Maruku');
+                                }else{
+                                    alert("请求失败");
+                                }
+                            })
+                            .catch(function(error){
+                                console.log(error);
+                            })  
                         }
-                    })
-                    .then(function(response){
-                        alert("保存成功");
-                    })
-                    .catch(function(error){
+                    },
+                    draftBlog(){
 
-                    })     
-                  },
-                  update(){
-                    //Maruku 这里加上是为了可以显示table
-                    $("preview").innerHTML = markdown.toHTML($("blog-content").value, 'Maruku');
-                  }
+                    },
+                    saveBlog(){
+                        axios.post(SERVER_URL+"/blog",{
+                            "content": $("blog-content").value,
+                            "title": $("blog-title").value,
+                            "id":this.blog.id
+                        },{
+                            "headers": {
+                                "token": localStorage.getItem("token")
+                            }
+                        })
+                        .then(function(response){
+                            if(response.data.state == 1) {
+                                alert("保存成功");
+                            }else if(response.data.state == 2) {
+                                alert("请登录");
+                                window.location.href = "admin-login.html";
+                            }else{
+                                alert("操作失败");
+                            } 
+                        })
+                        .catch(function(error){
+
+                        })     
+                    },
+                    update(){
+                        //Maruku 这里加上是为了可以显示table
+                        $("preview").innerHTML = markdown.toHTML($("blog-content").value, 'Maruku');
+                    }
                 } 
-              });
+            });
         </script>
     </body>
 </html>
