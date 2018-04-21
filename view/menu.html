@@ -135,7 +135,7 @@
                 window.location.href = "view.html";   
             },
             init(value){
-                axios.get(SERVER_URL+"/blogs",{
+                axios.get(SERVER_URL+"/blogs?isDraft=1",{
                    
                 })
                 .then(function(response){

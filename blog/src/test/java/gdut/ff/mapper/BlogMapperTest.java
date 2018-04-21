@@ -45,7 +45,7 @@ public class BlogMapperTest {
 		blog.setGmtModified(new Date());
 		blogServiceImpl.insertBlog(blog);
 		blogServiceImpl.deleteBlogById("bb38eab4-2f04-4560-b8c2-6b4a625e7ede");
-		List<Blog> blogs = blogServiceImpl.findAllBlog();
+		List<Blog> blogs = blogServiceImpl.findAllBlog(null);
 		if(null != blogs && blogs.size() > 0) {
 			for(int i = 0;i < blogs.size();i++) {
 				System.out.println(blogs.get(i));

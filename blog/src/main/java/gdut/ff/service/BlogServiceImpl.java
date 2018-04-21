@@ -45,8 +45,8 @@ public class BlogServiceImpl {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<Blog> findAllBlog() {
-		return blogMapper.findAllBlog();
+	public List<Blog> findAllBlog(Blog blog) {
+		return blogMapper.findAllBlog(blog);
 	}
 	
 }

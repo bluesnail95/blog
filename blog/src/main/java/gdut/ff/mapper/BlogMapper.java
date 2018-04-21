@@ -19,5 +19,5 @@ public interface BlogMapper {
 	
 	public int deleteBlogById(String id);
 	
-	public List<Blog> findAllBlog();
+	public List<Blog> findAllBlog(Blog blog);
 }

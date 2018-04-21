@@ -34,6 +34,10 @@
   <select id="findAllBlog" resultMap="blogMap">
       select id,blog_id,title, summary, keywords, classification, creator, gmt_create, gmt_modified, content,is_draft  
       from blog
+      where 1 = 1
+          <if test="isDraft != null and isDraft != ''">
+              and is_draft = #{isDraft}
+          </if>
   </select>
   
   <!-- 更新博客记录 -->
