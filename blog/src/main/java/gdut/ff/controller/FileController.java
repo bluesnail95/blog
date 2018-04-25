@@ -3,6 +3,7 @@ package gdut.ff.controller;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -63,40 +64,36 @@ public class FileController extends CommController{
 	 * 下载文件
 	 * @param request
 	 * @param response
+	 * @throws IOException 
 	 */
 	@GetMapping(value = "/download/{fileId}")
-	public JSONObject downloadFile(@PathVariable String fileId,HttpServletRequest request, HttpServletResponse response) {
-		try {
-			URL url = new URL("http://127.0.0.1:8088/index.html");
-			URLConnection urlConnection = url.openConnection();
-			urlConnection.connect();
-			HttpURLConnection httpUrlConnection = (HttpURLConnection) urlConnection;
-			int responseCode = httpUrlConnection.getResponseCode();
-			if(responseCode != HttpURLConnection.HTTP_OK) {
-				return JsonUtil.errorJson("连接失败");
-			}
-			int filesize = httpUrlConnection.getContentLength();
-			BufferedReader  reader = new BufferedReader(new InputStreamReader(httpUrlConnection.getInputStream(),"UTF-8"));
-			StringBuffer buffer = new StringBuffer();
-			String line = reader.readLine();
-			while(line != null) {
-				buffer.append(line);
-				buffer.append("\n");
-				line = reader.readLine();
-			}
-			
-			//输出
-			response.setHeader("Content-Disposition", "attachment;filename=test.html");
-			response.setHeader("content-type", "application/octet-stream");
-			response.setContentType("application/octet-stream");
-			ServletOutputStream outputStream = response.getOutputStream();
-			outputStream.write(buffer.toString().getBytes());
-			outputStream.flush();
-			outputStream.close();
-			return JsonUtil.successJson();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return JsonUtil.errorJson("下载失败");
+	public JSONObject downloadFile(@PathVariable String fileId,HttpServletRequest request, HttpServletResponse response) throws IOException {
+		URL url = new URL("http://127.0.0.1:8088/index.html");
+		URLConnection urlConnection = url.openConnection();
+		urlConnection.connect();
+		HttpURLConnection httpUrlConnection = (HttpURLConnection) urlConnection;
+		int responseCode = httpUrlConnection.getResponseCode();
+		if(responseCode != HttpURLConnection.HTTP_OK) {
+			return JsonUtil.errorJson("连接失败");
 		}
+		int filesize = httpUrlConnection.getContentLength();
+		BufferedReader  reader = new BufferedReader(new InputStreamReader(httpUrlConnection.getInputStream(),"UTF-8"));
+		StringBuffer buffer = new StringBuffer();
+		String line = reader.readLine();
+		while(line != null) {
+			buffer.append(line);
+			buffer.append("\n");
+			line = reader.readLine();
+		}
+		
+		//输出
+		response.setHeader("Content-Disposition", "attachment;filename=test.html");
+		response.setHeader("content-type", "application/octet-stream");
+		response.setContentType("application/octet-stream");
+		ServletOutputStream outputStream = response.getOutputStream();
+		outputStream.write(buffer.toString().getBytes());
+		outputStream.flush();
+		outputStream.close();
+		return JsonUtil.successJson();
 	}
 }

@@ -19,6 +19,10 @@ public class App extends SpringBootServletInitializer{
         return application.sources(App.class);
     }
 	
+	/**
+	 * 用于上传文件
+	 * @return
+	 */
 	@Bean
 	public TomcatEmbeddedServletContainerFactory tomcatEmbedded() {
 		TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();

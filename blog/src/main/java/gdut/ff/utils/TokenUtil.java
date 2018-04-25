@@ -64,20 +64,16 @@ public class TokenUtil {
 	public static User verifyUser(String token,String secert) throws Exception{
 		JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secert)).build();
 		DecodedJWT jwt = null;
-		try {
-			jwt = verifier.verify(token);
-			Map<String,Claim> claims = jwt.getClaims();
-			User user = new User();
-			user.setEmail(claims.get("email").asString());
-			user.setId(claims.get("id").asString());
-			//需要处理login_name与loginName的映射问题
-			user.setLoginName(claims.get("loginName").asString());
-			user.setPassword(claims.get("password").asString());
-			return user;
-		}catch(Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		jwt = verifier.verify(token);
+		Map<String,Claim> claims = jwt.getClaims();
+		User user = new User();
+		user.setEmail(claims.get("email").asString());
+		user.setId(claims.get("id").asString());
+		//需要处理login_name与loginName的映射问题
+		user.setLoginName(claims.get("loginName").asString());
+		user.setPassword(claims.get("password").asString());
+		return user;
+		
 	}
 
 }

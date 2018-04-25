@@ -51,22 +51,14 @@ public class BlogController extends CommController{
 	 */
 	@PostMapping(value = "/blog")
 	public JSONObject insertBlog(@RequestBody Blog blog,HttpServletRequest request) throws Exception {
-		try {
-			requireAuth(request);
-			//添加blogId的值
-			if(StringUtil.isNotBlank(blog.getId())) {
-				blogServiceImpl.updateBlog(blog);
-			}else {
-				blogServiceImpl.insertBlog(blog);
-			}
-			return JsonUtil.successJson();
-		}catch(LoginException ex) {
-			ex.printStackTrace();
-			return JsonUtil.loginJson();
-		}catch(Exception e) {
-			e.printStackTrace();
-			return JsonUtil.errorJson(e.getMessage());
+		requireAuth(request);
+		//添加blogId的值
+		if(StringUtil.isNotBlank(blog.getId())) {
+			blogServiceImpl.updateBlog(blog);
+		}else {
+			blogServiceImpl.insertBlog(blog);
 		}
+		return JsonUtil.successJson();
 	}
 	
 	/**
@@ -77,15 +69,10 @@ public class BlogController extends CommController{
 	@GetMapping(value = "/blog/{id}")
 	//@Cacheable(value="blog",key="#id")
 	public JSONObject findBlogById(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
-		try {	
-			Blog blog = blogServiceImpl.fingOneById(id);
-			JSONObject result = JsonUtil.successJson();
-			result.put("content", blog);
-			return result;
-		}catch(Exception e) {
-			e.printStackTrace();
-			return JsonUtil.errorJson(e.getMessage());
-		}
+		Blog blog = blogServiceImpl.fingOneById(id);
+		JSONObject result = JsonUtil.successJson();
+		result.put("content", blog);
+		return result;
 	}
 	
 	/**
@@ -95,33 +82,21 @@ public class BlogController extends CommController{
 	 */
 	@PutMapping(value = "/blog/{id}")
 	public JSONObject updateBlogById(@PathVariable String id, @RequestBody Blog blog, HttpServletRequest request) {
-		try {
-			blogServiceImpl.updateBlog(blog);
-			return JsonUtil.successJson();
-		}catch(Exception e) {
-			e.printStackTrace();
-			return JsonUtil.errorJson(e.getMessage());
-		}
+		blogServiceImpl.updateBlog(blog);
+		return JsonUtil.successJson();
 	}
 	
 	/**
 	 * 删除博客记录
 	 * @param id
 	 * @return
+	 * @throws Exception 
 	 */
 	@DeleteMapping(value = "/blog/{id}")
-	public JSONObject deleteBlogById(@PathVariable String id, HttpServletRequest request) {
-		try {
-			requireAuth(request);
-			blogServiceImpl.deleteBlogById(id);
-			return JsonUtil.successJson();
-		}catch(LoginException ex) {
-			ex.printStackTrace();
-			return JsonUtil.loginJson();
-		}catch(Exception e) {
-			e.printStackTrace();
-			return JsonUtil.errorJson(e.getMessage());
-		}
+	public JSONObject deleteBlogById(@PathVariable String id, HttpServletRequest request) throws Exception {
+		requireAuth(request);
+		blogServiceImpl.deleteBlogById(id);
+		return JsonUtil.successJson();
 	}
 	
 	/**
@@ -132,15 +107,10 @@ public class BlogController extends CommController{
 	@GetMapping(value = "/blogs")
 	//@Cacheable(value = "blogs")
 	public JSONObject findAllBlogs(Blog blog) {
-		try {
-			List<Blog> blogs = blogServiceImpl.findAllBlog(blog);
-			JSONObject result = JsonUtil.successJson();
-			result.put("blogs", blogs);
-			return result;
-		}catch(Exception e) {
-			e.printStackTrace();
-			return JsonUtil.errorJson(e.getMessage());
-		}
+		List<Blog> blogs = blogServiceImpl.findAllBlog(blog);
+		JSONObject result = JsonUtil.successJson();
+		result.put("blogs", blogs);
+		return result;
 	}
 	
 }

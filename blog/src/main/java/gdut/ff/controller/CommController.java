@@ -36,15 +36,10 @@ public class CommController {
 		if(null == user) throw new LoginException("用户登录失败，请重新登录");
 	}
 	
-	public User getUser(HttpServletRequest request) {
+	public User getUser(HttpServletRequest request) throws Exception {
 		String token = request.getHeader("token");
 		if(StringUtils.isBlank(token)) return null;
-		User user = null;
-		try {
-			user = TokenUtil.verifyUser(token, SECERT);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		User user = TokenUtil.verifyUser(token, SECERT);
 		return user;
 	}
 	

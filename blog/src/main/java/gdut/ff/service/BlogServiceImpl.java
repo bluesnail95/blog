@@ -32,6 +32,7 @@ public class BlogServiceImpl {
 		blog.setId(UUID.randomUUID().toString());
 		blog.setGmtCreate(new Date());
 		blog.setGmtModified(new Date());
+		blog.setIsDraft("0");
 		return blogMapper.insertBlog(blog);
 	}
 	

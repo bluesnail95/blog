@@ -58,72 +58,47 @@ public class UserController extends CommController{
 	/**
 	 * 查询全部的用户
 	 * @return
+	 * @throws Exception 
 	 */
 	@GetMapping(value = "/users")
-	public JSONObject findAllUsers(HttpServletRequest request) {
-		try {
-			requireAuth(request);
-			List<User> users =  userServiceImpl.findAllUser();
-			JSONObject result = JsonUtil.successJson();
-			result.put("users", users);
-			return result;
-		}catch(LoginException ex) {
-			ex.printStackTrace();
-			return JsonUtil.loginJson();
-		}catch(Exception e) {
-			e.printStackTrace();
-			return JsonUtil.errorJson(e.getMessage());
-		}
+	public JSONObject findAllUsers(HttpServletRequest request) throws Exception {
+		requireAuth(request);
+		List<User> users =  userServiceImpl.findAllUser();
+		JSONObject result = JsonUtil.successJson();
+		result.put("users", users);
+		return result;
+		
 	}
 	
 	/**
 	 * 查询指定的用户
 	 * @param id 用户ID
 	 * @return
+	 * @throws Exception 
 	 */
 	@GetMapping(value = "/user/{id}")
-	public JSONObject getUser(HttpServletRequest request, @PathVariable long id) {
-		try {
-			requireAuth(request);
-			User user = userServiceImpl.fingUserById(id);
-			JSONObject result = JsonUtil.successJson();
-			result.put("user",user);
-			return result;
-		}catch(LoginException ex) {
-			ex.printStackTrace();
-			return JsonUtil.loginJson();
-		}catch(Exception e) {
-			e.printStackTrace();
-			return JsonUtil.errorJson(e.getMessage());
-		}
+	public JSONObject getUser(HttpServletRequest request, @PathVariable long id) throws Exception {
+		requireAuth(request);
+		User user = userServiceImpl.fingUserById(id);
+		JSONObject result = JsonUtil.successJson();
+		result.put("user",user);
+		return result;
 	}
 
 	/**
 	 * 用户登录
 	 * @param user
 	 * @return
+	 * @throws Exception 
 	 */
 	@PostMapping("/user/login")
-	public JSONObject userLogin(@RequestBody JsonNode param) {
+	public JSONObject userLogin(@RequestBody JsonNode param) throws Exception {
 		User userValidate = NodeUtil.transToPOJO(param, User.class);
-		User user = null;
-		try {
-			//根据邮箱和密码查找用户
-			user = userServiceImpl.loginUser(userValidate);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return JsonUtil.errorJson(e.getMessage());
-		}
+		User user = userServiceImpl.loginUser(userValidate);
 		if(null == user) {
 			NodeUtil.errorNode("用户名/邮箱或密码错误");
 		}
-		String token = null;
-		try {
-			token = TokenUtil.token(SECERT, user, expireMinutes);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return JsonUtil.errorJson(e.getMessage());
-		}
+		String token = TokenUtil.token(SECERT, user, expireMinutes);
 		JSONObject result = JsonUtil.successJson();
 		result.put("token", token);
 		//不返回用户密码
@@ -148,12 +123,7 @@ public class UserController extends CommController{
 		}
 		User user = NodeUtil.transToPOJO(param,User.class);
 		user.setId(UUID.randomUUID().toString());
-		try {
-			userServiceImpl.saveUser(user);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return JsonUtil.errorJson(e.getMessage());
-		}
+		userServiceImpl.saveUser(user);
 		return JsonUtil.successJson();
 	}
 	
@@ -161,20 +131,15 @@ public class UserController extends CommController{
 	 * 保存用户访问
 	 * @param userAccess
 	 * @return
+	 * @throws Exception 
 	 */
 	@PostMapping("/user/access")
-	public JSONObject userAccess(@RequestBody UserAccess userAccess,HttpServletRequest request) {
-		
+	public JSONObject userAccess(@RequestBody UserAccess userAccess,HttpServletRequest request) throws Exception {
 		//设置主键和创建时间 保存
 		userAccess.setId(UUID.randomUUID().toString());
-		try {
-			User user = getUser(request);
-			userAccess.setUserId(user.getUserId());
-			userAccessServiceImpl.saveUserAccess(userAccess);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return JsonUtil.errorJson(e.getMessage());
-		}
+		User user = getUser(request);
+		userAccess.setUserId(user.getUserId());
+		userAccessServiceImpl.saveUserAccess(userAccess);
 		return JsonUtil.successJson();
 	}
 	
@@ -182,15 +147,11 @@ public class UserController extends CommController{
 	 * 用户修改登录密码
 	 * @param param password 当前密码 newPassword 新密码 confirmPassword 确认密码
 	 * @return
+	 * @throws Exception 
 	 */
 	@PutMapping(value="/user/password")
-	public JSONObject updatePassword(@RequestBody JsonNode param,HttpServletRequest request) {
-		User user = null;
-		try {
-			user = getUser(request);
-		} catch (Exception e) {
-			return JsonUtil.errorJson(e.getMessage());
-		}
+	public JSONObject updatePassword(@RequestBody JsonNode param,HttpServletRequest request) throws Exception {
+		User user = getUser(request);
 		if(null == user) NodeUtil.errorNode("请重新登录");
 		String password = param.has("password") ? param.get("password").asText() : "";
 		if(StringUtil.isBlank(password) || !password.equals(user.getPassword())) NodeUtil.errorNode("当前密码输入有误，请重新输入");
@@ -198,14 +159,8 @@ public class UserController extends CommController{
 		String comfirmPassword = param.has("comfirmPassword") ? param.get("comfirmPassword").asText() : "";
 		if(StringUtil.isBlank(newPassword) || StringUtil.isBlank(comfirmPassword) || !newPassword.equals(comfirmPassword) ) NodeUtil.errorNode("新密码或重复输入的新密码为空，或两次输入的密码不一致");
 		user.setPassword(newPassword);
-		String newToken = null;
-		try {
-			userServiceImpl.updateUser(user);
-			newToken = TokenUtil.token(SECERT, user, expireMinutes);
-		}catch(Exception e) {
-			e.printStackTrace();
-			return JsonUtil.errorJson(e.getMessage());
-		}
+		String newToken = TokenUtil.token(SECERT, user, expireMinutes);
+		userServiceImpl.updateUser(user);
 		JSONObject result = JsonUtil.successJson();
 		result.put("token",newToken);
 		user.setPassword(null);
