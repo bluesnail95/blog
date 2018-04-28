@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -67,7 +68,6 @@ public class BlogController extends CommController{
 	 * @return
 	 */
 	@GetMapping(value = "/blog/{id}")
-	//@Cacheable(value="blog",key="#id")
 	public JSONObject findBlogById(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
 		Blog blog = blogServiceImpl.fingOneById(id);
 		JSONObject result = JsonUtil.successJson();
@@ -105,7 +105,6 @@ public class BlogController extends CommController{
 	 * @return
 	 */
 	@GetMapping(value = "/blogs")
-	//@Cacheable(value = "blogs")
 	public JSONObject findAllBlogs(Blog blog) {
 		List<Blog> blogs = blogServiceImpl.findAllBlog(blog);
 		JSONObject result = JsonUtil.successJson();

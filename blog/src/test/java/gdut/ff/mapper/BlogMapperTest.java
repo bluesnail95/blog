@@ -8,6 +8,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cache.CacheManager;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import gdut.ff.domain.Blog;
@@ -24,6 +27,11 @@ public class BlogMapperTest {
 	
 	@Autowired
 	private BlogServiceImpl blogServiceImpl;
+	
+	@Autowired
+	private BlogMapper blogMapper;
+	
+	@Autowired CacheManager cacheManager;
 	
 	@Test
 	public void testGetBlog() {
@@ -68,6 +76,11 @@ public class BlogMapperTest {
 		blogServiceImpl.updateBlog(blog);
 	}
 	
-	
+	@Test
+	public void testFindAllBlog() {
+		blogMapper.findAllBlog(null);
+		
+		blogMapper.findAllBlog(null);
+	}
 
 }
