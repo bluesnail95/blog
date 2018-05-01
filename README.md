@@ -37,6 +37,12 @@ Project : blog
 
 (10)用环绕通知和异常通知替代每个方法的try{}catch(){}。(2018-04-25)
 
+(11)分布式文件系统FastDFS环境搭建完成。
+
+测试图片:http://193.112.47.238:8090/group1/M00/00/00/rBAAEFroDnyANbpFAAMstKSbgtU845_big.jpg
+
+参考资料:1.https://www.cnblogs.com/yufeng218/p/8111961.html        2.http://bbs.chinaunix.net/forum-240-1.html
+
 三：部署
 
 特点：前后端分开部署
