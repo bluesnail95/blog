@@ -37,7 +37,7 @@ Project : blog
 
 (10)用环绕通知和异常通知替代每个方法的try{}catch(){}。(2018-04-25)
 
-(11)分布式文件系统FastDFS环境搭建完成。
+(11)分布式文件系统FastDFS环境搭建完成。(2018-05-01)
 
 测试图片:http://193.112.47.238:8090/group1/M00/00/00/rBAAEFroDnyANbpFAAMstKSbgtU845_big.jpg
 
