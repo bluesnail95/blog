@@ -134,6 +134,13 @@
 	   <groupId>org.aspectj</groupId>
 	   <artifactId>aspectjweaver</artifactId>
    </dependency>
+   
+   <!-- https://mvnrepository.com/artifact/net.oschina.zcx7878/fastdfs-client-java -->
+   <dependency>
+	   <groupId>net.oschina.zcx7878</groupId>
+	   <artifactId>fastdfs-client-java</artifactId>
+	   <version>1.27.0.0</version>
+   </dependency>
    		
    </dependencies>
     
