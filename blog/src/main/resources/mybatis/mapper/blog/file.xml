@@ -8,27 +8,27 @@
 	  <result column="count" property="count" jdbcType="INTEGER" javaType="int"/>
 	  <result column="file_name" property="fileName" jdbcType="VARCHAR" javaType="String"/>
 	  <result column="file_introduction" property="fileIntroduction" jdbcType="VARCHAR" javaType="String"/>
-	  <result column="file_photo" property="filePhoto" jdbcType="VARCHAR" javaType="String"/>
-	  <result column="file_path" property="filePath" jdbcType="VARCHAR" javaType="String"/>
+	  <result column="group_name" property="groupName" jdbcType="VARCHAR" javaType="String"/>
+	  <result column="remote_file_name" property="remoteFileName" jdbcType="VARCHAR" javaType="String"/>
 	  <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
 	  <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
   </resultMap>
   
   <!-- 插入一条记录 -->
   <insert id="insertFile" parameterType="gdut.ff.domain.File">
-	  insert into file (id,file_id,count,file_name,file_introduction,file_photo,file_path,gmt_create,gmt_modified)
-	  values (#{id},#{fileId},#{count},#{fileName},#{fileIntroduction},#{filePhoto},#{filePath},#{gmtCreate},#{gmtModified})
+	  insert into file (id,file_id,count,file_name,file_introduction,group_name,remote_file_name,gmt_create,gmt_modified)
+	  values (#{id},#{fileId},#{count},#{fileName},#{fileIntroduction},#{groupName},#{remoteFileName},#{gmtCreate},#{gmtModified})
   </insert>
   
   <!-- 查找记录 -->
   <select id="findFileById" resultMap="fileMap">
-  	  select id,file_id,count,file_name,file_introduction,file_photo,file_path,gmt_create,gmt_modified
+  	  select id,file_id,count,file_name,file_introduction,group_name,remote_file_name,gmt_create,gmt_modified
   	  from file
   </select>
   
    <!-- 查找全部记录 -->
   <select id="findAllFile" resultMap="fileMap">
-      select id,file_id,count,file_name,file_introduction,file_photo,file_path,gmt_create,gmt_modified
+      select id,file_id,count,file_name,file_introduction,group_name,remote_file_name,gmt_create,gmt_modified
       from file
       where 1 = 1
           <if test = "id != null and id != ''">
@@ -46,11 +46,11 @@
           <if test = "fileIntroduction != null and fileIntroduction != ''">
           	  and file_introduction = #{fileIntroduction}
           </if>
-          <if test = "filePhoto != null and filePhoto != ''">
-          	  and file_photo = #{filePhoto}
+          <if test = "groupName != null and groupName != ''">
+          	  and group_name = #{groupName}
           </if>
-          <if test = "filePath != null and filePath != ''">
-          	  and file_path = #{filePath}
+          <if test = "remoteFileName != null and remoteFileName != ''">
+          	  and remote_file_name = #{remoteFileName}
           </if>
           <if test = "gmtCreate != null and gmtCreate != ''">
           	  and gmt_create = #{gmtCreate}
@@ -79,26 +79,26 @@
 	         <if test = "fileIntroduction != null and fileIntroduction != ''">
 	             file_introduction = #{fileIntroduction},
 	          </if>
-	         <if test = "filePhoto != null and filePhoto != ''">
-	             file_photo = #{filePhoto},
+	         <if test = "groupName != null and groupName != ''">
+	             group_name = #{groupName},
 	          </if>
-	         <if test = "filePath != null and filePath != ''">
-	             file_path = #{filePath},
+	         <if test = "remoteFileName != null and remoteFileName != ''">
+	             remote_file_name = #{remoteFileName},
 	          </if>
-	         <if test = "gmtCreate != null and gmtCreate != ''">
+	         <if test = "gmtCreate != null">
 	             gmt_create = #{gmtCreate},
 	          </if>
-	         <if test = "gmtModified != null and gmtModified != ''">
+	         <if test = "gmtModified != null">
 	             gmt_modified = #{gmtModified},
 	          </if>
 	  </set>
 	  <where>
-	      id = ${id}
+	      id = #{id}
 	  </where>
   </update>
   
   <!-- 删除记录 -->
-  <delete id="deletefileById" parameterType="java.lang.String">
+  <delete id="deleteFileById" parameterType="java.lang.String">
       delete from file where id = #{id}
   </delete>
 </mapper>

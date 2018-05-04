@@ -30,6 +30,7 @@ public class FileServiceImpl {
 	
 	public int insertFile(File file) {
 		file.setId(UUID.randomUUID().toString());
+		file.setFileId(UUID.randomUUID().toString());
 		file.setGmtCreate(new Date());
 		file.setGmtModified(new Date());
 		return fileMapper.insertFile(file);

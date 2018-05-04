@@ -30,6 +30,7 @@ public class BlogServiceImpl {
 	
 	public int insertBlog(Blog blog) {
 		blog.setId(UUID.randomUUID().toString());
+		blog.setBlogId(UUID.randomUUID().toString());
 		blog.setGmtCreate(new Date());
 		blog.setGmtModified(new Date());
 		blog.setIsDraft("0");

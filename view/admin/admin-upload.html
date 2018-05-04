@@ -19,9 +19,9 @@
     </head>
     <body>
         <!--[if lte IE 9]>
-    <p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
-      以获得更好的体验！</p>
-    <![endif]-->
+        <p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+          以获得更好的体验！</p>
+        <![endif]-->
         <header class="am-topbar am-topbar-inverse admin-header">
             <div class="am-topbar-brand">
                 <strong>
@@ -102,7 +102,7 @@
                             </a>
                             <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
                                 <li>
-                                    <a class="am-cf" href="admin-user.html">
+                                    <a class="am-cf" href="admin-person.html">
                                         <span class="am-icon-check">
                                         </span>
                                         个人资料
@@ -169,60 +169,37 @@
                     <div class="am-cf am-padding am-padding-bottom-0">
                         <div class="am-fl am-cf">
                             <strong class="am-text-primary am-text-lg">
-                                写博客
+                                文件管理
                             </strong>
                             /
                             <small>
-                                Write blog
+                                File upload
                             </small>
                         </div>
                     </div>
                     <hr/>
                     <div class="am-g">
-                        <div class="am-u-sm-12 am-u-md-6 am-u-md-push-6">
-                            <div class="am-form-group" id="preview">
-                            </div>
-                        </div>
-                        <div class="am-u-sm-12 am-u-md-6 am-u-md-pull-6" id="blog">
-                            <form class="am-form am-form-horizontal">
-                                <div class="am-form-group">
-                                    <label class="am-u-sm-3 am-form-label" for="blog-title">
-                                        标题 / Title
-                                    </label>
-                                    <div class="am-u-sm-9">
-                                        <input id="blog-title" placeholder="输入你的标题 / Title" type="text" v-model="blog.title">
-                                        </input>
-                                    </div>
-                                </div>
-                                <div class="am-form-group">
-                                    <label class="am-u-sm-3 am-form-label" for="blog-content">
-                                        正文 / Content
-                                    </label>
-                                    <div class="am-u-sm-9">
-                                        <textarea @input="update();" class="" id="blog-content" placeholder="输入个人简介" rows="20" v-model="blog.content">
-                                        </textarea>
-                                    </div>
-                                </div>
-                                <div class="am-form-group">
-                                    <div class="am-u-sm-9 am-u-sm-push-3">
-                                        <button @click="draftBlog();" class="am-btn am-btn-primary" type="button">
-                                            存草稿
+                        <div class="am-u-md-8">
+                            <form class="am-form">
+                                <div class="am-form-group" id="upload">
+                                    <input id="file" name="file" type="file" @change="upload($event);">
+                                        <p class="am-form-help">
+                                            请选择要上传的文件...
+                                        </p>
+                                        <button class="am-btn am-btn-primary am-btn-xs" type="button">
+                                            上传
                                         </button>
-                                        <button @click="saveBlog();" class="am-btn am-btn-primary" type="button">
-                                            保存
-                                        </button>
-                                    </div>
+                                    </input>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
                 <footer class="admin-content-footer">
-                    <hr>
-                        <p class="am-padding-left">
-                            © 2018 liuffei.
-                        </p>
-                    </hr>
+                    <hr/>
+                    <p class="am-padding-left">
+                        © 2018 liuffei.
+                    </p>
                 </footer>
             </div>
             <!-- content end -->
@@ -238,9 +215,9 @@
         <script src="../assets/js/jquery-3.3.1.js">
         </script>
         <!--<![endif]-->
-        <script src="../assets/js/amazeui.js">
+        <script src="../assets/js/amazeui.min.js">
         </script>
-        <script src="../assets/js/markdown.js">
+        <script src="../assets/js/amazeui.app.js">
         </script>
         <script src="../assets/js/axios.min.js">
         </script>
@@ -250,76 +227,25 @@
         </script>
         <script src="../assets/js/admin-comm.js">
         </script>
-        <script type="text/javascript">
-            var vm = new Vue({
-                el: "#blog",
-                data: function() {
-                    return {
-                        blog: {
-                            id: null,
-                            title: "",
-                            content: ""
-                        } 
-                    };        
-                },
-                created: function() {
-                    this.init(this.blog,this.update);
+        <script >
+            new Vue({
+                el: "#upload",
+                data: {
                 },
                 methods: {
-                    init(blog,func){
-                        blog.id = sessionStorage.getItem("blogId");
-                        if(blog.id){
-                            axios.get(SERVER_URL+"/blog/"+blog.id,{
-                                 
-                            })
-                            .then(function(response){
-                                if(response.data.state == 1){
-                                    blog.title = response.data.content.title;
-                                    blog.content = response.data.content.content;
-                                    //$("article").innerHTML += blog.content;
-                                    $("preview").innerHTML = markdown.toHTML(blog.content, 'Maruku');
-                                }else{
-                                    alert("请求失败");
-                                }
-                            })
-                            .catch(function(error){
-                                console.log(error);
-                            })  
-                        }
-                    },
-                    draftBlog(){
-
-                    },
-                    saveBlog(){
-                        axios.post(SERVER_URL+"/blog",{
-                            "content": $("blog-content").value,
-                            "title": $("blog-title").value,
-                            "id":this.blog.id
-                        },{
-                            "headers": {
-                                "token": localStorage.getItem("token")
+                    upload(event){
+                        this.file = event.target.files[0];
+                        let formData = new FormData();
+                        formData.append("file",this.file);
+                        axios.post(SERVER_URL + "/upload", formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
                             }
-                        })
-                        .then(function(response){
-                            if(response.data.state == 1) {
-                                alert("保存成功");
-                            }else if(response.data.state == 2) {
-                                alert("请登录");
-                                window.location.href = "admin-login.html";
-                            }else{
-                                alert("操作失败");
-                            } 
-                        })
-                        .catch(function(error){
-
-                        })     
-                    },
-                    update(){
-                        //Maruku 这里加上是为了可以显示table
-                        $("preview").innerHTML = markdown.toHTML($("blog-content").value, 'Maruku');
+                        }); 
                     }
-                } 
-            });
+                }
+            })
+
         </script>
     </body>
 </html>

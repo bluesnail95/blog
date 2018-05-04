@@ -11,7 +11,7 @@ new Vue({
   methods: {
     	write() {
   			  sessionStorage.removeItem("blogId");
-  			  window.location.href = "../../admin/admin-edit.html";
+  			  window.location.href = "../admin/admin-edit.html";
   	  }
   }
 })

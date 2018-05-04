@@ -1,6 +1,7 @@
 package gdut.ff.controller;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -124,6 +125,15 @@ public class FileController {
 		NameValuePair pair[] = new NameValuePair[1];
 		pair[0] = new NameValuePair("author","liuffei");
 		String[] uploadResult = FastDFSClient.upload(fileName, content, pair);
+		//保存到数据库
+		String groupName = uploadResult[0];
+		String remoteFileName = uploadResult[1];
+		File uploadFile = new File();
+		uploadFile.setRemoteFileName(remoteFileName);
+		uploadFile.setGroupName(groupName);
+		uploadFile.setFileName(file.getName());
+		fileServiceImpl.insertFile(uploadFile);
+		//返回结果
 		JSONObject result = JsonUtil.successJson();
 		result.put("uploadResult", uploadResult);
 		return result;
@@ -138,21 +148,27 @@ public class FileController {
 	 * @throws MyException 
 	 */
 	//TODO 需要修改成通过文件id获取groupName和remoteFileName,同时指定filename
-	@GetMapping(value = "/download")
-	public JSONObject downloadFile(@RequestParam("groupName") String groupName, @RequestParam("remoteFileName") String remoteFileName,
-			HttpServletResponse response) throws IOException, MyException {
-		//获取文件内容
-		byte[] content = FastDFSClient.donwloadFile(groupName, remoteFileName);
+	@GetMapping(value = "/download/{id}")
+	public JSONObject downloadFile(@PathVariable String id, HttpServletResponse response) throws IOException, MyException {
+		File downloadFile = fileServiceImpl.findFileById(id);
+		if(null != downloadFile) {
+			//获取文件内容
+			String groupName = downloadFile.getGroupName();
+			String remoteFileName = downloadFile.getRemoteFileName();
+			byte[] content = FastDFSClient.donwloadFile(groupName, remoteFileName);
+			//输出
+			//TODO filename需要修改
+			response.setHeader("Content-Disposition", "attachment;filename=2.jpg");
+			response.setHeader("content-type", "application/octet-stream");
+			response.setContentType("application/octet-stream");
+			ServletOutputStream outputStream = response.getOutputStream();
+			outputStream.write(content);
+			outputStream.flush();
+			outputStream.close();
+			return JsonUtil.successJson();
+		}else {
+			throw new FileNotFoundException("不存在该文件!!!");
+		}
 		
-		//输出
-		//TODO filename需要修改
-		response.setHeader("Content-Disposition", "attachment;filename=2.jpg");
-		response.setHeader("content-type", "application/octet-stream");
-		response.setContentType("application/octet-stream");
-		ServletOutputStream outputStream = response.getOutputStream();
-		outputStream.write(content);
-		outputStream.flush();
-		outputStream.close();
-		return JsonUtil.successJson();
 	}
 }

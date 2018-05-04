@@ -29,10 +29,10 @@ public class File implements Serializable{
     private String fileIntroduction;
 		
     //文件的预览图片
-    private String filePhoto;
+    private String groupName;
 		
     //文件路径
-    private String filePath;
+    private String remoteFileName;
 		
     //创建时间
     private Date gmtCreate;
@@ -80,23 +80,23 @@ public class File implements Serializable{
         return this.fileIntroduction;
     }
 	
-    public void setFilePhoto(String filePhoto){
-        this.filePhoto = filePhoto;
-    }
-    
-    public String getFilePhoto(){
-        return this.filePhoto;
-    }
-	
-    public void setFilePath(String filePath){
-        this.filePath = filePath;
-    }
-    
-    public String getFilePath(){
-        return this.filePath;
-    }
-	
-    public void setGmtCreate(Date gmtCreate){
+    public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
+	public String getRemoteFileName() {
+		return remoteFileName;
+	}
+
+	public void setRemoteFileName(String remoteFileName) {
+		this.remoteFileName = remoteFileName;
+	}
+
+	public void setGmtCreate(Date gmtCreate){
         this.gmtCreate = gmtCreate;
     }
     
@@ -112,4 +112,12 @@ public class File implements Serializable{
         return this.gmtModified;
     }
 
+	@Override
+	public String toString() {
+		return "File [id=" + id + ", fileId=" + fileId + ", count=" + count + ", fileName=" + fileName
+				+ ", fileIntroduction=" + fileIntroduction + ", groupName=" + groupName + ", remoteFileName="
+				+ remoteFileName + ", gmtCreate=" + gmtCreate + ", gmtModified=" + gmtModified + "]";
+	}
+
+    
 }

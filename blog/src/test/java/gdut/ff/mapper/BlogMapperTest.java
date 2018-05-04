@@ -76,11 +76,5 @@ public class BlogMapperTest {
 		blogServiceImpl.updateBlog(blog);
 	}
 	
-	@Test
-	public void testFindAllBlog() {
-		blogMapper.findAllBlog(null);
-		
-		blogMapper.findAllBlog(null);
-	}
 
 }
