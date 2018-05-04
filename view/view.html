@@ -11,6 +11,15 @@
         <meta http-equiv="Cache-Control" content="no-siteapp" />
         <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
         <link rel="stylesheet" type="text/css" href="assets/css/index.css">
+        <style type="text/css">
+            /**
+             *处理table的自适应容器,内容的换行
+             */
+            table {
+                table-layout: fixed;
+                word-break:break-all;
+            }
+        </style>
     </head>
     <body>
         <header class="am-g my-head">
@@ -76,7 +85,7 @@
         <script src="assets/js/comm.js"></script>
         <script src="assets/js/markdown.js"></script>
         <script type="text/javascript">
-            new Vue({
+            var vm = new Vue({
                 el: "#article",
                 data: function() {
                     return {
@@ -89,7 +98,18 @@
                 created: function() {
                     this.$nextTick(function () {
                         this.init(this.blog);
+
+                        
                     })
+                },
+                //每次渲染完后执行的代码
+                updated:function(){
+                    this.$nextTick(function(){
+                        var tableEle = document.getElementsByTagName("table");
+                        for(var i = 0;i < tableEle.length; i++) {
+                            tableEle[i].className += ' am-table am-table-striped am-table-hover table-main ';
+                        }
+                    });
                 },
                 methods: {
                     init(blog){
@@ -108,8 +128,7 @@
                     }
                 }
             });
-          
-          
+
         </script>
     </body>
 </html>
