@@ -182,11 +182,11 @@
                         <div class="am-u-md-8">
                             <form class="am-form">
                                 <div class="am-form-group" id="upload">
-                                    <input id="file" name="file" type="file" @change="upload($event);">
+                                    <input id="file" name="file" type="file">
                                         <p class="am-form-help">
                                             请选择要上传的文件...
                                         </p>
-                                        <button class="am-btn am-btn-primary am-btn-xs" type="button">
+                                        <button class="am-btn am-btn-primary am-btn-xs" type="button" @click="upload($event);">
                                             上传
                                         </button>
                                     </input>
@@ -234,13 +234,25 @@
                 },
                 methods: {
                     upload(event){
-                        this.file = event.target.files[0];
                         let formData = new FormData();
-                        formData.append("file",this.file);
+                        console.log(document.getElementById("file").files[0]);
+                        formData.append("file",document.getElementById("file").files[0]);
                         axios.post(SERVER_URL + "/upload", formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }
+                        })
+                        .then(function(response){
+                            if(response.data.state == 1) {
+                                alert("上传成功");
+                            }else if(response.data.state == 0) {
+                                alert("上传失败");
+                            }else if(response.data.state == 2) {
+                                window.location.href = "admin-login.html";
+                            }
+                        })
+                        .catch(function(error){
+                            alert(error);
                         }); 
                     }
                 }

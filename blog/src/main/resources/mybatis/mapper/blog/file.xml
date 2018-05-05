@@ -24,6 +24,7 @@
   <select id="findFileById" resultMap="fileMap">
   	  select id,file_id,count,file_name,file_introduction,group_name,remote_file_name,gmt_create,gmt_modified
   	  from file
+  	  where id = #{id}
   </select>
   
    <!-- 查找全部记录 -->

@@ -1,12 +1,9 @@
+
 package gdut.ff.controller;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
@@ -16,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.csource.common.MyException;
 import org.csource.common.NameValuePair;
 import org.eclipse.jetty.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +40,8 @@ import gdut.ff.utils.JsonUtil;
  */
 @RestController
 public class FileController {
+	
+	private Logger logger = LoggerFactory.getLogger(FileController.class);
 	
 	@Autowired
 	private FileServiceImpl fileServiceImpl;
@@ -131,7 +132,7 @@ public class FileController {
 		File uploadFile = new File();
 		uploadFile.setRemoteFileName(remoteFileName);
 		uploadFile.setGroupName(groupName);
-		uploadFile.setFileName(file.getName());
+		uploadFile.setFileName(file.getOriginalFilename());
 		fileServiceImpl.insertFile(uploadFile);
 		//返回结果
 		JSONObject result = JsonUtil.successJson();
@@ -147,9 +148,8 @@ public class FileController {
 	 * @throws IOException 
 	 * @throws MyException 
 	 */
-	//TODO 需要修改成通过文件id获取groupName和remoteFileName,同时指定filename
 	@GetMapping(value = "/download/{id}")
-	public JSONObject downloadFile(@PathVariable String id, HttpServletResponse response) throws IOException, MyException {
+	public void downloadFile(@PathVariable String id, HttpServletResponse response) throws IOException, MyException {
 		File downloadFile = fileServiceImpl.findFileById(id);
 		if(null != downloadFile) {
 			//获取文件内容
@@ -157,15 +157,12 @@ public class FileController {
 			String remoteFileName = downloadFile.getRemoteFileName();
 			byte[] content = FastDFSClient.donwloadFile(groupName, remoteFileName);
 			//输出
-			//TODO filename需要修改
-			response.setHeader("Content-Disposition", "attachment;filename=2.jpg");
-			response.setHeader("content-type", "application/octet-stream");
+			response.setHeader("Content-Disposition", "attachment;filename="+URLEncoder.encode(downloadFile.getFileName(), "UTF-8"));
 			response.setContentType("application/octet-stream");
 			ServletOutputStream outputStream = response.getOutputStream();
 			outputStream.write(content);
 			outputStream.flush();
 			outputStream.close();
-			return JsonUtil.successJson();
 		}else {
 			throw new FileNotFoundException("不存在该文件!!!");
 		}

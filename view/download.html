@@ -31,12 +31,12 @@
                     <div class="am-u-sm-11 am-u-sm-centered">
                         <section class="am-panel am-panel-default">
                             <div class="am-panel-hd">
-                                文章目录
+                                文件下载目录
                             </div>
-                            <ul class="am-list blog-list" id="menu">
-                                <li v-for="blog in blogs">
-                                    <a href="javascript:void(0)" target="_blank" v-on:click="viewBlog(blog);">
-                                        {{blog.title}}
+                            <ul class="am-list blog-list" id="file">
+                                <li v-for="file in files">
+                                    <a href="javascript:void(0)" target="_blank" v-on:click="download(file);" >
+                                        {{file.fileName}}
                                         <!--<a href="javascript:void(0)" target="_blank" v-on:click="editBlog(blog);"> 编辑</a>-->
                                     </a>
                                 </li>
@@ -123,29 +123,33 @@
 </script>
 <script type="text/javascript">
     var vm = new Vue({
-        el: "#menu",
+        el: "#file",
         data: function() {
             return {
-                blogs: []
+                files: []
             };
         },
         mounted: function() {
             this.$nextTick(function () {
-                this.init(this.blogs);
+                this.init(this.files);
             })
         },
         methods: {
-            viewBlog(blog) {
-                sessionStorage.setItem("blogId",blog.id);
-                window.location.href = "view.html";   
+            download(file) {
+                //直接执行下载
+                window.location.href = SERVER_URL+"/download/"+file.id;
             },
-            init(value){
-                axios.get(SERVER_URL+"/blogs?isDraft=1",{
+            init(value) {
+                axios.get(SERVER_URL+"/files",{
                    
                 })
                 .then(function(response){
-                    for(var i = 0;i < response.data.blogs.length;i++){
-                        value.push(response.data.blogs[i]);
+                    if(response.data.state == 1) {
+                        for(var i = 0;i < response.data.files.length;i++){
+                            value.push(response.data.files[i]);
+                        }
+                    }else if(response.data.state == 0) {
+                        alert(response.data.msg);
                     }
                  })
                 .catch(function(error){
