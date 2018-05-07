@@ -1,6 +1,6 @@
 url : http://193.112.47.238:8088
 
-update date : 2018-04-25
+update date : 2018-05-07
 
 Author : liuffei
 
@@ -8,7 +8,7 @@ Project : blog
 
 一：这个项目将会使用哪些技术？
 
-(1)后台:maven+springboot+mybatis+redis
+(1)后台:maven+springboot+mybatis+redis+FastDFS
 
 (2)前端:vue+axios+js+amazeui
 
@@ -37,11 +37,13 @@ Project : blog
 
 (10)用环绕通知和异常通知替代每个方法的try{}catch(){}。(2018-04-25)
 
-(11)分布式文件系统FastDFS环境搭建完成。(2018-05-01)
+(11)分布式文件系统FastDFS环境搭建完成。(2018-05-01)基于FastDFS Client API的上传下载功能完成。(2018-05-06)
 
 测试图片:http://193.112.47.238:8090/group1/M00/00/00/rBAAEFroDnyANbpFAAMstKSbgtU845_big.jpg
 
-参考资料:1.https://www.cnblogs.com/yufeng218/p/8111961.html        2.http://bbs.chinaunix.net/forum-240-1.html
+参考资料:1.https://www.cnblogs.com/yufeng218/p/8111961.html        2.http://bbs.chinaunix.net/forum-240-1.html
+
+（12）数据库连接池整合为HikariCP。原来是Tomcat Jdbc,SpringBoot 2.0默认的数据库连接池是HikariCP。(2018-05-07)
 
 三：部署
 
