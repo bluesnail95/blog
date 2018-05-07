@@ -1,5 +1,7 @@
 package gdut.ff;
 
+import javax.sql.DataSource;
+
 import org.apache.coyote.http11.AbstractHttp11Protocol;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,7 +11,10 @@ import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletCon
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+
+import com.zaxxer.hikari.HikariDataSource;
 
 @SpringBootApplication
 @ServletComponentScan
@@ -37,7 +42,16 @@ public class App extends SpringBootServletInitializer{
 	}
 
     public static void main(String[] args) {
-        SpringApplication.run(App.class, args);
+    	ApplicationContext applicationContext = SpringApplication.run(App.class, args);
+    	DataSource dataSource = applicationContext.getBean(DataSource.class);
+        System.out.println("datasource is :" + dataSource);
+        //检查数据库是否是hikari数据库连接池
+        if (!(dataSource instanceof HikariDataSource)) {
+            System.err.println(" Wrong datasource type :" + dataSource.getClass().getCanonicalName());
+            //System.exit(-1);
+        }
+    	
+       
     }
 
 }
