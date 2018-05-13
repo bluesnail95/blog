@@ -82,4 +82,9 @@
   <delete id="deleteBlogById" parameterType="java.lang.String">
       delete from blog where id = #{id,jdbcType=VARCHAR}
   </delete>
+  
+  <!-- 查找最新的一条博客记录 -->
+  <select id="findLastestBlog" resultMap="blogMap">
+  	  select * from blog order by gmt_create desc limit 1;
+  </select>
 </mapper>

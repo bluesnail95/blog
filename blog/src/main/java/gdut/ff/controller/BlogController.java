@@ -112,4 +112,12 @@ public class BlogController extends CommController{
 		return result;
 	}
 	
+	@GetMapping(value = "/blog/lastest")
+	public JSONObject findLastestBlog() {
+		Blog blog = blogServiceImpl.findLastestBlog();
+		JSONObject result = JsonUtil.successJson();
+		result.put("blog", blog);
+		return result;
+	}
+	
 }

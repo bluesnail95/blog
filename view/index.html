@@ -12,6 +12,15 @@
         <meta content="no-siteapp" http-equiv="Cache-Control"/>
         <link href="assets/css/amazeui.min.css" rel="stylesheet"/>
         <link href="assets/css/index.css" rel="stylesheet" type="text/css"/>
+        <style media="screen" type="text/css">
+            /**
+             *处理table的自适应容器,内容的换行
+             */
+            table {
+                table-layout: fixed;
+                word-break:break-all;
+            }
+        </style>
     </head>
 </html>
 <body>
@@ -30,15 +39,12 @@
         <div class="am-u-md-9 am-u-md-push-3">
             <div class="am-g">
                 <div class="am-u-sm-11 am-u-sm-centered">
-                    <div class="am-cf am-article">
-                        标题
-                        <hr class="am-article-divider">
-                            <h2>
-                                正文
-                            </h2>
-                            xxx
-                            <hr class="am-article-divider">
-                            </hr>
+                    <div class="am-cf am-article" id="article-index">
+                        {{blog.title}}
+                        <hr class="am-article-divider"/>
+                        <div v-html="blog.content">
+                            {{blog.content}}
+                        </div>
                         </hr>
                     </div>
                     <hr/>
@@ -121,5 +127,47 @@
 </script>
 <script src="assets/js/comm.js">
 </script>
+<script src="assets/js/markdown.js">
+</script>
 <script type="text/javascript">
+    var vm = new Vue({
+        el: "#article-index",
+        data: function() {
+            return {
+                blog: {
+                    "title": "",
+                    "content": ""
+                }
+            };
+        },
+        created: function() {
+            this.$nextTick(function () {
+                this.init(this.blog);
+            })
+        },
+        //每次渲染完后执行的代码
+        updated:function(){
+            this.$nextTick(function(){
+                var tableEle = document.getElementsByTagName("table");
+                for(var i = 0;i < tableEle.length; i++) {
+                    tableEle[i].className += ' am-table am-table-striped am-table-hover table-main ';
+                }
+            });
+        },
+        methods: {
+            init(blog){
+                axios.get(SERVER_URL+"/blog/lastest",{
+                   
+                })
+                .then(function(response){
+                    blog.title = response.data.blog.title;
+                    blog.content = markdown.toHTML(response.data.blog.content, 'Maruku');
+                })
+                .catch(function(error){
+                    console.log(error);
+                })  
+            }
+        }
+        
+    });
 </script>

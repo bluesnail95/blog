@@ -33,4 +33,7 @@ public interface BlogMapper {
 	
 	@Cacheable
 	public List<Blog> findAllBlog(Blog blog);
+	
+	@Cacheable
+	public Blog findLastestBlog();
 }

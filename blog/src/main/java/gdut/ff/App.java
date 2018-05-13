@@ -1,5 +1,10 @@
 package gdut.ff;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.sql.DataSource;
 
 import org.apache.coyote.http11.AbstractHttp11Protocol;
@@ -9,12 +14,17 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.tomcat.TomcatConnectorCustomizer;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
 
 import com.zaxxer.hikari.HikariDataSource;
+
+import gdut.ff.mydispatcher.MyDispatcherServlet;
 
 @SpringBootApplication
 @ServletComponentScan
@@ -40,6 +50,24 @@ public class App extends SpringBootServletInitializer{
 		});
 		return tomcat;
 	}
+	
+	/**
+	 * 加入自定义的DispatcherServlet
+	 * @return
+	@Bean
+	public ServletRegistrationBean myDispatcherServlet() {
+		ServletRegistrationBean registrationBean = new ServletRegistrationBean(new MyDispatcherServlet());
+		registrationBean.setName("myDispatcherServlet");
+		List<String> mappings = new ArrayList<String>();
+		mappings.add("/myTest/test");
+		registrationBean.setUrlMappings(mappings);
+		registrationBean.setLoadOnStartup(1);
+		Map<String, String> initParameters = new HashMap<String, String>();
+		initParameters.put("contextConfigLocation", "application2.properties");
+		registrationBean.setInitParameters(initParameters);
+		return registrationBean;
+	}
+	*/
 
     public static void main(String[] args) {
     	ApplicationContext applicationContext = SpringApplication.run(App.class, args);
@@ -48,10 +76,7 @@ public class App extends SpringBootServletInitializer{
         //检查数据库是否是hikari数据库连接池
         if (!(dataSource instanceof HikariDataSource)) {
             System.err.println(" Wrong datasource type :" + dataSource.getClass().getCanonicalName());
-            //System.exit(-1);
-        }
-    	
-       
+        } 
     }
 
 }
