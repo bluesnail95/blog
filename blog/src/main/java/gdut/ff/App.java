@@ -24,7 +24,8 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 import com.zaxxer.hikari.HikariDataSource;
 
-import gdut.ff.mydispatcher.MyDispatcherServlet;
+//import com.zaxxer.hikari.HikariDataSource;
+
 
 @SpringBootApplication
 @ServletComponentScan
@@ -51,24 +52,6 @@ public class App extends SpringBootServletInitializer{
 		return tomcat;
 	}
 	
-	/**
-	 * 加入自定义的DispatcherServlet
-	 * @return
-	@Bean
-	public ServletRegistrationBean myDispatcherServlet() {
-		ServletRegistrationBean registrationBean = new ServletRegistrationBean(new MyDispatcherServlet());
-		registrationBean.setName("myDispatcherServlet");
-		List<String> mappings = new ArrayList<String>();
-		mappings.add("/myTest/test");
-		registrationBean.setUrlMappings(mappings);
-		registrationBean.setLoadOnStartup(1);
-		Map<String, String> initParameters = new HashMap<String, String>();
-		initParameters.put("contextConfigLocation", "application2.properties");
-		registrationBean.setInitParameters(initParameters);
-		return registrationBean;
-	}
-	*/
-
     public static void main(String[] args) {
     	ApplicationContext applicationContext = SpringApplication.run(App.class, args);
     	DataSource dataSource = applicationContext.getBean(DataSource.class);
