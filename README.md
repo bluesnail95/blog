@@ -45,7 +45,9 @@ Project : blog
 
 参考资料:1.https://www.cnblogs.com/yufeng218/p/8111961.html        2.http://bbs.chinaunix.net/forum-240-1.html
 
-（12）数据库连接池整合为HikariCP。原来是Tomcat Jdbc,SpringBoot 2.0默认的数据库连接池是HikariCP。(2018-05-07)
+(12)数据库连接池整合为HikariCP。原来是Tomcat Jdbc,SpringBoot 2.0默认的数据库连接池是HikariCP。(2018-05-07)
+
+(13)统计博客的点击量：以(key=id,value=clickCount)的形式存储在map中，定时器每天凌晨3点同步点击次数到数据库。(2018-05-29)
 
 三：部署
 
@@ -53,6 +55,6 @@ Project : blog
 
 (1)前端：nginx作为反向代理服务器。
 
-(2)后台：springboot打的jar,内置的tomcat。
+(2)后台：springboot使用内置的tomcat。
 
 (3)运行在腾讯云centos7.3操作系统。
