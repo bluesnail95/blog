@@ -28,6 +28,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import gdut.ff.domain.Blog;
 import gdut.ff.exception.LoginException;
 import gdut.ff.service.BlogServiceImpl;
+import gdut.ff.utils.Constant;
 import gdut.ff.utils.JsonUtil;
 import gdut.ff.utils.NodeUtil;
 
@@ -54,7 +55,7 @@ public class BlogController extends CommController{
 	public JSONObject insertBlog(@RequestBody Blog blog,HttpServletRequest request) throws Exception {
 		requireAuth(request);
 		//添加blogId的值
-		if(StringUtil.isNotBlank(blog.getId())) {
+		if(null != blog.getId()) {
 			blogServiceImpl.updateBlog(blog);
 		}else {
 			blogServiceImpl.insertBlog(blog);
@@ -68,8 +69,15 @@ public class BlogController extends CommController{
 	 * @return
 	 */
 	@GetMapping(value = "/blog/{id}")
-	public JSONObject findBlogById(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
+	public JSONObject findBlogById(@PathVariable Integer id, HttpServletRequest request, HttpServletResponse response) {
 		Blog blog = blogServiceImpl.fingOneById(id);
+		if(null != blog) {
+			if(Constant.blogCountMap.containsKey(blog.getId())) {
+				Constant.blogCountMap.put(blog.getId(), Constant.blogCountMap.get(blog.getId()) + 1);
+			}else {
+				Constant.blogCountMap.put(blog.getId(), 1);
+			}
+		}
 		JSONObject result = JsonUtil.successJson();
 		result.put("content", blog);
 		return result;
@@ -93,7 +101,7 @@ public class BlogController extends CommController{
 	 * @throws Exception 
 	 */
 	@DeleteMapping(value = "/blog/{id}")
-	public JSONObject deleteBlogById(@PathVariable String id, HttpServletRequest request) throws Exception {
+	public JSONObject deleteBlogById(@PathVariable Integer id, HttpServletRequest request) throws Exception {
 		requireAuth(request);
 		blogServiceImpl.deleteBlogById(id);
 		return JsonUtil.successJson();

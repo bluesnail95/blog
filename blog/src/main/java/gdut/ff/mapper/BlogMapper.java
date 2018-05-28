@@ -1,6 +1,7 @@
 package gdut.ff.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
@@ -23,17 +24,20 @@ public interface BlogMapper {
 	public int insertBlog(Blog blog);
 	
 	@Cacheable
-	public Blog findBlogById(String id);
+	public Blog findBlogById(Integer id);
 	
 	@CachePut(key = "#p0.title")
 	public int updateBlog(Blog blog);
 	
 	@CacheEvict
-	public int deleteBlogById(String id);
+	public int deleteBlogById(Integer id);
 	
 	@Cacheable
 	public List<Blog> findAllBlog(Blog blog);
 	
 	@Cacheable
 	public Blog findLastestBlog();
+	
+	@CachePut
+	public void updateClickCount(Map<String, Integer> param);
 }

@@ -3,7 +3,7 @@
 <mapper namespace="gdut.ff.mapper.BlogMapper">
     
   <resultMap id="blogMap" type="gdut.ff.domain.Blog">
-	  <id column="id" jdbcType="VARCHAR" property="id" />
+	  <id column="id" jdbcType="INTEGER" property="id" />
 	  <result column="blog_id" jdbcType="VARCHAR" property="blogId" />
 	  <result column="title" jdbcType="VARCHAR" property="title" />
 	  <result column="summary" jdbcType="VARCHAR" property="summary" />
@@ -14,6 +14,7 @@
 	  <result column="creator" jdbcType="VARCHAR" property="creator" />
 	  <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
 	  <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+	  <result column="click_count" jdbcType="INTEGER" property="clickCount" />
   </resultMap>
   
   <!-- 插入一条博客记录 -->
@@ -26,18 +27,18 @@
   
   <!-- 查找博客记录 gmt_create, gmt_modified, -->
   <select id="findBlogById" resultMap="blogMap">
-  	  select id,blog_id,title, summary, keywords, classification, creator, content,is_draft 
+  	  select id,blog_id,title, summary, keywords, classification, creator, content,is_draft, click_count 
   	  from blog 
   	  where id = #{id}
   </select>
   
   <select id="findAllBlog" resultMap="blogMap">
-      select id,blog_id,title, summary, keywords, classification, creator, gmt_create, gmt_modified, content,is_draft  
+      select id,blog_id,title, summary, keywords, classification, creator, gmt_create, gmt_modified, content,is_draft, click_count   
       from blog
       where 1 = 1
-          <if test="isDraft != null and isDraft != ''">
-              and is_draft = #{isDraft}
-          </if>
+      <if test="isDraft != null and isDraft != ''">
+          and is_draft = #{isDraft}
+      </if>
   </select>
   
   <!-- 更新博客记录 -->
@@ -74,6 +75,9 @@
 	    <if test="isDraft != null">
 	      is_draft = #{isDraft,jdbcType=CHAR},
 	    </if>
+	    <if test="clickCount != null">
+	      click_count = #{clickCount,jdbcType=CHAR},
+	    </if>
 	  </set>
 	  where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -87,4 +91,8 @@
   <select id="findLastestBlog" resultMap="blogMap">
   	  select * from blog order by gmt_create desc limit 1;
   </select>
+  
+  <update id="updateClickCount" parameterType="map">
+      update blog set click_count = click_count + #{clickCount,jdbcType=INTEGER} where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

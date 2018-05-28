@@ -35,14 +35,14 @@ public class BlogMapperTest {
 	
 	@Test
 	public void testGetBlog() {
-		Blog blog = blogServiceImpl.fingOneById("bb38eab4-2f04-4560-b8c2-6b4a625e7ede");
-		System.out.println(blog);
+		//Blog blog = blogServiceImpl.fingOneById("bb38eab4-2f04-4560-b8c2-6b4a625e7ede");
+		//System.out.println(blog);
 	}
 	
 	@Test
 	public void testInsertBlog() {
 		Blog blog = new Blog();
-		blog.setId(UUID.randomUUID().toString());
+		//blog.setId(UUID.randomUUID().toString());
 		blog.setClassification("后台");
 		blog.setContent("<p>hello,world!!!</p>");
 		blog.setKeywords("java");
@@ -52,7 +52,7 @@ public class BlogMapperTest {
 		blog.setGmtCreate(new Date());
 		blog.setGmtModified(new Date());
 		blogServiceImpl.insertBlog(blog);
-		blogServiceImpl.deleteBlogById("bb38eab4-2f04-4560-b8c2-6b4a625e7ede");
+		//blogServiceImpl.deleteBlogById("bb38eab4-2f04-4560-b8c2-6b4a625e7ede");
 		List<Blog> blogs = blogServiceImpl.findAllBlog(null);
 		if(null != blogs && blogs.size() > 0) {
 			for(int i = 0;i < blogs.size();i++) {
@@ -64,7 +64,7 @@ public class BlogMapperTest {
 	@Test
 	public void testUpdateBlog() {
 		Blog blog = new Blog();
-		blog.setId("bb38eab4-2f04-4560-b8c2-6b4a625e7ede");
+		//blog.setId("bb38eab4-2f04-4560-b8c2-6b4a625e7ede");
 		blog.setClassification("前端");
 		blog.setContent("<p>hello,world!!!</p>");
 		blog.setKeywords("java");

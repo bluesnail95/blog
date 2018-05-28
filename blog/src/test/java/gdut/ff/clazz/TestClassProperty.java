@@ -42,5 +42,13 @@ public class TestClassProperty {
 	    JsonNode jsonNode = NodeUtil.transFromPOJO(user);
 	    System.out.println(jsonNode);
 	}
+	
+	@Test
+	public void testFiestCase() {
+		String name = "ClassName";
+		char[] c = name.toCharArray();
+		c[0] += 32;
+		System.out.println(String.valueOf(c));
+	}
 
 }

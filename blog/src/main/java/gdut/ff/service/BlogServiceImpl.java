@@ -1,16 +1,20 @@
 package gdut.ff.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import gdut.ff.domain.Blog;
 import gdut.ff.mapper.BlogMapper;
+import gdut.ff.utils.Constant;
 
 /**
  * 
@@ -25,13 +29,12 @@ public class BlogServiceImpl {
 	private BlogMapper blogMapper;
 
 	@Transactional(readOnly = true)
-	public Blog fingOneById(String id) {
+	public Blog fingOneById(Integer id) {
 		return blogMapper.findBlogById(id);
 	}
 	
 	public int insertBlog(Blog blog) {
-		blog.setId(UUID.randomUUID().toString());
-		blog.setBlogId(UUID.randomUUID().toString());
+		blog.setBlogId(Constant.dateFormatNow("yyyyMMddHHmmss", new Date()).concat("blog"));
 		blog.setGmtCreate(new Date());
 		blog.setGmtModified(new Date());
 		blog.setIsDraft("0");
@@ -43,7 +46,7 @@ public class BlogServiceImpl {
 		return blogMapper.updateBlog(blog);
 	}
 
-	public int deleteBlogById(String id) {
+	public int deleteBlogById(Integer id) {
 		return blogMapper.deleteBlogById(id);
 	}
 	
@@ -57,4 +60,11 @@ public class BlogServiceImpl {
 		return blogMapper.findLastestBlog();
 	}
 	
+	@Async
+	public void updateClickCount(Integer clickCount, Integer id) {
+		Map<String, Integer> param = new HashMap<String, Integer>();
+		param.put("clickCount", clickCount);
+		param.put("id", id);
+		blogMapper.updateClickCount(param);
+	}
 }

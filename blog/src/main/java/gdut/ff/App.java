@@ -19,6 +19,7 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
@@ -30,6 +31,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @SpringBootApplication
 @ServletComponentScan
 @EnableCaching
+@EnableScheduling
 public class App extends SpringBootServletInitializer{
 	
 	@Override

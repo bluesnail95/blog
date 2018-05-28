@@ -12,8 +12,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  * @author liuffei
  * @date 2018-04-03 update
  */
-@JsonSerialize
-@JsonNaming(PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy.class)
 public class Blog implements Serializable{
 
 	private static final long serialVersionUID = 111111L;
@@ -21,7 +19,7 @@ public class Blog implements Serializable{
 	/**
 	 * 主键
 	 */
-	private String id;
+	private Integer id;
 	
 	/**
 	 * 具有业务标识的博客id
@@ -67,17 +65,22 @@ public class Blog implements Serializable{
 	 * 修改时间
 	 */
 	private Date gmtModified;
-	
+		
 	/**
 	 * 是否是草稿 0 是 1 否
 	 */
 	private String isDraft;
+	
+	/**
+	 * 点击次数
+	 */
+	private Integer clickCount;
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -160,12 +163,21 @@ public class Blog implements Serializable{
 	public void setIsDraft(String isDraft) {
 		this.isDraft = isDraft;
 	}
+	
+	public Integer getClickCount() {
+		return clickCount;
+	}
+
+	public void setClickCount(Integer clickCount) {
+		this.clickCount = clickCount;
+	}
 
 	@Override
 	public String toString() {
 		return "Blog [id=" + id + ", blogId=" + blogId + ", title=" + title + ", summary=" + summary + ", keywords="
 				+ keywords + ", content=" + content + ", classification=" + classification + ", creator=" + creator
-				+ ", gmtCreate=" + gmtCreate + ", gmtModified=" + gmtModified + ", isDraft=" + isDraft + "]";
+				+ ", gmtCreate=" + gmtCreate + ", gmtModified=" + gmtModified + ", isDraft=" + isDraft + ", clickCount="
+				+ clickCount + "]";
 	}
-	
+
 }

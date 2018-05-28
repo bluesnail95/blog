@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.DelayQueue;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,7 +25,7 @@ import gdut.ff.domain.User;
  * @date 2018-02-04
  */
 public class TokenUtil {
-
+	
 	/**
 	 * 获取用户登录token
 	 * @param secret 密钥
@@ -43,15 +44,17 @@ public class TokenUtil {
 		header.put("alg", "HS256");
 		header.put("typ", "JWT");
 		
-		return JWT.create()
+		String token =  JWT.create()
 				.withHeader(header)
 				.withClaim("loginName",user.getLoginName())
 				.withClaim("password", user.getPassword())
 				.withClaim("email", user.getEmail())
 				.withClaim("id", user.getId())
 				.withExpiresAt(expireDate)
-				.withIssuedAt(iatDate)
+				//.withIssuedAt(iatDate)
 				.sign(Algorithm.HMAC256(secret));
+		
+		return token;
 	}
 	
 	/**
@@ -62,9 +65,8 @@ public class TokenUtil {
 	 * @throws Exception
 	 */
 	public static User verifyUser(String token,String secert) throws Exception{
-		JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secert)).build();
-		DecodedJWT jwt = null;
-		jwt = verifier.verify(token);
+		JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secert)).acceptExpiresAt(60).build();
+		DecodedJWT jwt = verifier.verify(token);
 		Map<String,Claim> claims = jwt.getClaims();
 		User user = new User();
 		user.setEmail(claims.get("email").asString());
@@ -73,7 +75,7 @@ public class TokenUtil {
 		user.setLoginName(claims.get("loginName").asString());
 		user.setPassword(claims.get("password").asString());
 		return user;
-		
 	}
 
+	
 }
