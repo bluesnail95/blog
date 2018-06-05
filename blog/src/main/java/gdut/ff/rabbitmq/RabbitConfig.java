@@ -5,10 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 
+ * 创建队列
  * @author liuffei
  * @date 2018-05-31
- */
 @Configuration
 public class RabbitConfig {
 
@@ -17,4 +16,4 @@ public class RabbitConfig {
 		return new Queue("blog");
 	}
 }
-
+*/

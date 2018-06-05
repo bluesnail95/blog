@@ -31,6 +31,7 @@ import gdut.ff.service.BlogServiceImpl;
 import gdut.ff.utils.Constant;
 import gdut.ff.utils.JsonUtil;
 import gdut.ff.utils.NodeUtil;
+import gdut.ff.websocket.BlogWebSocketServer;
 
 /**
  * 用于获取我的博客的数据
@@ -45,6 +46,9 @@ public class BlogController extends CommController{
 	
 	@Value("${blog.user.secret}")
 	private String SECERT;
+	
+	@Autowired
+	private BlogWebSocketServer blogWebSocketServer;
     
 	/**
 	 * 添加博客记录
@@ -60,6 +64,8 @@ public class BlogController extends CommController{
 		}else {
 			blogServiceImpl.insertBlog(blog);
 		}
+		//服务端推送消息
+		blogWebSocketServer.blogServerMessage(blog);
 		return JsonUtil.successJson();
 	}
 	

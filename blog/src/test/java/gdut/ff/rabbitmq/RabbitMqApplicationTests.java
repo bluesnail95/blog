@@ -10,11 +10,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class RabbitMqApplicationTests {
 
-	@Autowired
-	private Sender sender;
+	//@Autowired
+	//private Sender sender;
 	
 	@Test
 	public void blog() {
-		sender.send();
+		//sender.send();
 	}
 }

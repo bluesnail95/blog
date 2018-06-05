@@ -22,6 +22,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -32,6 +34,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @ServletComponentScan
 @EnableCaching
 @EnableScheduling
+@EnableWebSocket  
 public class App extends SpringBootServletInitializer{
 	
 	@Override
