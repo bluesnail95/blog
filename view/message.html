@@ -12,6 +12,8 @@
         <meta content="no-siteapp" http-equiv="Cache-Control"/>
         <link href="assets/css/amazeui.min.css" rel="stylesheet"/>
         <link href="assets/css/index.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
     </head>
     <body>
         <header class="am-g my-head">
@@ -33,6 +35,8 @@
                             <div class="am-panel-hd">
                                 留言
                             </div>
+                            <div id="container"></div>
+                            <!--
                             <ul class="am-comments-list">
                                 <li class="am-comment">
                                     <a href="#link-to-user-home">
@@ -83,6 +87,7 @@
                                     </div>
                                 </li>
                             </ul>
+                            -->
                         </section>
                     </div>
                 </div>
@@ -161,4 +166,17 @@
 <script src="assets/js/axios.min.js">
 </script>
 <script src="assets/js/comm.js">
+</script>
+<script type="text/javascript">
+    var gitment = new Gitment({
+        //id: '页面 ID', // 可选。默认为 location.href
+        owner: 'bluesnail95',
+        repo: 'blog',
+        oauth: {
+            client_id: 'c6bfad08847b686cabdb',
+            client_secret: '540dc354c4b7889a0123f3a3b1ff266e68e08521',
+        },
+    })
+    gitment.render('container')
+
 </script>
