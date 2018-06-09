@@ -1,6 +1,8 @@
 package gdut.ff.controller;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +28,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import gdut.ff.domain.Blog;
+import gdut.ff.domain.Message;
 import gdut.ff.exception.LoginException;
 import gdut.ff.service.BlogServiceImpl;
 import gdut.ff.utils.Constant;
@@ -65,7 +68,14 @@ public class BlogController extends CommController{
 			blogServiceImpl.insertBlog(blog);
 		}
 		//服务端推送消息
-		blogWebSocketServer.blogServerMessage(blog);
+		JSONObject blogJson = new JSONObject();
+		blogJson.put("blog", blog);
+		Message message = new Message();
+		message.setGmtCreate(new Date());
+		message.setGmtModified(new Date());
+		message.setMessageId("blog" + Constant.dateFormatNow("yyyyMMddHHmmss", new Date()));
+		message.setMessageContent(blogJson.toJSONString());
+		blogWebSocketServer.blogServerMessage(message);
 		return JsonUtil.successJson();
 	}
 	

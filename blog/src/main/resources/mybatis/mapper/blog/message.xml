@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gdut.ff.mapper.MessageMapper">
+
+  <resultMap id="messageMap" type="gdut.ff.domain.Message">
+	  <result column="id" property="id" jdbcType="INTEGER" javaType="int"/>
+	  <result column="message_id" property="messageId" jdbcType="VARCHAR" javaType="String"/>
+	  <result column="message_content" property="messageContent" jdbcType="VARCHAR" javaType="String"/>
+	  <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+	  <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+  </resultMap>
+  
+  <!-- 插入一条记录 -->
+  <insert id="insertMessage" parameterType="gdut.ff.domain.Message">
+	  insert into message (id,message_id,message_content,gmt_create,gmt_modified,)
+	  values (#{id},#{messageId},#{messageContent},#{gmtCreate},#{gmtModified},)
+  </insert>
+  
+  <!-- 查找记录 -->
+  <select id="findMessageById" resultMap="messageMap">
+  	  select id,message_id,message_content,gmt_create,gmt_modified,
+  	  from message
+  </select>
+  
+   <!-- 查找全部记录 -->
+  <select id="findAllMessage" resultMap="messageMap">
+      select id,message_id,message_content,gmt_create,gmt_modified,  
+      from message
+      where 1 = 1
+      <if test = "id != null and id != ''">
+          and id = #{id}
+      </if>
+      <if test = "messageId != null and messageId != ''">
+          and message_id = #{messageId}
+      </if>
+      <if test = "messageContent != null and messageContent != ''">
+          and message_content = #{messageContent}
+      </if>
+      <if test = "gmtCreate != null and gmtCreate != ''">
+          and gmt_create = #{gmtCreate}
+      </if>
+      <if test = "gmtModified != null and gmtModified != ''">
+          and gmt_modified = #{gmtModified}
+      </if>
+  </select>
+  
+  <!-- 更新记录-->
+  <update id="updateMessage" parameterType="gdut.ff.domain.Message">
+	  update message
+	  <set>
+      <if test = "id != null and id != ''">
+          id = #{id},
+       </if>
+      <if test = "messageId != null and messageId != ''">
+          message_id = #{messageId},
+       </if>
+      <if test = "messageContent != null and messageContent != ''">
+          message_content = #{messageContent},
+       </if>
+      <if test = "gmtCreate != null and gmtCreate != ''">
+          gmt_create = #{gmtCreate},
+       </if>
+      <if test = "gmtModified != null and gmtModified != ''">
+          gmt_modified = #{gmtModified},
+       </if>
+	  </set>
+	  <where>
+	      id = ${id}
+	  </where>
+  </update>
+  
+  <!-- 删除记录 -->
+  <delete id="deletemessageById" parameterType="int">
+      delete from message where id = #{id}
+  </delete>
+</mapper>

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
-import gdut.ff.domain.Blog;
+import gdut.ff.domain.Message;
 
 /**
  * @date 2018-06-05
@@ -17,8 +17,8 @@ public class BlogWebSocketServer {
 	@Autowired
 	private SimpMessagingTemplate messagingTemplate;
 	
-	public void blogServerMessage(Blog blog) {
-		messagingTemplate.convertAndSend("/topic/subscribe", blog);
+	public void blogServerMessage(Message message) {
+		messagingTemplate.convertAndSend("/topic/subscribe", message);
 	}
 	
 }

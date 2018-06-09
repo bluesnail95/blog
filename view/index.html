@@ -25,12 +25,15 @@
 </html>
 <body>
     <header class="am-g my-head">
-        <div class="am-u-sm-12 am-article">
+        <div class="am-u-sm-8 am-u-sm-centered">
             <h1 class="am-article-title">
                 liuffei's blog
             </h1>
             <p class="am-article-meta">
-                liuffei(GuangZhou)
+                <div class="am-form-inline">
+                    <input type="text" class="am-form-field" placeholder="关键字"/>
+                    <button type="submit" class="am-btn am-btn-default">搜索</button>
+                </div>
             </p>
             <!--websocket测试-->
             <div id="main">  
@@ -192,8 +195,10 @@
             // 连接成功时（服务器响应 CONNECTED 帧）的回调方法
             setMessageInnerHTML("连接成功");
             stompClient.subscribe('/topic/subscribe', function (response) {
+                debugger
                 var returnData = JSON.parse(response.body);
-                setMessageInnerHTML("博主于:" + new Date(returnData.gmtModified) + "更新了博客《" + returnData.title + "》");
+                var blogData = JSON.parse(returnData.messageContent);
+                setMessageInnerHTML("博主于:" + new Date(returnData.gmtModified) + "更新了博客《" + blogData.blog.title + "》");
             });
         },
         function errorCallBack(error) {
