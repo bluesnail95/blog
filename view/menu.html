@@ -34,11 +34,16 @@
                                 文章目录
                             </div>
                             <ul class="am-list blog-list" id="menu">
-                                <li v-for="blog in blogs">
+                                <li v-for="blog in blogs">                           
                                     <a href="javascript:void(0)" target="_blank" v-on:click="viewBlog(blog);">
                                         {{blog.title}}
                                         <!--<a href="javascript:void(0)" target="_blank" v-on:click="editBlog(blog);"> 编辑</a>-->
                                     </a>
+                                    <!--
+                                    <p>关键词:{{blog.keyword}}</p>
+                                    <p>简介:{{blog.summary}}</p>
+                                    <p style="text-align: right">点击量：【{{blog.clickCount}}】 &nbsp;&nbsp;发布于:{{blog.gmtCreate}}</p> 
+                                    -->
                                 </li>
                             </ul>
                         </section>

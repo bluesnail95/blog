@@ -11,6 +11,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Value;
+
 /**
  * 
  * @author liuffei
@@ -18,6 +20,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebFilter(urlPatterns = "/*")
 public class HttpFilter implements Filter {
+	
+	@Value("${filter.url}")
+	private String filterUrl;
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -28,8 +33,7 @@ public class HttpFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletResponse res = (HttpServletResponse) response;
-        res.addHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8088");
-        res.addHeader("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT");
+		res.addHeader("Access-Control-Allow-Origin", filterUrl);
         res.addHeader("Allow", "GET, POST, DELETE, PUT");
         res.addHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, token");
         res.setCharacterEncoding("UTF-8");

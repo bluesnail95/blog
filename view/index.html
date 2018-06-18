@@ -183,7 +183,7 @@
 <script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script>
     // 建立连接对象（还未发起连接）
-    var socket = new SockJS("http://localhost:8081/webSocketServer");
+    var socket = new SockJS(SERVER_URL+"/webSocketServer");
 
     // 获取 STOMP 子协议的客户端对象
     var stompClient = Stomp.over(socket);
@@ -193,9 +193,8 @@
         {},
         function connectCallback(frame) {
             // 连接成功时（服务器响应 CONNECTED 帧）的回调方法
-            setMessageInnerHTML("连接成功");
+            //setMessageInnerHTML("连接成功");
             stompClient.subscribe('/topic/subscribe', function (response) {
-                debugger
                 var returnData = JSON.parse(response.body);
                 var blogData = JSON.parse(returnData.messageContent);
                 setMessageInnerHTML("博主于:" + new Date(returnData.gmtModified) + "更新了博客《" + blogData.blog.title + "》");
