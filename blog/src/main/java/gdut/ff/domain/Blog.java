@@ -75,6 +75,11 @@ public class Blog implements Serializable{
 	 * 点击次数
 	 */
 	private Integer clickCount;
+	
+	/**
+	 * 用于目录的图片
+	 */
+	private String img;
 
 	public Integer getId() {
 		return id;
@@ -171,13 +176,21 @@ public class Blog implements Serializable{
 	public void setClickCount(Integer clickCount) {
 		this.clickCount = clickCount;
 	}
+	
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
 
 	@Override
 	public String toString() {
 		return "Blog [id=" + id + ", blogId=" + blogId + ", title=" + title + ", summary=" + summary + ", keywords="
 				+ keywords + ", content=" + content + ", classification=" + classification + ", creator=" + creator
 				+ ", gmtCreate=" + gmtCreate + ", gmtModified=" + gmtModified + ", isDraft=" + isDraft + ", clickCount="
-				+ clickCount + "]";
+				+ clickCount + ", img=" + img + "]";
 	}
 
 }

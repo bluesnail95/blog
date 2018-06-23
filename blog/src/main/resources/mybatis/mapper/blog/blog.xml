@@ -15,25 +15,26 @@
 	  <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
 	  <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
 	  <result column="click_count" jdbcType="INTEGER" property="clickCount" />
+	  <result column="img" jdbcType="VARCHAR" property="img" />
   </resultMap>
   
   <!-- 插入一条博客记录 -->
   <insert id="insertBlog" parameterType="gdut.ff.domain.Blog">
-	  insert into blog (id,blog_id,title, summary, keywords, classification, creator, gmt_create, gmt_modified, content,is_draft)
+	  insert into blog (id,blog_id,title, summary, keywords, classification, creator, gmt_create, gmt_modified, content,is_draft,img)
 	  values (#{id,jdbcType=VARCHAR},#{blogId,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR}, 
 	    #{classification,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
-	    #{gmtModified,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARBINARY},#{isDraft,jdbcType=CHAR})
+	    #{gmtModified,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARBINARY},#{isDraft,jdbcType=CHAR},#{img,jdbcType=VARCHAR})
   </insert>
   
   <!-- 查找博客记录 gmt_create, gmt_modified, -->
   <select id="findBlogById" resultMap="blogMap">
-  	  select id,blog_id,title, summary, keywords, classification, creator, content,is_draft, click_count 
+  	  select id,blog_id,title, summary, keywords, classification, creator, content,is_draft, click_count, img
   	  from blog 
   	  where id = #{id}
   </select>
   
   <select id="findAllBlog" resultMap="blogMap">
-      select id,blog_id,title, summary, keywords, classification, creator, gmt_create, gmt_modified, content,is_draft, click_count   
+      select id,blog_id,title, summary, keywords, classification, creator, gmt_create, gmt_modified, content,is_draft, click_count, img 
       from blog
       where 1 = 1
       <if test="isDraft != null and isDraft != ''">
@@ -77,6 +78,9 @@
 	    </if>
 	    <if test="clickCount != null">
 	      click_count = #{clickCount,jdbcType=CHAR},
+	    </if>
+	    <if test="img != null">
+	      img = #{img,jdbcType=VARCHAR},
 	    </if>
 	  </set>
 	  where id = #{id,jdbcType=VARCHAR}
