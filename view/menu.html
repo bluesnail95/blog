@@ -25,31 +25,35 @@
             </div>
         </header>
         <hr class="am-article-divider"/>
-        <div class="am-g am-g-fixed">
-            <div class="am-u-md-9 am-u-md-push-3">
-                <div class="am-g">
-                    <div class="am-u-sm-11 am-u-sm-centered">
-                        <section class="am-panel am-panel-default">
-                            <div class="am-panel-hd">
-                                文章目录
+        <div class="am-g am-g-fixed"">
+            <div class="am-u-md-9 am-u-md-push-3 ">
+                <ul class="am-list blog-list" id="menu">
+                    <li v-for="blog in blogs">
+                        <div class="am-g am-margin-top">
+                            <div class="am-u-sm-12 am-u-md-3">
+                                <a href="javascript:void(0)" target="_blank" v-on:click="viewBlog(blog);">
+                                    <img alt="blog.title" class="am-img-thumbnail" style="width:200px;height:150px;" src="http://193.112.47.238:8090/group1/M00/00/00/rBAAEFroDnyANbpFAAMstKSbgtU845_big.jpg"/>
+                                </a>
                             </div>
-                            <ul class="am-list blog-list" id="menu">
-                                <li v-for="blog in blogs">                           
+                            <div class="am-u-sm-12 am-u-md-9">
+                                <h3>
                                     <a href="javascript:void(0)" target="_blank" v-on:click="viewBlog(blog);">
                                         {{blog.title}}
-                                        <!--<a href="javascript:void(0)" target="_blank" v-on:click="editBlog(blog);"> 编辑</a>-->
                                     </a>
-                                    <!--
-                                    <p>关键词:{{blog.keyword}}</p>
-                                    <p>简介:{{blog.summary}}</p>
-                                    <p style="text-align: right">点击量：【{{blog.clickCount}}】 &nbsp;&nbsp;发布于:{{blog.gmtCreate}}</p> 
-                                    -->
-                                </li>
-                            </ul>
-                        </section>
-                        <hr/>
-                    </div>
-                </div>
+                                </h3>
+                                <p class="am-list-item-text pet_list_one_text">
+                                    浏览量： <span class="am-badge am-badge-success">{{blog.clickCount}}</span>&nbsp;&nbsp;
+                                    发布于: <span class="am-badge am-badge-success">{{blog.gmtCreate}}</span>&nbsp;&nbsp;
+                                    关键词： <span class="am-badge am-badge-primary">{{blog.keywords}}</span>
+                                </p>
+                                <br/>
+                                <p class="am-list-item-text pet_list_one_text">
+                                    {{blog.summary}}
+                                </p>          
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
             <div class="am-u-md-3 am-u-md-pull-9 my-sidebar">
                 <div class="am-offcanvas" id="sidebar">
