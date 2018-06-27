@@ -1,6 +1,6 @@
-网站 ：http://193.112.47.238:8088
+网站 ：http://193.112.47.238
 
-后台管理系统：http://193.112.47.238:8088/admin/admin-blog.html
+后台管理系统：http://193.112.47.238/admin/admin-blog.html
 
 update date : 2018-05-13
 
