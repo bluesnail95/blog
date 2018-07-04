@@ -12,6 +12,52 @@
         <meta content="no-siteapp" http-equiv="Cache-Control"/>
         <link href="assets/css/amazeui.min.css" rel="stylesheet"/>
         <link href="assets/css/index.css" rel="stylesheet" type="text/css"/>
+        <style type="text/css">
+            .fileDiv{
+                position: relative;
+                width: 100%;
+                padding: 1%;
+                overflow: hidden;
+                margin-bottom: 1rem;
+                margin-top: 1rem;
+            }
+            .fileBgColor {
+                background-color: #e5fff3 !important;
+            }
+            .ng-binding {
+                /*font-size: 1.8rem;*/
+                color: #1fa86b;
+            }
+            .describe {
+                font-size: 1.1rem;
+                color: #000;
+            }
+            .fileDiv ul {
+                float: left;
+                width: 48%;
+                margin: 1%;
+                height: 8rem;
+                border-radius: 1rem;
+                background-color: #f9f9f9;
+                padding-left: 1rem;
+            }
+            .fileDiv ul div {
+                float: left;
+                margin: 1.85rem .3rem;
+            }
+            .fileDiv ul a img {
+                width: 6rem;
+                height: auto;
+                vertical-align: middle;
+                margin: 1rem .5rem 1rem 1rem;
+                float: left;
+            }
+            .downloadTitle {
+                padding: 0rem 1rem 0rem 1rem;
+                border-bottom: 2px solid #93afa2;
+                margin: 0 1rem 0 1rem;
+            }
+        </style>
     </head>
     <body>
         <header class="am-g my-head">
@@ -29,20 +75,22 @@
             <div class="am-u-md-9 am-u-md-push-3">
                 <div class="am-g">
                     <div class="am-u-sm-11 am-u-sm-centered">
-                        <section class="am-panel am-panel-default">
-                            <div class="am-panel-hd">
-                                文件下载目录
-                            </div>
-                            <ul class="am-list blog-list" id="file">
-                                <li v-for="file in files">
-                                    <a href="javascript:void(0)" target="_blank" v-on:click="download(file);" >
-                                        {{file.fileName}}
-                                        <!--<a href="javascript:void(0)" target="_blank" v-on:click="editBlog(blog);"> 编辑</a>-->
-                                    </a>
-                                </li>
+                        <div class="downloadTitle">
+                           <p>下载目录</p>
+                        </div>
+                        <div class="fileDiv" class="am-list blog-list" id="file">
+                            <ul class="fileBgColor" v-for="(file,index) in files">
+                                <a href="javascript:void(0)" target="_blank" v-on:click="download(file);" >
+                                    <img src="assets/img/download/text.png"/>
+                                </a>
+                                <div style='width: 180px;display: block;word-break: break-all;word-wrap: break-word;'>
+                                    <span class="ng-binding">
+                                        <p>{{file.fileName}}</p>
+                                    </span>
+                                    <br/>
+                                </div>
                             </ul>
-                        </section>
-                        <hr/>
+                        </div>
                     </div>
                 </div>
             </div>
