@@ -9,8 +9,8 @@
 	  <result column="summary" jdbcType="VARCHAR" property="summary" />
 	  <result column="keywords" jdbcType="VARCHAR" property="keywords" />
 	  <result column="content" jdbcType="LONGVARBINARY" property="content" />
-	  <result column="classification" jdbcType="VARCHAR" property="classification" />
-	  <result column="is_draft" jdbcType="CHAR" property="classification" />
+	  <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
+	  <result column="is_draft" jdbcType="CHAR" property="isDraft" />
 	  <result column="creator" jdbcType="VARCHAR" property="creator" />
 	  <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
 	  <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
@@ -18,23 +18,35 @@
 	  <result column="img" jdbcType="VARCHAR" property="img" />
   </resultMap>
   
+  <!-- 包含content字段的属性片段  -->
+  <sql id="fieldWithContent">
+      id, blog_id, title, summary, category_id, creator, gmt_create, gmt_modified, 
+      content, is_draft, click_count, img 
+  </sql>
+  
+  <!-- 不包含content字段的属性片段  -->
+  <sql id="fieldWithNoContent">
+      id, blog_id, title, summary, category_id, creator, gmt_create, gmt_modified, 
+      is_draft, click_count, img 
+  </sql>
+  
   <!-- 插入一条博客记录 -->
   <insert id="insertBlog" parameterType="gdut.ff.domain.Blog">
-	  insert into blog (id,blog_id,title, summary, keywords, classification, creator, gmt_create, gmt_modified, content,is_draft,img)
+	  insert into blog (id,blog_id,title, summary, keywords, category_id, creator, gmt_create, gmt_modified, content,is_draft,img)
 	  values (#{id,jdbcType=VARCHAR},#{blogId,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR}, 
-	    #{classification,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+	    #{categoryId,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
 	    #{gmtModified,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARBINARY},#{isDraft,jdbcType=CHAR},#{img,jdbcType=VARCHAR})
   </insert>
   
   <!-- 查找博客记录 gmt_create, gmt_modified, -->
   <select id="findBlogById" resultMap="blogMap">
-  	  select id,blog_id,title, summary, keywords, classification, creator, content,is_draft, click_count, img
+  	  select <include refid="fieldWithContent"></include>
   	  from blog 
   	  where id = #{id}
   </select>
   
   <select id="findAllBlog" resultMap="blogMap">
-      select id,blog_id,title, summary, keywords, classification, creator, gmt_create, gmt_modified, content,is_draft, click_count, img 
+      select <include refid="fieldWithNoContent"></include>
       from blog
       where 1 = 1
       <if test="isDraft != null and isDraft != ''">
@@ -55,11 +67,8 @@
 	    <if test="summary != null">
 	      summary = #{summary,jdbcType=VARCHAR},
 	    </if>
-	    <if test="keywords != null">
-	      keywords = #{keywords,jdbcType=VARCHAR},
-	    </if>
-	    <if test="classification != null">
-	      classification = #{classification,jdbcType=VARCHAR},
+	    <if test="category_id != null">
+	      category_id = #{categoryId,jdbcType=VARCHAR},
 	    </if>
 	    <if test="creator != null">
 	      creator = #{creator,jdbcType=VARCHAR},
@@ -93,10 +102,12 @@
   
   <!-- 查找最新的一条博客记录 -->
   <select id="findLastestBlog" resultMap="blogMap">
-  	  select * from blog order by gmt_create desc limit 1;
+  	  select id,title,content from blog order by gmt_create desc limit 1;
   </select>
   
   <update id="updateClickCount" parameterType="map">
-      update blog set click_count = click_count + #{clickCount,jdbcType=INTEGER} where id = #{id,jdbcType=INTEGER}
+      update blog 
+      set click_count = click_count + #{clickCount,jdbcType=INTEGER} 
+      where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

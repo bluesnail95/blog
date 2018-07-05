@@ -37,7 +37,6 @@ public class TestRedis {
 	public void testObj() throws Exception {
 		Blog blog = new Blog();
 		blog.setBlogId("1");
-		blog.setClassification("java后台");
 		blog.setContent("哈哈");
 		ValueOperations<String, Blog> operations = redisTemplate.opsForValue();
 		operations.set("www.liuffei", blog);

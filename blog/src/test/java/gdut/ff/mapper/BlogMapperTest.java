@@ -43,9 +43,7 @@ public class BlogMapperTest {
 	public void testInsertBlog() {
 		Blog blog = new Blog();
 		//blog.setId(UUID.randomUUID().toString());
-		blog.setClassification("后台");
 		blog.setContent("<p>hello,world!!!</p>");
-		blog.setKeywords("java");
 		blog.setSummary("一个简单的测试");
 		blog.setTitle("测试");
 		blog.setCreator("liuffei");
@@ -65,9 +63,7 @@ public class BlogMapperTest {
 	public void testUpdateBlog() {
 		Blog blog = new Blog();
 		//blog.setId("bb38eab4-2f04-4560-b8c2-6b4a625e7ede");
-		blog.setClassification("前端");
 		blog.setContent("<p>hello,world!!!</p>");
-		blog.setKeywords("java");
 		blog.setSummary("一个简单的测试");
 		blog.setTitle("测试");
 		blog.setCreator("liuffei");

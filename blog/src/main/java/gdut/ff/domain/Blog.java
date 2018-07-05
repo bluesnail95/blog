@@ -37,11 +37,6 @@ public class Blog implements Serializable{
 	private String summary;
 	
 	/**
-	 * 关键词
-	 */
-	private String keywords;
-	
-	/**
 	 * 正文
 	 */
 	private String content;
@@ -49,7 +44,7 @@ public class Blog implements Serializable{
 	/**
 	 * 分类
 	 */
-	private String classification;
+	private String categoryId;
 	
 	/**
 	 * 创建者
@@ -105,14 +100,6 @@ public class Blog implements Serializable{
 		this.summary = summary;
 	}
 
-	public String getKeywords() {
-		return keywords;
-	}
-
-	public void setKeywords(String keywords) {
-		this.keywords = keywords;
-	}
-
 	public String getContent() {
 		return content;
 	}
@@ -121,12 +108,12 @@ public class Blog implements Serializable{
 		this.content = content;
 	}
 
-	public String getClassification() {
-		return classification;
+	public String getCategoryId() {
+		return categoryId;
 	}
 
-	public void setClassification(String classification) {
-		this.classification = classification;
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	public String getCreator() {
@@ -187,10 +174,10 @@ public class Blog implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Blog [id=" + id + ", blogId=" + blogId + ", title=" + title + ", summary=" + summary + ", keywords="
-				+ keywords + ", content=" + content + ", classification=" + classification + ", creator=" + creator
-				+ ", gmtCreate=" + gmtCreate + ", gmtModified=" + gmtModified + ", isDraft=" + isDraft + ", clickCount="
-				+ clickCount + ", img=" + img + "]";
+		return "Blog [id=" + id + ", blogId=" + blogId + ", title=" + title + ", summary=" + summary + ", content="
+				+ content + ", categoryId=" + categoryId + ", creator=" + creator + ", gmtCreate=" + gmtCreate
+				+ ", gmtModified=" + gmtModified + ", isDraft=" + isDraft + ", clickCount=" + clickCount + ", img="
+				+ img + "]";
 	}
 
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gdut.ff.mapper.CategoryMapper">
+    
+  <resultMap id="categoryMap" type="gdut.ff.domain.Category">
+	  <id column="id" jdbcType="INTEGER" property="id" />
+	  <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
+	  <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+	  <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+	  <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  
+  <sql id="categoryField">
+      id, category_id, category_name, gmt_create, gmt_modified
+  </sql>
+  
+  <!-- 插入一条文章分类记录 -->
+  <insert id="insertCategory" parameterType="gdut.ff.domain.Category">
+	  insert into category (<include refid="categoryField"></include>)
+	  values (#{id,jdbcType=INTEGER},#{categoryId,jdbcType=VARCHAR},#{categoryName,jdbcType=VARCHAR},
+	      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <!-- 查找文章分类记录 gmt_create, gmt_modified, -->
+  <select id="findCategoryById" resultMap="categoryMap">
+  	  select <include refid="categoryField"></include>
+  	  from category 
+  	  where id = #{id}
+  </select>
+  
+  <select id="findAllCategory" resultMap="categoryMap">
+      select <include refid="categoryField"></include>
+      from category
+      where 1 = 1
+  </select>
+  
+  <!-- 更新文章分类记录 -->
+  <update id="updateCategory" parameterType="gdut.ff.domain.Category">
+	  update category
+	  <set>
+	    <if test="categoryId != null">
+	      category_id = #{categoryId,jdbcType=VARCHAR},
+	    </if>
+	    <if test="categoryName != null">
+	      category_name= #{categoryName,jdbcType=VARCHAR},
+	    </if>
+	    <if test="gmtCreate != null">
+	      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+	    </if>
+	    <if test="gmtModified != null">
+	      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+	    </if>
+	  </set>
+	  where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 删除文章分类记录 -->
+  <delete id="deleteCategoryById" parameterType="int">
+      delete from category where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+</mapper>
