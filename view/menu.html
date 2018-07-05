@@ -135,17 +135,20 @@
         el: "#menu",
         data: function() {
             return {
-                blogs: []
+                blogs: [],
+                categorys: {}
             };
         },
         mounted: function() {
             this.$nextTick(function () {
+                this.loadAllCategory(this.categorys);
                 this.init(this.blogs);
             })
         },
         filters: {
             categoryFormat: function(value) {
-                return "test";
+                //这里使用this.categorys[value]不起作用
+                return vm.categorys[value];
             }
         },
         methods: {
@@ -153,13 +156,30 @@
                 sessionStorage.setItem("blogId",blog.id);
                 window.location.href = "view.html";   
             },
-            init(value){
+            init(value) {
                 axios.get(SERVER_URL+"/blogs?isDraft=1",{
                    
                 })
                 .then(function(response){
                     for(var i = 0;i < response.data.blogs.length;i++){
                         value.push(response.data.blogs[i]);
+                    }
+                 })
+                .catch(function(error){
+                    console.log(error);
+                })  
+            },
+            loadAllCategory(value) {
+                axios.get(SERVER_URL+"/categorys",{
+                   
+                })
+                .then(function(response){
+                    //转换成{"Java":"Java","Other":"其他"，"Thread":"线程"}
+                    for(var i = 0;i < response.data.categorys.length;i++){
+                        var category = response.data.categorys[i];
+                        var categoryId = category["categoryId"];
+                        var categoryName = category["categoryName"];
+                        value[categoryId] = categoryName;
                     }
                  })
                 .catch(function(error){
