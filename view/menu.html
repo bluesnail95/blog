@@ -43,8 +43,8 @@
                                 </h3>
                                 <p class="am-list-item-text pet_list_one_text">
                                     浏览量： <span class="am-badge am-badge-success">{{blog.clickCount}}</span>&nbsp;&nbsp;
-                                    发布于: <span class="am-badge am-badge-success">{{blog.gmtCreate}}</span>&nbsp;&nbsp;
-                                    关键词： <span class="am-badge am-badge-primary">{{blog.categoryId|categoryFormat}}</span>
+                                    发布于: <span class="am-badge am-badge-success">{{blog.gmtCreate|timeFormat}}</span>&nbsp;&nbsp;
+                                    分类： <span class="am-badge am-badge-primary">{{blog.categoryId|categoryFormat}}</span>
                                 </p>
                                 <br/>
                                 <p class="am-list-item-text pet_list_one_text">
@@ -149,6 +149,10 @@
             categoryFormat: function(value) {
                 //这里使用this.categorys[value]不起作用
                 return vm.categorys[value];
+            },
+            timeFormat: function(value) {
+                var date = new Date(value);
+                return (1900+date.getYear())+"-"+date.getMonth()+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
             }
         },
         methods: {
