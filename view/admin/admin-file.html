@@ -17,9 +17,9 @@
     </head>
     <body>
         <!--[if lte IE 9]>
-		<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
-		  以获得更好的体验！</p>
-		<![endif]-->
+        <p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+        以获得更好的体验！</p>
+        <![endif]-->
         <header class="am-topbar am-topbar-inverse admin-header">
             <div class="am-topbar-brand">
                 <strong>
@@ -167,65 +167,21 @@
                     <div class="am-cf am-padding am-padding-bottom-0">
                         <div class="am-fl am-cf">
                             <strong class="am-text-primary am-text-lg">
-                                表格
+                                博客管理
                             </strong>
                             /
                             <small>
-                                Table
+                                Blog management
                             </small>
                         </div>
                     </div>
                     <hr/>
                     <div class="am-g">
-                        <div class="am-u-sm-12 am-u-md-6">
-                            <div class="am-btn-toolbar">
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <button class="am-btn am-btn-default" type="button">
-                                        <span class="am-icon-plus">
-                                        </span>
-                                        新增
-                                    </button>
-                                    <button class="am-btn am-btn-default" type="button">
-                                        <span class="am-icon-save">
-                                        </span>
-                                        保存
-                                    </button>
-                                    <button class="am-btn am-btn-default" type="button">
-                                        <span class="am-icon-archive">
-                                        </span>
-                                        审核
-                                    </button>
-                                    <button class="am-btn am-btn-default" type="button">
-                                        <span class="am-icon-trash-o">
-                                        </span>
-                                        删除
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
                         <div class="am-u-sm-12 am-u-md-3">
                             <div class="am-form-group">
                                 <select data-am-selected="{btnSize: 'sm'}">
                                     <option value="option1">
                                         所有类别
-                                    </option>
-                                    <option value="option2">
-                                        IT业界
-                                    </option>
-                                    <option value="option3">
-                                        数码产品
-                                    </option>
-                                    <option value="option3">
-                                        笔记本电脑
-                                    </option>
-                                    <option value="option3">
-                                        平板电脑
-                                    </option>
-                                    <option value="option3">
-                                        只能手机
-                                    </option>
-                                    <option value="option3">
-                                        超极本
                                     </option>
                                 </select>
                             </div>
@@ -244,123 +200,103 @@
                     </div>
                     <div class="am-g">
                         <div class="am-u-sm-12">
-                            <form class="am-form">
-                                <table class="am-table am-table-striped am-table-hover table-main">
-                                    <thead>
-                                        <tr>
-                                            <th class="table-check">
-                                                <input type="checkbox"/>
-                                            </th>
-                                            <th class="table-id">
-                                                ID
-                                            </th>
-                                            <th class="table-title">
-                                                标题
-                                            </th>
-                                            <th class="table-type">
-                                                类别
-                                            </th>
-                                            <th class="table-author am-hide-sm-only">
-                                                作者
-                                            </th>
-                                            <th class="table-date am-hide-sm-only">
-                                                修改日期
-                                            </th>
-                                            <th class="table-set">
-                                                操作
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <input type="checkbox"/>
-                                            </td>
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>
-                                                <a href="#">
-                                                    Business management
-                                                </a>
-                                            </td>
-                                            <td>
-                                                default
-                                            </td>
-                                            <td class="am-hide-sm-only">
-                                                测试1号
-                                            </td>
-                                            <td class="am-hide-sm-only">
-                                                2014年9月4日 7:28:47
-                                            </td>
-                                            <td>
-                                                <div class="am-btn-toolbar">
-                                                    <div class="am-btn-group am-btn-group-xs">
-                                                        <button class="am-btn am-btn-default am-btn-xs am-text-secondary">
-                                                            <span class="am-icon-pencil-square-o">
-                                                            </span>
-                                                            编辑
-                                                        </button>
-                                                        <button class="am-btn am-btn-default am-btn-xs am-hide-sm-only">
-                                                            <span class="am-icon-copy">
-                                                            </span>
-                                                            复制
-                                                        </button>
-                                                        <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
-                                                            <span class="am-icon-trash-o">
-                                                            </span>
-                                                            删除
-                                                        </button>
-                                                    </div>
+                            <table class="am-table am-table-striped am-table-hover table-main" id="admin-files">
+                                <thead>
+                                    <tr>
+                                        <th class="table-check">
+                                            <input type="checkbox"/>
+                                        </th>
+                                        <th class="table-id am-hide-sm-only">
+                                            文件编号
+                                        </th>
+                                        <th class="table-title">
+                                            文件名
+                                        </th>
+                                        <th class="table-type am-hide-sm-only">
+                                            下载量
+                                        </th>
+                                        <th class="table-date am-hide-sm-only">
+                                            修改日期
+                                        </th>
+                                        <th class="table-set">
+                                            操作
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="file in files">
+                                        <td>
+                                            <input type="checkbox"/>
+                                        </td>
+                                        <td class="am-hide-sm-only">
+                                            {{file.fileId}}
+                                        </td>
+                                        <td>
+                                            {{file.fileName}}
+                                        </td>
+                                        <td class="am-hide-sm-only">
+                                            {{file.count}}
+                                        </td>
+                                        <td class="am-hide-sm-only">
+                                            {{file.gmtModified|timeFormat}}
+                                        </td>
+                                        <td>
+                                            <div class="am-btn-toolbar">
+                                                <div class="am-btn-group am-btn-group-xs">
+                                                    <a @click="deleteFile(file);" class="am-btn am-btn-default am-btn-xs am-text-secondary">
+                                                        <span class="am-icon-pencil-square-o">
+                                                        </span>
+                                                        删除
+                                                    </a>
                                                 </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div class="am-cf">
-                                    共 15 条记录
-                                    <div class="am-fr">
-                                        <ul class="am-pagination">
-                                            <li class="am-disabled">
-                                                <a href="#">
-                                                    «
-                                                </a>
-                                            </li>
-                                            <li class="am-active">
-                                                <a href="#">
-                                                    1
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    2
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    3
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    4
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    5
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    »
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="am-cf">
+                                共 15 条记录
+                                <div class="am-fr">
+                                    <ul class="am-pagination">
+                                        <li class="am-disabled">
+                                            <a href="#">
+                                                «
+                                            </a>
+                                        </li>
+                                        <li class="am-active">
+                                            <a href="#">
+                                                1
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                2
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                3
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                4
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                5
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                »
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <hr/>
-                            </form>
+                            </div>
+                            <hr/>
                         </div>
                     </div>
                 </div>
@@ -376,10 +312,10 @@
         <a class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}" href="#">
         </a>
         <!--[if lt IE 9]>
-		<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
-		<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
-		<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
-		<![endif]-->
+        <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+        <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+        <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+        <![endif]-->
         <!--[if (gte IE 9)|!(IE)]><!-->
         <script src="../assets/js/jquery-3.3.1.js">
         </script>
@@ -395,6 +331,46 @@
         <script src="../assets/js/comm.js">
         </script>
         <script src="../assets/js/admin-comm.js">
+        </script>
+        <script>
+            var vm = new Vue({
+                el: "#admin-files",
+                data: function() {
+                    return {
+                        files: []
+                    };
+                },
+                mounted: function() {
+                    this.$nextTick(function () {
+                        this.init(this.files);
+                    })
+                },
+                filters: {
+                    timeFormat: function(value) {
+                        var date = new Date(value);
+                        return (1900+date.getYear())+"-"+date.getMonth()+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+                    }
+                },
+                methods: {
+                    init(value) {
+                        axios.get(SERVER_URL+"/files",{
+                                 
+                        })
+                        .then(function(response){
+                            if(response.data.state == 1) {
+                                for(var i = 0;i < response.data.files.length;i++){
+                                    value.push(response.data.files[i]);
+                                }
+                            }else{
+                                alert("操作失败");
+                            }
+                        })
+                        .catch(function(error){
+                            console.log(error);
+                        })  
+                    }
+                }
+            });
         </script>
     </body>
 </html>
