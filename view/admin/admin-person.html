@@ -180,64 +180,60 @@
                     <hr/>
                     <div class="am-g">
                         <div class="am-u-sm-12 am-u-md-11 am-u-md-pull-1">
-                            <form class="am-form am-form-horizontal">
+                            <div class="am-form am-form-horizontal" id="personalInfo">
                                 <div class="am-form-group">
-                                    <label class="am-u-sm-3 am-form-label" for="user-name">
+                                    <label class="am-u-sm-3 am-form-label" for="name">
                                         姓名 / Name
                                     </label>
                                     <div class="am-u-sm-9">
-                                        <input id="user-name" placeholder="姓名 / Name" type="text">
-                                            <small>
-                                                输入你的名字，让我们记住你。
-                                            </small>
-                                        </input>
+                                        <input v-model="user.name" placeholder="姓名 / Name" type="text"/>
+                                        <small>
+                                            输入你的名字，让我们记住你。
+                                        </small>
                                     </div>
                                 </div>
                                 <div class="am-form-group">
-                                    <label class="am-u-sm-3 am-form-label" for="user-email">
+                                    <label class="am-u-sm-3 am-form-label" for="email">
                                         电子邮件 / Email
                                     </label>
                                     <div class="am-u-sm-9">
-                                        <input id="user-email" placeholder="输入你的电子邮件 / Email" type="email">
-                                            <small>
-                                                邮箱你懂得...
-                                            </small>
-                                        </input>
+                                        <input v-model="user.email" placeholder="输入你的电子邮件 / Email" type="email"/>
+                                        <small>
+                                            邮箱你懂得...
+                                        </small>
                                     </div>
                                 </div>
                                 <div class="am-form-group">
-                                    <label class="am-u-sm-3 am-form-label" for="user-phone">
-                                        电话 / Telephone
+                                    <label class="am-u-sm-3 am-form-label" for="birthday">
+                                        生日
                                     </label>
                                     <div class="am-u-sm-9">
-                                        <input id="user-phone" placeholder="输入你的电话号码 / Telephone" type="tel">
-                                        </input>
+                                        <input placeholder="输入你的生日" type="text" :value="user.birthday"/>
                                     </div>
                                 </div>
                                 <div class="am-form-group">
-                                    <label class="am-u-sm-3 am-form-label" for="user-QQ">
-                                        QQ
+                                    <label class="am-u-sm-3 am-form-label" for="isAdmin">
+                                        是否管理员
                                     </label>
                                     <div class="am-u-sm-9">
-                                        <input id="user-QQ" pattern="[0-9]*" placeholder="输入你的QQ号码" type="number">
-                                        </input>
+                                        <div class="am-radio-inline">
+                                            <label>
+                                                <input type="radio" value="1" v-model="user.isAdmin"/>是
+                                            </label>
+                                        </div>
+                                        <div class="am-radio-inline">
+                                            <label>
+                                                <input type="radio" value="0" v-model="user.isAdmin"/>否
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="am-form-group">
-                                    <label class="am-u-sm-3 am-form-label" for="user-weibo">
-                                        微博 / Twitter
-                                    </label>
-                                    <div class="am-u-sm-9">
-                                        <input id="user-weibo" placeholder="输入你的微博 / Twitter" type="text">
-                                        </input>
-                                    </div>
-                                </div>
-                                <div class="am-form-group">
-                                    <label class="am-u-sm-3 am-form-label" for="user-intro">
+                                    <label class="am-u-sm-3 am-form-label" for="signature">
                                         简介 / Intro
                                     </label>
                                     <div class="am-u-sm-9">
-                                        <textarea class="" id="user-intro" placeholder="输入个人简介" rows="5">
+                                        <textarea class="" v-model="user.signature" placeholder="输入个人简介" rows="5">
                                         </textarea>
                                         <small>
                                             250字以内写出你的一生...
@@ -246,12 +242,12 @@
                                 </div>
                                 <div class="am-form-group">
                                     <div class="am-u-sm-9 am-u-sm-push-3">
-                                        <button class="am-btn am-btn-primary" type="button">
+                                        <button class="am-btn am-btn-primary" type="button" @click="saveUser(user);">
                                             保存修改
                                         </button>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -286,6 +282,72 @@
         <script src="../assets/js/comm.js">
         </script>
         <script src="../assets/js/admin-comm.js">
+        </script>
+        <script type="text/javascript">
+            var currentUser = {
+                name: "",
+                email: "",
+                birthday: "",
+                isAdmin: "",
+                signature: ""
+            };
+            if(null != window.localStorage.getItem("user")) {
+                currentUser = JSON.parse(window.localStorage.getItem("user"));
+            }
+            var vm = new Vue({
+                el: "#personalInfo",
+                data: function() {
+                    return {
+                        user: currentUser
+                    };
+                },
+                mounted: function() {
+                    this.$nextTick(function () {
+                        this.init(this.user);
+                    })
+                },
+                filters: {
+                    timeFormat: function(value) {
+                        var date = new Date(value);
+                        return (1900+date.getYear())+"-"+date.getMonth()+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+                    }
+                },
+                methods: {
+                    init(user) {
+                        
+                    },
+                    saveUser(user) {
+                        debugger
+                        if(null == window.localStorage.getItem("user") || null == window.localStorage.getItem("token")) {
+                            alert("请登录");
+                            window.location.href = "admin-login.html";
+                        }
+                        axios.post(SERVER_URL + "/user", {
+                            "id": user.id,
+                            "name": user.name,
+                            "birthday": user.birthday,
+                            "email": user.email,
+                            "signature": user.signature,
+                            "isAdmin": user.isAdmin    
+                        },{
+                            "headers": {
+                                "token": localStorage.getItem("token")
+                            }
+                        })
+                        .then(function(response){
+                            if(response.data.state == 1) {
+                                window.localStorage.setItem("user",JSON.stringify(user));
+                                alert("修改成功");
+                            }else{
+                                alert("修改失败");
+                            }
+                        })
+                        .catch(function(error){
+                            console.log(error);
+                        })  
+                    }
+                }
+            });
         </script>
     </body>
 </html>

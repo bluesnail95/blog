@@ -1,9 +1,5 @@
 package gdut.ff.controller;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,30 +8,20 @@ import javax.servlet.http.HttpServletRequest;
 import org.eclipse.jetty.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import gdut.ff.domain.User;
 import gdut.ff.domain.UserAccess;
-import gdut.ff.exception.LoginException;
-import gdut.ff.mapper.UserAccessMapper;
-import gdut.ff.mapper.UserMapper;
 import gdut.ff.service.UserAccessServiceImpl;
 import gdut.ff.service.UserServiceImpl;
-import gdut.ff.utils.AjaxResult;
 import gdut.ff.utils.JsonUtil;
 import gdut.ff.utils.NodeUtil;
 import gdut.ff.utils.TokenUtil;
@@ -84,7 +70,22 @@ public class UserController extends CommController{
 		result.put("user",user);
 		return result;
 	}
-
+	
+	/**
+	 * 更新用户信息
+	 * @param request
+	 * @param user 用户信息
+	 * @return
+	 * @throws Exception
+	 */
+	@PostMapping(value = "/user")
+	public JSONObject updateUser(HttpServletRequest request,@RequestBody User user) throws Exception {
+		requireAuth(request);
+		userServiceImpl.updateUser(user);
+		JSONObject result = JsonUtil.successJson();
+		return result;
+	}
+	
 	/**
 	 * 用户登录
 	 * @param user

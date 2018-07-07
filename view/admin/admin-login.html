@@ -106,11 +106,10 @@
                 methods: {
                     login(){
                         axios.post(SERVER_URL+"/user/login",{
-                             email:this.email,
-                             password:md5(this.password)
+                            email:this.email,
+                            password:md5(this.password)
                         })
                         .then(function(response){
-                            debugger
                             window.localStorage.setItem("token",response.data.token);
                             window.localStorage.setItem("user",JSON.stringify(response.data.user));
                             window.location.href = "admin-blog.html";

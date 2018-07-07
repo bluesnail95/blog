@@ -64,14 +64,14 @@
             <if test="img != null">
                 img = #{img},
             </if>
-            <if test="is_admin != null">
-                isAdmin = #{isAdmin}
+            <if test="isAdmin != null">
+                is_admin = #{isAdmin}
             </if>
-            <if test="gmt_create != null">
-                gmtCreate = #{gmtCreate},
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate},
             </if>
-            <if test="gmt_modified != null">
-            	gmtModified = #{gmtModified}
+            <if test="gmtModified != null">
+            	gmt_modified = #{gmtModified}
             </if>         
         </set>
         WHERE id = #{id}
