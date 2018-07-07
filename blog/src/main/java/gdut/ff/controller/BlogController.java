@@ -103,9 +103,11 @@ public class BlogController extends CommController{
 	 * 查询指定的博客记录
 	 * @param id
 	 * @return
+	 * @throws Exception 
 	 */
-	@PutMapping(value = "/blog/{id}")
-	public JSONObject updateBlogById(@PathVariable String id, @RequestBody Blog blog, HttpServletRequest request) {
+	@PostMapping(value = "/blog/{id}")
+	public JSONObject updateBlogById(@PathVariable String id, @RequestBody Blog blog, HttpServletRequest request) throws Exception {
+		requireAuth(request);
 		blogServiceImpl.updateBlog(blog);
 		return JsonUtil.successJson();
 	}
@@ -136,6 +138,10 @@ public class BlogController extends CommController{
 		return result;
 	}
 	
+	/**
+	 *  获取最新的博客
+	 * @return
+	 */
 	@GetMapping(value = "/blog/lastest")
 	public JSONObject findLastestBlog() {
 		Blog blog = blogServiceImpl.findLastestBlog();

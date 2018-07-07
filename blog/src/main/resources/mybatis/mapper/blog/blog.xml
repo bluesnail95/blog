@@ -67,7 +67,7 @@
 	    <if test="summary != null">
 	      summary = #{summary,jdbcType=VARCHAR},
 	    </if>
-	    <if test="category_id != null">
+	    <if test="categoryId != null">
 	      category_id = #{categoryId,jdbcType=VARCHAR},
 	    </if>
 	    <if test="creator != null">

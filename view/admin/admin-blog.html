@@ -202,116 +202,121 @@
                     </div>
                     <div class="am-g">
                         <div class="am-u-sm-12">
-                            <form class="am-form">
-                                <table class="am-table am-table-striped am-table-hover table-main" id="admin-blogs">
-                                    <thead>
-                                        <tr>
-                                            <th class="table-check">
-                                                <input type="checkbox"/>
-                                            </th>
-                                            <th class="table-id am-hide-sm-only">
-                                                博客编号
-                                            </th>
-                                            <th class="table-title">
-                                                标题
-                                            </th>
-                                            <th class="table-type am-hide-sm-only">
-                                                类别
-                                            </th>
-                                            <th class="table-author am-hide-sm-only">
-                                                作者
-                                            </th>
-                                            <th class="table-date am-hide-sm-only">
-                                                修改日期
-                                            </th>
-                                            <th class="table-set">
-                                                操作
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="blog in blogs">
-                                            <td>
-                                                <input type="checkbox"/>
-                                            </td>
-                                            <td class="am-hide-sm-only">
-                                                {{blog.blogId}}
-                                            </td>
-                                            <td>
-                                                {{blog.title}}
-                                            </td>
-                                            <td class="am-hide-sm-only">
-                                                {{blog.classification}}
-                                            </td>
-                                            <td class="am-hide-sm-only">
-                                                {{blog.creator}}
-                                            </td>
-                                            <td class="am-hide-sm-only">
-                                                {{blog.gmtModified}}
-                                            </td>
-                                            <td>
-                                                <div class="am-btn-toolbar">
-                                                    <div class="am-btn-group am-btn-group-xs">
-                                                        <a @click="editBlog(blog);" class="am-btn am-btn-default am-btn-xs am-text-secondary">
-                                                            <span class="am-icon-pencil-square-o">
-                                                            </span>
-                                                            编辑
-                                                        </a>
-                                                        <button @click="draftBlog(blog);" class="am-btn am-btn-default am-btn-xs am-text-danger ">
+                            <table class="am-table am-table-striped am-table-hover table-main" id="admin-blogs">
+                                <thead>
+                                    <tr>
+                                        <th class="table-check">
+                                            <input type="checkbox"/>
+                                        </th>
+                                        <th class="table-id am-hide-sm-only">
+                                            博客编号
+                                        </th>
+                                        <th class="table-title">
+                                            标题
+                                        </th>
+                                        <th class="table-type am-hide-sm-only">
+                                            类别
+                                        </th>
+                                        <th class="table-author am-hide-sm-only">
+                                            作者
+                                        </th>
+                                        <th class="table-date am-hide-sm-only">
+                                            修改日期
+                                        </th>
+                                        <th class="table-set">
+                                            操作
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="blog in blogs">
+                                        <td>
+                                            <input type="checkbox"/>
+                                        </td>
+                                        <td class="am-hide-sm-only">
+                                            {{blog.blogId}}
+                                        </td>
+                                        <td>
+                                            {{blog.title}}
+                                        </td>
+                                        <td class="am-hide-sm-only">
+                                            {{blog.classification}}
+                                        </td>
+                                        <td class="am-hide-sm-only">
+                                            {{blog.creator}}
+                                        </td>
+                                        <td class="am-hide-sm-only">
+                                            {{blog.gmtModified}}
+                                        </td>
+                                        <td>
+                                            <div class="am-btn-toolbar">
+                                                <div class="am-btn-group am-btn-group-xs">
+                                                    <a @click="editBlog(blog);" class="am-btn am-btn-default am-btn-xs am-text-secondary">
+                                                        <span class="am-icon-pencil-square-o">
+                                                        </span>
+                                                        编辑
+                                                    </a>
+                                                    <button @click="draftBlog(blog);" class="am-btn am-btn-default am-btn-xs am-text-danger " id="draftBtn">
+                                                        <div v-if="blog.isDraft == 1">
                                                             <span class="am-icon-trash-o">
                                                             </span>
                                                             置为草稿
-                                                        </button>
-                                                    </div>
+                                                        </div>
+                                                        <div v-if="blog.isDraft == 0">
+                                                            <span class="am-icon-check">
+                                                            </span>
+                                                            置为发布
+                                                        </div>
+                                                    </button>
                                                 </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div class="am-cf">
-                                    共 15 条记录
-                                    <div class="am-fr">
-                                        <ul class="am-pagination">
-                                            <li class="am-disabled">
-                                                <a href="#">
-                                                    «
-                                                </a>
-                                            </li>
-                                            <li class="am-active">
-                                                <a href="#">
-                                                    1
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    2
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    3
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    4
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    5
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    »
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="am-cf">
+                                共 15 条记录
+                                <div class="am-fr">
+                                    <ul class="am-pagination">
+                                        <li class="am-disabled">
+                                            <a href="#">
+                                                «
+                                            </a>
+                                        </li>
+                                        <li class="am-active">
+                                            <a href="#">
+                                                1
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                2
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                3
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                4
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                5
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                »
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <hr/>
-                            </form>
+                            </div>
+                            <hr/>
                         </div>
                     </div>
                 </div>
@@ -327,10 +332,10 @@
         <a class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}" href="#">
         </a>
         <!--[if lt IE 9]>
-<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
-<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
-<![endif]-->
+        <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+        <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+        <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+        <![endif]-->
         <!--[if (gte IE 9)|!(IE)]><!-->
         <script src="../assets/js/jquery-3.3.1.js">
         </script>
@@ -349,44 +354,68 @@
         </script>
         <script>
             var vm = new Vue({
-        el: "#admin-blogs",
-        data: function() {
-            return {
-                blogs: []
-            };
-        },
-        mounted: function() {
-            this.$nextTick(function () {
-                this.init(this.blogs);
-            })
-        },
-        methods: {
-            init(value) {
-                axios.get(SERVER_URL+"/blogs",{
-                         
-                })
-                .then(function(response){
-                    if(response.data.state == 1) {
-                        for(var i = 0;i < response.data.blogs.length;i++){
-                            value.push(response.data.blogs[i]);
-                        }
-                    }else{
-                        alert("操作失败");
+                el: "#admin-blogs",
+                data: function() {
+                    return {
+                        blogs: []
+                    };
+                },
+                mounted: function() {
+                    this.$nextTick(function () {
+                        this.init(this.blogs);
+                    })
+                },
+                methods: {
+                    init(value) {
+                        axios.get(SERVER_URL+"/blogs",{
+                                 
+                        })
+                        .then(function(response){
+                            if(response.data.state == 1) {
+                                for(var i = 0;i < response.data.blogs.length;i++){
+                                    value.push(response.data.blogs[i]);
+                                }
+                            }else{
+                                alert("操作失败");
+                            }
+                        })
+                        .catch(function(error){
+                            console.log(error);
+                        })  
+                    },
+                    editBlog(blog) {
+                        sessionStorage.setItem("blogId",blog.id);
+                        window.location.href = "../admin/admin-edit.html";
+                    },
+                    draftBlog(blog) {
+                        var draft = blog.isDraft == 0 ? 1 : 0;
+                        //axios是异步发起，若发起后页面刷新，那么就会丢失当前进程，导致接收不到！(form会导致页面刷新)
+                        axios.post(SERVER_URL + "/blog/" + blog.id,{
+                            "id": blog.id,
+                            "isDraft": draft,
+                            "title": blog.title
+                        },{
+                            "headers": {
+                                "token": localStorage.getItem("token")
+                            }
+                        })
+                        .then(function(response){
+                            if(response.data.state == 1) {
+                                blog.isDraft = draft;
+                                window.location.reload(true);
+                            }else if(response.data.state == 2) {
+                                alert("请登录");
+                                window.location.href = "admin-login.html";
+                            }else{
+                                alert("操作失败");
+                            }
+                        })
+                        .catch(function(error){
+                            console.log(error);
+                        })  
                     }
-                })
-                .catch(function(error){
-                    console.log(error);
-                })  
-            },
-            editBlog(blog) {
-                sessionStorage.setItem("blogId",blog.id);
-                window.location.href = "../admin/admin-edit.html";
-            },
-            draftBlog(blog) {
-
-            }
-        }
-    });
+                }
+            });
         </script>
     </body>
 </html>
