@@ -1,39 +1,36 @@
 package gdut.ff.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.jetty.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import gdut.ff.domain.Blog;
+import gdut.ff.domain.Category;
 import gdut.ff.domain.Message;
-import gdut.ff.exception.LoginException;
+import gdut.ff.domain.User;
 import gdut.ff.service.BlogServiceImpl;
+import gdut.ff.service.CategoryServiceImpl;
+import gdut.ff.service.TagRelationServiceImpl;
+import gdut.ff.service.UserServiceImpl;
 import gdut.ff.utils.Constant;
 import gdut.ff.utils.JsonUtil;
-import gdut.ff.utils.NodeUtil;
 import gdut.ff.websocket.BlogWebSocketServer;
 
 /**
@@ -46,6 +43,15 @@ public class BlogController extends CommController{
 	
 	@Autowired
 	private BlogServiceImpl blogServiceImpl;
+	
+	@Autowired
+	private UserServiceImpl userServiceImpl;
+	
+	@Autowired
+	private TagRelationServiceImpl tagRelationServiceImpl;
+	
+	@Autowired
+	private CategoryServiceImpl categoryServiceImpl;
 	
 	@Value("${blog.user.secret}")
 	private String SECERT;
@@ -62,7 +68,7 @@ public class BlogController extends CommController{
 	public JSONObject insertBlog(@RequestBody Blog blog,HttpServletRequest request) throws Exception {
 		requireAuth(request);
 		//添加blogId的值
-		if(null != blog.getId()) {
+		if(blog.getId() > 0) {
 			blogServiceImpl.updateBlog(blog);
 		}else {
 			blogServiceImpl.insertBlog(blog);
@@ -86,15 +92,30 @@ public class BlogController extends CommController{
 	 */
 	@GetMapping(value = "/blog/{id}")
 	public JSONObject findBlogById(@PathVariable Integer id, HttpServletRequest request, HttpServletResponse response) {
+		JSONObject result = JsonUtil.successJson();
 		Blog blog = blogServiceImpl.fingOneById(id);
 		if(null != blog) {
-			if(Constant.blogCountMap.containsKey(blog.getId())) {
-				Constant.blogCountMap.put(blog.getId(), Constant.blogCountMap.get(blog.getId()) + 1);
-			}else {
-				Constant.blogCountMap.put(blog.getId(), 1);
+			//直接更新博客的点击率
+			blogServiceImpl.updateClickCount(1, id);
+			//查询博客的创建者的名称
+			String creator = blog.getCreator();
+			User user = userServiceImpl.findUserByUserId(creator);
+			result.put("creatorName", user.getName());
+			//查询博客的分类
+			String categoryId = blog.getCategoryId();
+			Category category = categoryServiceImpl.fingCategoryByCategoryId(categoryId);
+			result.put("categoryName", category.getCategoryName());
+			//查询博客的标签
+			Map<String, Object> tagParam = new HashMap<String, Object>();
+			tagParam.put("blogId", blog.getBlogId());
+			tagParam.put("relationType", "1");
+			List<Map<String, Object>> tags = tagRelationServiceImpl.findTagRelationDetail(tagParam);
+			List<String> blogTag = new ArrayList<String>();
+			if(null != tags && tags.size() > 0) {
+				tags.forEach((Map<String, Object> tag) -> blogTag.add(tag.get("tag_name").toString()));
 			}
+			result.put("tags", blogTag.toArray());
 		}
-		JSONObject result = JsonUtil.successJson();
 		result.put("content", blog);
 		return result;
 	}

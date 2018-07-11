@@ -16,7 +16,7 @@ public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	private String id;
+	private int id;
 	
 	//用户的业务标识
 	private String userId;
@@ -40,7 +40,7 @@ public class User implements Serializable{
 	private String signature;
 
 	//头像
-	private String img;
+	private Object img;
 	
 	//是否是管理员 '0' 是 '1' 否
 	private String isAdmin;
@@ -51,11 +51,11 @@ public class User implements Serializable{
 	//修改时间
 	private Date gmtModified;
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -91,11 +91,11 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
-	public String getImg() {
+	public Object getImg() {
 		return img;
 	}
 
-	public void setImg(String img) {
+	public void setImg(Object img) {
 		this.img = img;
 	}
 

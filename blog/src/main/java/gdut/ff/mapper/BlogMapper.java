@@ -32,4 +32,5 @@ public interface BlogMapper {
 	public Blog findLastestBlog();
 	
 	public void updateClickCount(Map<String, Integer> param);
+	
 }

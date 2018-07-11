@@ -2,6 +2,7 @@ package gdut.ff.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,14 +24,15 @@ public class CategoryServiceImpl {
 	private CategoryMapper categoryMapper;
 
 	@Transactional(readOnly = true)
-	public Category fingOneById(Integer id) {
+	public Category fingCategoryById(Integer id) {
 		return categoryMapper.findCategoryById(id);
 	}
 	
-	public int insertCategory(Category Category) {
-		Category.setGmtCreate(new Date());
-		Category.setGmtModified(new Date());
-		return categoryMapper.insertCategory(Category);
+	public int insertCategory(Category category) {
+		category.setGmtCreate(new Date());
+		category.setGmtModified(new Date());
+		category.setCategoryId(UUID.randomUUID().toString());
+		return categoryMapper.insertCategory(category);
 	}
 	
 	public int updateCategory(Category category) {
@@ -45,6 +47,10 @@ public class CategoryServiceImpl {
 	@Transactional(readOnly = true)
 	public List<Category> findAllCategory(Category category) {
 		return categoryMapper.findAllCategory(category);
+	}
+	
+	public Category fingCategoryByCategoryId(String categoryId) {
+		return categoryMapper.findCategoryByCategoryId(categoryId);
 	}
 
 }

@@ -73,7 +73,7 @@ public class CategoryController extends CommController{
 	 */
 	@GetMapping(value = "/category/{id}")
 	public JSONObject findCategoryById(@PathVariable Integer id, HttpServletRequest request, HttpServletResponse response) {
-		Category category = categoryServiceImpl.fingOneById(id);
+		Category category = categoryServiceImpl.fingCategoryById(id);
 		JSONObject result = JsonUtil.successJson();
 		result.put("content", category);
 		return result;

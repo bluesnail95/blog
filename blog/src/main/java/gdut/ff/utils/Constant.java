@@ -36,8 +36,8 @@ public class Constant {
 	
 	/**
 	 * 存储博客的点击率 key是blog的id,value是一段时间的点击数，每天指定的时间将点击数刷新到数据库中
-	 */
 	public static Map<Integer,Integer> blogCountMap = new HashMap<Integer,Integer>();
+	 */
 	
 	
 }

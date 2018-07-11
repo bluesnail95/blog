@@ -3,17 +3,16 @@
 <mapper namespace="gdut.ff.mapper.UserAccessMapper">
       
     <resultMap id="userAccessMap" type="gdut.ff.domain.UserAccess">    
-        <id column="id" property="id"/>
-        <result column="user_access_id" property="userAccessId"/>
-        <result column="title" property="title"/>
-        <result column="url" property="url"/>
-        <result column="website_type" property="websiteType"/>
-        <result column="classification" property="classification"/>
-        <result column="user_id" property="userId"/>
-        <result column="gmt_create" property="gmtCreate"/>
-        <result column="gmt_modified" property="gmtModified"/>
+        <id column="id" property="id" jdbcType="INTEGER" javaType="int"/>
+        <result column="user_access_id" property="userAccessId" jdbcType="VARCHAR" javaType="String"/>
+        <result column="title" property="title" jdbcType="VARCHAR" javaType="String"/>
+        <result column="url" property="url" jdbcType="VARCHAR" javaType="String"/>
+        <result column="website_type" property="websiteType" jdbcType="INTEGER" javaType="int"/>
+        <result column="classification" property="classification" jdbcType="VARCHAR" javaType="String"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR" javaType="String"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
     </resultMap>
-    
     
     <!-- 保存用户 访问记录-->
     <insert id="saveUserAccess">

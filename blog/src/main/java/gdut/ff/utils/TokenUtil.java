@@ -70,7 +70,7 @@ public class TokenUtil {
 		Map<String,Claim> claims = jwt.getClaims();
 		User user = new User();
 		user.setEmail(claims.get("email").asString());
-		user.setId(claims.get("id").asString());
+		user.setId(claims.get("id").asInt());
 		//需要处理login_name与loginName的映射问题
 		user.setLoginName(claims.get("loginName").asString());
 		user.setPassword(claims.get("password").asString());

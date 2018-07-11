@@ -63,7 +63,7 @@ public class UserController extends CommController{
 	 * @throws Exception 
 	 */
 	@GetMapping(value = "/user/{id}")
-	public JSONObject getUser(HttpServletRequest request, @PathVariable long id) throws Exception {
+	public JSONObject getUser(HttpServletRequest request, @PathVariable int id) throws Exception {
 		requireAuth(request);
 		User user = userServiceImpl.fingUserById(id);
 		JSONObject result = JsonUtil.successJson();
@@ -123,7 +123,6 @@ public class UserController extends CommController{
 		    NodeUtil.errorNode("两次输入密码不一致，请重新输入");
 		}
 		User user = NodeUtil.transToPOJO(param,User.class);
-		user.setId(UUID.randomUUID().toString());
 		userServiceImpl.saveUser(user);
 		return JsonUtil.successJson();
 	}
@@ -137,7 +136,6 @@ public class UserController extends CommController{
 	@PostMapping("/user/access")
 	public JSONObject userAccess(@RequestBody UserAccess userAccess,HttpServletRequest request) throws Exception {
 		//设置主键和创建时间 保存
-		userAccess.setId(UUID.randomUUID().toString());
 		User user = getUser(request);
 		userAccess.setUserId(user.getUserId());
 		userAccessServiceImpl.saveUserAccess(userAccess);

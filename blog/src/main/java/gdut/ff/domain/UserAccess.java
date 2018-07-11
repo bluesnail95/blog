@@ -15,59 +15,41 @@ import java.util.Date;
 public class UserAccess implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 主键
-	 */
-	private String id;
+	//主键
+	private int id;
 	
-	/**
-	 * 具有业务意义的标识
-	 */
+	//具有业务意义的标识
 	private String userAccessId;
 
-	/**
-	 * 分类
-	 */
+	//分类
 	private String classification;
 
-	/**
-	 * 标题
-	 */
+	//标题
 	private String title;
 
-	/**
-	 * 请求路径
-	 */
+	//请求路径
 	private String url;
 
-	/**
-	 * 访问网站类型
-	 */
+	//访问网站类型
 	private int websiteType;
 	
-	/**
-	 * 用户
-	 */
+	//用户
 	private String userId;
 	
-	/**
-	 * 创建时间
-	 */
+	//创建时间
 	private Date gmtCreate;
 	
-	/**
-	 * 修改时间
-	 */
+	//修改时间
 	private Date gmtModified;
 
 	public UserAccess() {
 	}
 
-	public String getId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

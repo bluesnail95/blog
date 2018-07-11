@@ -2,15 +2,12 @@ package gdut.ff.mapper;
 
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cache.CacheManager;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import gdut.ff.domain.Blog;

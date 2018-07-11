@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gdut.ff.mapper.TagRelationMapper">
+    
+  <resultMap id="tagRelationMap" type="gdut.ff.domain.TagRelation">
+	  <id column="id" jdbcType="INTEGER" property="id" javaType="int"/>
+	  <result column="relation_id" jdbcType="VARCHAR" property="relationId" javaType="String"/>
+	  <result column="relation_type" jdbcType="CHAR" property="relationType" javaType="String"/>
+	  <result column="tag_id" jdbcType="VARCHAR" property="tagId" javaType="String"/>
+	  <result column="type_id" jdbcType="VARCHAR" property="typeId" javaType="String"/>
+	  <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" javaType="java.util.Date"/>
+	  <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" javaType="java.util.Date"/>
+  </resultMap>
+  
+  <sql id="tagRelationField">
+      id, relation_id, relation_type, tag_id, type_id, gmt_create, gmt_modified
+  </sql>
+  
+  <!-- 插入一条标签关联记录 -->
+  <insert id="insertTagRelation" parameterType="gdut.ff.domain.TagRelation">
+	  insert into tag_relation (<include refid="tagRelationField"></include>)
+	  values (#{id,jdbcType=INTEGER},#{relationId,jdbcType=VARCHAR},#{relationType,jdbcType=CHAR},
+	      #{tagId,jdbcType=VARCHAR},#{typeId,jdbcType=CHAR},
+	      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <!-- 查找标签关联记录 gmt_create, gmt_modified, -->
+  <select id="findTagRelationById" resultMap="tagRelationMap">
+  	  select <include refid="tagRelationField"></include>
+  	  from tag_relation
+  	  where id = #{id}
+  </select>
+  
+  <select id="findAllTagRelation" resultMap="tagRelationMap">
+      select <include refid="tagRelationField"></include>
+      from tag_relation
+      where 1 = 1
+      <if test="relationId != null">
+	      and relation_id = #{relationId,jdbcType=VARCHAR}
+	    </if>
+	    <if test="relationType != null">
+	      and relation_type = #{relationType,jdbcType=CHAR},
+	    </if>
+	    <if test="typeId != null">
+	      and type_id = #{typeId,jdbcType=VARCHAR},
+	    </if>
+	    <if test="tagId != null">
+	      and tag_type = #{tagType,jdbcType=CHAR},
+	    </if>
+	    <if test="gmtCreate != null">
+	      and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+	    </if>
+	    <if test="gmtModified != null">
+	      and gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+	    </if>
+  </select>
+  
+  <!-- 更新标签关联记录 -->
+  <update id="updateTagRelation" parameterType="gdut.ff.domain.TagRelation">
+	  update tag_relation
+	  <set>
+	    <if test="relationId != null">
+	      relation_id = #{relationId,jdbcType=VARCHAR},
+	    </if>
+	    <if test="relationType != null">
+	      relation_type = #{relationType,jdbcType=CHAR},
+	    </if>
+	    <if test="typeId != null">
+	      type_id = #{typeId,jdbcType=VARCHAR},
+	    </if>
+	    <if test="tagId != null">
+	      tag_type = #{tagType,jdbcType=CHAR},
+	    </if>
+	    <if test="gmtCreate != null">
+	      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+	    </if>
+	    <if test="gmtModified != null">
+	      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+	    </if>
+	  </set>
+	  where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 删除标签关联记录 -->
+  <delete id="deleteTagRelationById" parameterType="int">
+      delete from tag_relation where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <!-- 查找博客或是网站的标签具体信息 -->
+  <select id="findTagRelationDetail" parameterType="map" resultType="map">
+  	  select b.title,t2.tag_name,t2.tag_id,b.blog_id
+	  from blog b
+	  left join tag_relation t1 on b.blog_id = t1.type_id
+	  left join tag t2 on t1.tag_id = t2.tag_id
+	  where b.blog_id = #{blogId,jdbcType=VARCHAR} and t1.relation_type = #{relationType,jdbcType=CHAR}
+  </select>
+  
+</mapper>

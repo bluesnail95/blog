@@ -31,6 +31,7 @@ public class MessageServiceImpl {
 	public int insertMessage(Message message) {
 		message.setGmtCreate(new Date());
 		message.setGmtModified(new Date());
+		message.setMessageId(UUID.randomUUID().toString());
 		return messageMapper.insertMessage(message);
 	}
 	

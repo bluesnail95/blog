@@ -14,73 +14,49 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  */
 public class Blog implements Serializable{
 
-	private static final long serialVersionUID = 111111L;
+	private static final long serialVersionUID = 1L;
 	
-	/**
-	 * 主键
-	 */
-	private Integer id;
+	//主键
+	private int id;
 	
-	/**
-	 * 具有业务标识的博客id
-	 */
+	//具有业务标识的博客id
 	private String blogId;
 	
-	/**
-	 * 标题
-	 */
+	//标题
 	private String title;
 	
-	/**
-	 * 摘要
-	 */
+	//摘要
 	private String summary;
 	
-	/**
-	 * 正文
-	 */
+	//正文
 	private String content;
 	
-	/**
-	 * 分类
-	 */
+	//分类
 	private String categoryId;
 	
-	/**
-	 * 创建者
-	 */
+	//创建者
 	private String creator;
 	
-	/**
-	 * 创建时间
-	 */
+    //创建时间
 	private Date gmtCreate;
 	
-	/**
-	 * 修改时间
-	 */
+	//修改时间
 	private Date gmtModified;
 		
-	/**
-	 * 是否是草稿 0 是 1 否
-	 */
+	//是否是草稿 0 是 1 否
 	private String isDraft;
 	
-	/**
-	 * 点击次数
-	 */
-	private Integer clickCount;
+	//点击次数
+	private int clickCount;
 	
-	/**
-	 * 用于目录的图片
-	 */
+	//用于目录的图片
 	private String img;
 
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -156,11 +132,11 @@ public class Blog implements Serializable{
 		this.isDraft = isDraft;
 	}
 	
-	public Integer getClickCount() {
+	public int getClickCount() {
 		return clickCount;
 	}
 
-	public void setClickCount(Integer clickCount) {
+	public void setClickCount(int clickCount) {
 		this.clickCount = clickCount;
 	}
 	

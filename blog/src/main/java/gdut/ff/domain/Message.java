@@ -26,7 +26,6 @@ public class Message implements Serializable{
 		
     //更新时间
     private Date gmtModified;
-		
 	
     public void setId(int id){
         this.id = id;

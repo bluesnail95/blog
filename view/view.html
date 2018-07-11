@@ -34,7 +34,13 @@
                 <div class="am-g">
                     <div class="am-u-sm-11 am-u-sm-centered">
                         <div class="am-cf am-article" id="article" >
-                            {{blog.title}}
+                            <h3 class="am-article-title blog-title" style="text-align: center;">{{blog.title}}</h3>
+                            <h4 class="am-article-meta blog-meta" style="text-align: center;">
+                            发布者：<span class="am-badge am-badge-success">{{blog.creatorName}} </span> &nbsp;&nbsp;
+                            更新于：<span class="am-badge am-badge-success">{{blog.gmtModified|timeFormat}} </span>
+                            分类：<span class="am-badge am-badge-success">{{blog.categoryName}} </span>
+                            标签：<span class="am-badge am-badge-success">{{blog.tag}}</span>
+                            </h4>
                             <hr class="am-article-divider">
                             <div v-html="blog.content">{{blog.content}}</div>
                         </div>
@@ -91,7 +97,10 @@
                     return {
                         "blog": {
                             "title": "",
-                            "content": ""
+                            "content": "",
+                            "creatorName": "",
+                            "tag": "",
+                            "categoryName": ""
                         }
                     };
                 },
@@ -111,6 +120,12 @@
                         }
                     });
                 },
+                filters: {
+                    timeFormat: function(value) {
+                        var date = new Date(value);
+                        return (1900+date.getYear())+"-"+date.getMonth()+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+                    }
+                },
                 methods: {
                     init(blog){
                         var blogId = sessionStorage.getItem("blogId");
@@ -120,7 +135,14 @@
                         .then(function(response){
                             blog.title = response.data.content.title;
                             blog.content = markdown.toHTML(response.data.content.content, 'Maruku');
-                            //$("article").innerHTML += blog.content;
+                            blog.creatorName = response.data.creatorName;
+                            blog.categoryName = response.data.categoryName;
+                            blog.gmtModified = response.data.content.gmtModified;
+                            for(var i = 0;i < response.data.tags.length;i++) {
+                                blog.tag += response.data.tags[i] + ",";
+                            }
+                            //和Java一样，也是不会改变原来的字符串，而是新创建一个
+                            blog.tag = blog.tag.substring(0,blog.tag.length - 1);
                         })
                         .catch(function(error){
                             console.log(error);

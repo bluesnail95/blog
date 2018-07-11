@@ -50,7 +50,6 @@ public class FileMapperTest {
 		//file.setGroupName("group1");
 		//file.setRemoteFileName("M00/00/00/rBAAEFrpxHiAUGPRAAAIdkgFegc18.file");
 		file.setFileIntroduction("上传头像测试");
-		file.setId("6ba4ecb6-5937-4f9c-817d-5a42078f693e");
 		fileServiceImpl.updateFile(file);
 	}
 	

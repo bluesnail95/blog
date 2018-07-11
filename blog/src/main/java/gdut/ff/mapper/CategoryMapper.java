@@ -20,5 +20,7 @@ public interface CategoryMapper {
 	public int deleteCategoryById(Integer id);
 	
 	public List<Category> findAllCategory(Category Category);
+
+	public Category findCategoryByCategoryId(String categoryId);
 	
 }

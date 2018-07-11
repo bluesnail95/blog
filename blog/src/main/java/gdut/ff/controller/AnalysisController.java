@@ -68,7 +68,7 @@ public class AnalysisController {
 				result.put("msg","请登录！！！");
 				return result;
 			}
-			String userId = user.getId();
+			int userId = user.getId();
 			Map<String,Object> params = NodeUtil.transToMap(param);
 			params.put("userId", userId);
 			List<Map<String,String>> data = userAccessServiceImpl.blogWebsiteAnalysis(params);

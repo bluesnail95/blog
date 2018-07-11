@@ -3,9 +3,9 @@
 <mapper namespace="gdut.ff.mapper.FileMapper">
 
   <resultMap id="fileMap" type="gdut.ff.domain.File">
-	  <id column="id" property="id" jdbcType="VARCHAR" javaType="String"/>
+	  <id column="id" property="id" jdbcType="INTEGER" javaType="int"/>
 	  <result column="file_id" property="fileId" jdbcType="VARCHAR" javaType="String"/>
-	  <result column="count" property="count" jdbcType="INTEGER" javaType="int"/>
+	  <result column="click_count" property="clickCount" jdbcType="INTEGER" javaType="int"/>
 	  <result column="file_name" property="fileName" jdbcType="VARCHAR" javaType="String"/>
 	  <result column="file_introduction" property="fileIntroduction" jdbcType="VARCHAR" javaType="String"/>
 	  <result column="group_name" property="groupName" jdbcType="VARCHAR" javaType="String"/>
@@ -16,20 +16,20 @@
   
   <!-- 插入一条记录 -->
   <insert id="insertFile" parameterType="gdut.ff.domain.File">
-	  insert into file (id,file_id,count,file_name,file_introduction,group_name,remote_file_name,gmt_create,gmt_modified)
-	  values (#{id},#{fileId},#{count},#{fileName},#{fileIntroduction},#{groupName},#{remoteFileName},#{gmtCreate},#{gmtModified})
+	  insert into file (id,file_id,click_count,file_name,file_introduction,group_name,remote_file_name,gmt_create,gmt_modified)
+	  values (#{id},#{fileId},#{clickCount},#{fileName},#{fileIntroduction},#{groupName},#{remoteFileName},#{gmtCreate},#{gmtModified})
   </insert>
   
   <!-- 查找记录 -->
   <select id="findFileById" resultMap="fileMap">
-  	  select id,file_id,count,file_name,file_introduction,group_name,remote_file_name,gmt_create,gmt_modified
+  	  select id,file_id,click_count,file_name,file_introduction,group_name,remote_file_name,gmt_create,gmt_modified
   	  from file
   	  where id = #{id}
   </select>
   
    <!-- 查找全部记录 -->
   <select id="findAllFile" resultMap="fileMap">
-      select id,file_id,count,file_name,file_introduction,group_name,remote_file_name,gmt_create,gmt_modified
+      select id,file_id,click_count,file_name,file_introduction,group_name,remote_file_name,gmt_create,gmt_modified
       from file
       where 1 = 1
           <if test = "id != null and id != ''">
@@ -39,7 +39,7 @@
               and file_id = #{fileId}
           </if>
           <if test = "count != null and count != ''">
-          	  and count = #{count}
+          	  and click_count = #{clickCount}
           </if>
           <if test = "fileName != null and fileName != ''">
               and file_name = #{fileName}
@@ -72,7 +72,7 @@
 	             file_id = #{fileId},
 	          </if>
 	         <if test = "count != null and count != ''">
-	             count = #{count},
+	             click_count = #{clickCount},
 	          </if>
 	         <if test = "fileName != null and fileName != ''">
 	             file_name = #{fileName},

@@ -23,7 +23,6 @@ public class ClickCountScheduler {
 	
 	/**
 	 * 定时器 0 0 3 * * ? 凌晨3点执行一次
-	 */
 	@Scheduled(cron = "0 0 3 * * ?")
 	public void blogClickCount() {
 		for(Map.Entry<Integer, Integer> entry: Constant.blogCountMap.entrySet()) {
@@ -33,5 +32,5 @@ public class ClickCountScheduler {
 		}
 		Constant.blogCountMap.clear();
 	}
-
+	*/
 }

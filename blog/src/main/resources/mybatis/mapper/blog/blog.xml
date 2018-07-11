@@ -3,19 +3,19 @@
 <mapper namespace="gdut.ff.mapper.BlogMapper">
     
   <resultMap id="blogMap" type="gdut.ff.domain.Blog">
-	  <id column="id" jdbcType="INTEGER" property="id" />
-	  <result column="blog_id" jdbcType="VARCHAR" property="blogId" />
-	  <result column="title" jdbcType="VARCHAR" property="title" />
-	  <result column="summary" jdbcType="VARCHAR" property="summary" />
-	  <result column="keywords" jdbcType="VARCHAR" property="keywords" />
-	  <result column="content" jdbcType="LONGVARBINARY" property="content" />
-	  <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
-	  <result column="is_draft" jdbcType="CHAR" property="isDraft" />
-	  <result column="creator" jdbcType="VARCHAR" property="creator" />
-	  <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
-	  <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
-	  <result column="click_count" jdbcType="INTEGER" property="clickCount" />
-	  <result column="img" jdbcType="VARCHAR" property="img" />
+	  <id column="id" jdbcType="INTEGER" property="id" javaType="int"/>
+	  <result column="blog_id" jdbcType="VARCHAR" property="blogId" javaType="String"/>
+	  <result column="title" jdbcType="VARCHAR" property="title" javaType="String"/>
+	  <result column="summary" jdbcType="VARCHAR" property="summary" javaType="String"/>
+	  <result column="keywords" jdbcType="VARCHAR" property="keywords" javaType="String"/>
+	  <result column="content" jdbcType="LONGVARBINARY" property="content" javaType="String"/>
+	  <result column="category_id" jdbcType="VARCHAR" property="categoryId" javaType="String"/>
+	  <result column="is_draft" jdbcType="CHAR" property="isDraft" javaType="String"/>
+	  <result column="creator" jdbcType="VARCHAR" property="creator" javaType="String"/>
+	  <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" javaType="java.util.Date"/>
+	  <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" javaType="java.util.Date"/>
+	  <result column="click_count" jdbcType="INTEGER" property="clickCount" javaType="int"/>
+	  <result column="img" jdbcType="VARCHAR" property="img" javaType="String"/>
   </resultMap>
   
   <!-- 包含content字段的属性片段  -->
@@ -102,7 +102,7 @@
   
   <!-- 查找最新的一条博客记录 -->
   <select id="findLastestBlog" resultMap="blogMap">
-  	  select id,title,content from blog order by gmt_create desc limit 1;
+  	  select id,title,content,gmt_modified from blog order by gmt_create desc limit 1;
   </select>
   
   <update id="updateClickCount" parameterType="map">

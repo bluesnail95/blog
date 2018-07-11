@@ -3,11 +3,11 @@
 <mapper namespace="gdut.ff.mapper.CategoryMapper">
     
   <resultMap id="categoryMap" type="gdut.ff.domain.Category">
-	  <id column="id" jdbcType="INTEGER" property="id" />
-	  <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
-	  <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
-	  <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
-	  <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+	  <id column="id" jdbcType="INTEGER" property="id" javaType="int"/>
+	  <result column="category_id" jdbcType="VARCHAR" property="categoryId" javaType="String"/>
+	  <result column="category_name" jdbcType="VARCHAR" property="categoryName" javaType="String"/>
+	  <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" javaType="java.util.Date"/>
+	  <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" javaType="java.util.Date"/>
   </resultMap>
   
   <sql id="categoryField">
@@ -59,4 +59,10 @@
       delete from category where id = #{id,jdbcType=INTEGER}
   </delete>
   
+  <!-- 查找文章分类记录-->
+  <select id="findCategoryByCategoryId" resultMap="categoryMap">
+  	  select <include refid="categoryField"></include>
+  	  from category 
+  	  where category_id = #{categoryId}
+  </select>
 </mapper>

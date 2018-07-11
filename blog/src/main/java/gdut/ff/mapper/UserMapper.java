@@ -22,7 +22,7 @@ public interface UserMapper {
 	 * @param id
 	 * @return
 	 */
-	public User fingUserById(long id);
+	public User fingUserById(int id);
 	
 	/**
 	 * 保存用户
@@ -45,5 +45,10 @@ public interface UserMapper {
 	 */
 	public User loginUser(User user);
 	
-	
+	/**
+	 * 根据用户的userId创建用户
+	 * @param userId
+	 * @return
+	 */
+	public User findUserByUserId(String userId);
 }

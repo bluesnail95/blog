@@ -3,18 +3,18 @@
 <mapper namespace="gdut.ff.mapper.UserMapper">
     
     <resultMap id="userMap" type="gdut.ff.domain.User">
-        <id column="id" property="id"/>
-        <result column="user_id" property="userId"/>
-        <result column="name" property="name"/>
-        <result column="email" property="email"/>
-        <result column="birthday" property="birthday" />
-        <result column="login_name" property="loginName" />
-        <result column="password" property="password"/>
-        <result column="img" property="img"/>
-        <result column="signature" property="signature"/>
-        <result column="is_admin" property="isAdmin"/>
-        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
-        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+        <id column="id" property="id" jdbcType="INTEGER" javaType="int"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR" javaType="String"/>
+        <result column="name" property="name" jdbcType="VARCHAR" javaType="String"/>
+        <result column="email" property="email" jdbcType="VARCHAR" javaType="String"/>
+        <result column="birthday" property="birthday" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result column="login_name" property="loginName" jdbcType="VARCHAR" javaType="String"/>
+        <result column="password" property="password" jdbcType="VARCHAR" javaType="String"/>
+        <result column="img" property="img" jdbcType="BLOB" javaType="java.lang.Object"/>
+        <result column="signature" property="signature" jdbcType="VARCHAR" javaType="String"/>
+        <result column="is_admin" property="isAdmin" jdbcType="VARCHAR" javaType="String"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
     </resultMap>
     
     <!-- 查找全部用户 -->
@@ -84,7 +84,10 @@
         WHERE (login_name = #{loginName} or email = #{email}) AND password = #{password}
     </select>
     
-    
+    <!-- 根据用户id查找用户 -->
+    <select id="findUserByUserId" resultMap="userMap">
+    	SELECT name from user where user_id = #{userId,jdbcType=VARCHAR} limit 1
+    </select>
     
     
 </mapper>

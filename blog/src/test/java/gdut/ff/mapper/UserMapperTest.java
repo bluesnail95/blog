@@ -37,7 +37,7 @@ public class UserMapperTest {
 	
 	@Test
 	public void testFindOneUser() {
-		long id = 1;
+		int id = 1;
 		User user = userMapper.fingUserById(id);
 		System.out.println("id = "+user.getId()+",name = "+user.getName()
 		+",birthday="+sdf.format(user.getBirthday())+",loginName="+user.getLoginName()

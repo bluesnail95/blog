@@ -1,6 +1,8 @@
 package gdut.ff.service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +38,7 @@ public class UserServiceImpl {
 	 * @return
 	 */
 	@Transactional(readOnly = true)
-	public User fingUserById(long id) {
+	public User fingUserById(int id) {
 		return userMapper.fingUserById(id);
 	}
 	
@@ -46,6 +48,9 @@ public class UserServiceImpl {
 	 * @return
 	 */
 	public void saveUser(User user) {
+		user.setGmtCreate(new Date());
+		user.setGmtModified(new Date());
+		user.setUserId(UUID.randomUUID().toString());
 		userMapper.saveUser(user);
 	}
 	
@@ -55,6 +60,7 @@ public class UserServiceImpl {
 	 * @return
 	 */
 	public void updateUser(User user) {
+		user.setGmtModified(new Date());
 		userMapper.updateUser(user);
 	}
 	
@@ -66,6 +72,16 @@ public class UserServiceImpl {
 	@Transactional(readOnly = true)
 	public User loginUser(User user) {
 		return userMapper.loginUser(user);
+	}
+	
+	/**
+	 * 根据用户业务标识查找用户
+	 * @param userId
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public User findUserByUserId(String userId) {
+		return userMapper.findUserByUserId(userId);
 	}
 	
 }

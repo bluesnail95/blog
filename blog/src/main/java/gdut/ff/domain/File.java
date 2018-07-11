@@ -14,13 +14,13 @@ public class File implements Serializable{
     private final static long serialVersionUID = 1L;
 
     //主键
-    private String id;
+    private int id;
 		
     //业务标识
     private String fileId;
 		
     //文件下载的次数
-    private int count;
+    private int clickCount;
 		
     //文件名
     private String fileName;
@@ -40,11 +40,11 @@ public class File implements Serializable{
     //修改时间
     private Date gmtModified;
 		
-    public void setId(String id){
+    public void setId(int id){
         this.id = id;
     }
     
-    public String getId(){
+    public int getId(){
         return this.id;
     }
 	
@@ -56,15 +56,15 @@ public class File implements Serializable{
         return this.fileId;
     }
 	
-    public void setCount(int count){
-        this.count = count;
-    }
-    
-    public int getCount(){
-        return this.count;
-    }
-	
-    public void setFileName(String fileName){
+    public int getClickCount() {
+		return clickCount;
+	}
+
+	public void setClickCount(int clickCount) {
+		this.clickCount = clickCount;
+	}
+
+	public void setFileName(String fileName){
         this.fileName = fileName;
     }
     
@@ -114,7 +114,7 @@ public class File implements Serializable{
 
 	@Override
 	public String toString() {
-		return "File [id=" + id + ", fileId=" + fileId + ", count=" + count + ", fileName=" + fileName
+		return "File [id=" + id + ", fileId=" + fileId + ", clickCount=" + clickCount + ", fileName=" + fileName
 				+ ", fileIntroduction=" + fileIntroduction + ", groupName=" + groupName + ", remoteFileName="
 				+ remoteFileName + ", gmtCreate=" + gmtCreate + ", gmtModified=" + gmtModified + "]";
 	}

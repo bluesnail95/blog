@@ -4,25 +4,27 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @date 2018-07-05
- * @author liuffei 文章分类
+ * 标签
+ * @author liuffei
+ * @date 2018-07-10
+ *
  */
-public class Category implements Serializable {
-
+public class Tag implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
-
+	
 	//主键
 	private int id;
-
-	//业务标识
-	private String categoryId;
-
-	//分类名称
-	private String categoryName;
-
+	
+	//标签的业务标识
+	private String tagId;
+	
+	//标签名称
+	private String tagName;
+	
 	//创建时间
 	private Date gmtCreate;
-
+	
 	//修改时间
 	private Date gmtModified;
 
@@ -34,20 +36,20 @@ public class Category implements Serializable {
 		this.id = id;
 	}
 
-	public String getCategoryId() {
-		return categoryId;
+	public String getTagId() {
+		return tagId;
 	}
 
-	public void setCategoryId(String categoryId) {
-		this.categoryId = categoryId;
+	public void setTagId(String tagId) {
+		this.tagId = tagId;
 	}
 
-	public String getCategoryName() {
-		return categoryName;
+	public String getTagName() {
+		return tagName;
 	}
 
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
 	}
 
 	public Date getGmtCreate() {
@@ -68,8 +70,7 @@ public class Category implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", categoryId=" + categoryId + ", categoryName=" + categoryName + ", gmtCreate="
-				+ gmtCreate + ", gmtModified=" + gmtModified + "]";
+		return "Tag [id=" + id + ", tagId=" + tagId + ", tagName=" + tagName + ", gmtCreate=" + gmtCreate
+				+ ", gmtModified=" + gmtModified + "]";
 	}
-	
 }

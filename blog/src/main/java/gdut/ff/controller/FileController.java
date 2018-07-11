@@ -53,7 +53,7 @@ public class FileController {
 	 */
 	@PostMapping(value = "/file")
 	public JSONObject insertFile(@RequestBody File file,HttpServletRequest request) throws Exception {
-		if(StringUtil.isNotBlank(file.getId())) {
+		if(file.getId() > 0) {
 			fileServiceImpl.updateFile(file);
 		}else {
 			fileServiceImpl.insertFile(file);

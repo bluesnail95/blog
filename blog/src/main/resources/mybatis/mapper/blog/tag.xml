@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gdut.ff.mapper.TagMapper">
+    
+  <resultMap id="tagMap" type="gdut.ff.domain.Tag">
+	  <id column="id" jdbcType="INTEGER" property="id" javaType="int"/>
+	  <result column="tag_id" jdbcType="VARCHAR" property="tagId" javaType="String"/>
+	  <result column="tag_name" jdbcType="VARCHAR" property="tagName" javaType="String"/>
+	  <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" javaType="java.util.Date"/>
+	  <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" javaType="java.util.Date"/>
+  </resultMap>
+  
+  <sql id="tagField">
+      id, tag_id, tag_name, gmt_create, gmt_modified
+  </sql>
+  
+  <!-- 插入一条文章分类记录 -->
+  <insert id="insertTag" parameterType="gdut.ff.domain.Tag">
+	  insert into tag (<include refid="tagField"></include>)
+	  values (#{id,jdbcType=INTEGER},#{tagId,jdbcType=VARCHAR},#{tagName,jdbcType=VARCHAR},
+	      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <!-- 查找文章分类记录 gmt_create, gmt_modified, -->
+  <select id="findTagById" resultMap="tagMap">
+  	  select <include refid="tagField"></include>
+  	  from tag 
+  	  where id = #{id}
+  </select>
+  
+  <select id="findAllTag" resultMap="tagMap">
+      select <include refid="tagField"></include>
+      from tag
+      where 1 = 1
+  </select>
+  
+  <!-- 更新文章分类记录 -->
+  <update id="updateTag" parameterType="gdut.ff.domain.Tag">
+	  update tag
+	  <set>
+	    <if test="tagId != null">
+	      tag_id = #{tagId,jdbcType=VARCHAR},
+	    </if>
+	    <if test="tagName != null">
+	      tag_name= #{tagName,jdbcType=VARCHAR},
+	    </if>
+	    <if test="gmtCreate != null">
+	      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+	    </if>
+	    <if test="gmtModified != null">
+	      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+	    </if>
+	  </set>
+	  where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 删除文章分类记录 -->
+  <delete id="deleteTagById" parameterType="int">
+      delete from tag where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+</mapper>
