@@ -33,11 +33,12 @@ public class HttpFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletResponse res = (HttpServletResponse) response;
-		res.addHeader("Access-Control-Allow-Origin", filterUrl);
+		//res.addHeader("Access-Control-Allow-Origin", filterUrl);
+		res.addHeader("Access-Control-Allow-Origin", "*");
         res.addHeader("Allow", "GET, POST, DELETE, PUT");
         res.addHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, token");
         res.setCharacterEncoding("UTF-8");
-        res.addHeader("Access-Control-Allow-Credentials", "true");
+        //res.addHeader("Access-Control-Allow-Credentials", "true");
         chain.doFilter(request, res);
 	}
 
