@@ -7,7 +7,6 @@
 	  <result column="blog_id" jdbcType="VARCHAR" property="blogId" javaType="String"/>
 	  <result column="title" jdbcType="VARCHAR" property="title" javaType="String"/>
 	  <result column="summary" jdbcType="VARCHAR" property="summary" javaType="String"/>
-	  <result column="keywords" jdbcType="VARCHAR" property="keywords" javaType="String"/>
 	  <result column="content" jdbcType="LONGVARBINARY" property="content" javaType="String"/>
 	  <result column="category_id" jdbcType="VARCHAR" property="categoryId" javaType="String"/>
 	  <result column="is_draft" jdbcType="CHAR" property="isDraft" javaType="String"/>
@@ -32,8 +31,8 @@
   
   <!-- 插入一条博客记录 -->
   <insert id="insertBlog" parameterType="gdut.ff.domain.Blog">
-	  insert into blog (id,blog_id,title, summary, keywords, category_id, creator, gmt_create, gmt_modified, content,is_draft,img)
-	  values (#{id,jdbcType=VARCHAR},#{blogId,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR}, 
+	  insert into blog (id,blog_id,title, summary, category_id, creator, gmt_create, gmt_modified, content,is_draft,img)
+	  values (#{id,jdbcType=VARCHAR},#{blogId,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, 
 	    #{categoryId,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
 	    #{gmtModified,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARBINARY},#{isDraft,jdbcType=CHAR},#{img,jdbcType=VARCHAR})
   </insert>

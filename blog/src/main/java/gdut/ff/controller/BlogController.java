@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -100,11 +101,16 @@ public class BlogController extends CommController{
 			//查询博客的创建者的名称
 			String creator = blog.getCreator();
 			User user = userServiceImpl.findUserByUserId(creator);
-			result.put("creatorName", user.getName());
+			//TODO 这里的name可能出现非空
+			if(null != user.getName()) {
+				result.put("creatorName", user.getName());
+			}
 			//查询博客的分类
 			String categoryId = blog.getCategoryId();
-			Category category = categoryServiceImpl.fingCategoryByCategoryId(categoryId);
-			result.put("categoryName", category.getCategoryName());
+			if(StringUtils.isNotBlank(categoryId)) {
+				Category category = categoryServiceImpl.fingCategoryByCategoryId(categoryId);
+				result.put("categoryName", category.getCategoryName());
+			}
 			//查询博客的标签
 			Map<String, Object> tagParam = new HashMap<String, Object>();
 			tagParam.put("blogId", blog.getBlogId());
