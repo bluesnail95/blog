@@ -49,4 +49,12 @@ public class MessageServiceImpl {
 		return messageMapper.findAllMessage();
 	}
 	
+	/**
+	 * 查询时间最近的一条通知记录
+	 */
+	@Transactional(readOnly = true)
+	public Message findLastestMessage() {
+		return messageMapper.findLastestMessage();
+	}
+	
 }

@@ -14,11 +14,12 @@ import gdut.ff.domain.Message;
 @Component
 public class BlogWebSocketServer {
 
+	
 	@Autowired
 	private SimpMessagingTemplate messagingTemplate;
 	
 	public void blogServerMessage(Message message) {
-		messagingTemplate.convertAndSend("/topic/subscribe", message);
+		messagingTemplate.convertAndSend("/topic/blog", message);
 	}
 	
 }

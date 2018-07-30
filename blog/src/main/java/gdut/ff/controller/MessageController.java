@@ -99,4 +99,17 @@ public class MessageController {
 		result.put("messages", messages);
 		return result;
 	}
+	
+	/**
+	 * 查询最新的一条记录
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(value = "/lastestMessage")
+	public JSONObject findLastestMessage() {
+		Message lastestMessage = messageServiceImpl.findLastestMessage();
+		JSONObject result = JsonUtil.successJson();
+		result.put("message", lastestMessage);
+		return result;
+	}
 }

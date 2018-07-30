@@ -21,4 +21,6 @@ public interface MessageMapper {
 	public int deleteMessageById(String id);
 	
 	public List<Message> findAllMessage();
+	
+	public Message findLastestMessage();
 }

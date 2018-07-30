@@ -37,11 +37,10 @@
                 </div>
             </p>
             -->
-            <!--websocket测试
+            <!--websocket测试-->
             <div id="main">  
                 <div id="message"></div>  
             </div>
-            -->
         </div>
     </header>
     <hr class="am-article-divider"/>
@@ -186,7 +185,7 @@
 <script src="assets/js/sockjs.min.js"></script>
 <script src="assets/js/stomp.min.js"></script>
 <script>
-    /*
+    
     // 建立连接对象（还未发起连接）
     var socket = new SockJS(SERVER_URL+"/webSocketServer");
 
@@ -199,11 +198,21 @@
         function connectCallback(frame) {
             // 连接成功时（服务器响应 CONNECTED 帧）的回调方法
             //setMessageInnerHTML("连接成功");
-            stompClient.subscribe('/topic/subscribe', function (response) {
+            stompClient.subscribe('/topic/blog', function (response) {
                 var returnData = JSON.parse(response.body);
                 var blogData = JSON.parse(returnData.messageContent);
-                setMessageInnerHTML("博主于:" + new Date(returnData.gmtModified) + "更新了博客《" + blogData.blog.title + "》");
+                setMessageInnerHTML("博主于:" + new Date(returnData.gmtModified) + "更新了博客《" + blogData.blogTitle + "》");
             });
+
+            axios.get(SERVER_URL+"/lastestMessage",{
+               
+            })
+            .then(function(response){
+                stompClient.send("/topic/blog", {}, JSON.stringify(response.data.message));
+             })
+            .catch(function(error){
+                console.log(error);
+            })  
         },
         function errorCallBack(error) {
             // 连接失败时（服务器响应 ERROR 帧）的回调方法
@@ -215,5 +224,4 @@
     function setMessageInnerHTML(innerHTML) {
         document.getElementById('message').innerHTML = innerHTML + '<br/>';
     }
-    */
 </script>

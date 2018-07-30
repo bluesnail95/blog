@@ -28,6 +28,7 @@ import gdut.ff.domain.Message;
 import gdut.ff.domain.User;
 import gdut.ff.service.BlogServiceImpl;
 import gdut.ff.service.CategoryServiceImpl;
+import gdut.ff.service.MessageServiceImpl;
 import gdut.ff.service.TagRelationServiceImpl;
 import gdut.ff.service.UserServiceImpl;
 import gdut.ff.utils.Constant;
@@ -54,6 +55,9 @@ public class BlogController extends CommController{
 	@Autowired
 	private CategoryServiceImpl categoryServiceImpl;
 	
+	@Autowired
+	private MessageServiceImpl messageServiceImpl;
+	
 	@Value("${blog.user.secret}")
 	private String SECERT;
 	
@@ -76,12 +80,15 @@ public class BlogController extends CommController{
 		}
 		//服务端推送消息
 		JSONObject blogJson = new JSONObject();
-		blogJson.put("blog", blog);
+		blogJson.put("blogTitle", blog.getTitle());
 		Message message = new Message();
 		message.setGmtCreate(new Date());
 		message.setGmtModified(new Date());
 		message.setMessageId("blog" + Constant.dateFormatNow("yyyyMMddHHmmss", new Date()));
-		message.setMessageContent(blogJson.toJSONString());
+		message.setMessageContent(blogJson.toString());
+		//向数据库插入新的通知
+		messageServiceImpl.insertMessage(message);
+		//服务端推送
 		blogWebSocketServer.blogServerMessage(message);
 		return JsonUtil.successJson();
 	}
@@ -100,11 +107,11 @@ public class BlogController extends CommController{
 			blogServiceImpl.updateClickCount(1, id);
 			//查询博客的创建者的名称
 			String creator = blog.getCreator();
-			User user = userServiceImpl.findUserByUserId(creator);
-			//TODO 这里的name可能出现非空
-			if(null != user.getName()) {
+			if(StringUtils.isNotBlank(creator)) {
+				User user = userServiceImpl.findUserByUserId(creator);
 				result.put("creatorName", user.getName());
 			}
+			
 			//查询博客的分类
 			String categoryId = blog.getCategoryId();
 			if(StringUtils.isNotBlank(categoryId)) {

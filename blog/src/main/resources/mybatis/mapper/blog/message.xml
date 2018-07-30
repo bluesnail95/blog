@@ -12,19 +12,19 @@
   
   <!-- 插入一条记录 -->
   <insert id="insertMessage" parameterType="gdut.ff.domain.Message">
-	  insert into message (id,message_id,message_content,gmt_create,gmt_modified,)
-	  values (#{id},#{messageId},#{messageContent},#{gmtCreate},#{gmtModified},)
+	  insert into message (id,message_id,message_content,gmt_create,gmt_modified)
+	  values (#{id},#{messageId},#{messageContent},#{gmtCreate},#{gmtModified})
   </insert>
   
   <!-- 查找记录 -->
   <select id="findMessageById" resultMap="messageMap">
-  	  select id,message_id,message_content,gmt_create,gmt_modified,
+  	  select id,message_id,message_content,gmt_create,gmt_modified
   	  from message
   </select>
   
    <!-- 查找全部记录 -->
   <select id="findAllMessage" resultMap="messageMap">
-      select id,message_id,message_content,gmt_create,gmt_modified,  
+      select id,message_id,message_content,gmt_create,gmt_modified 
       from message
       where 1 = 1
       <if test = "id != null and id != ''">
@@ -61,7 +61,7 @@
           gmt_create = #{gmtCreate},
        </if>
       <if test = "gmtModified != null and gmtModified != ''">
-          gmt_modified = #{gmtModified},
+          gmt_modified = #{gmtModified}
        </if>
 	  </set>
 	  <where>
@@ -73,4 +73,9 @@
   <delete id="deletemessageById" parameterType="int">
       delete from message where id = #{id}
   </delete>
+  
+  <select id="findLastestMessage" resultMap="messageMap">
+  	  select * from message order by gmt_create desc limit 1
+  </select>
+  
 </mapper>

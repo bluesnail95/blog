@@ -37,7 +37,9 @@
                             <h3 class="am-article-title blog-title" style="text-align: center;">{{blog.title}}</h3>
                             <h4 class="am-article-meta blog-meta" style="text-align: center;">
                             发布者：<span class="am-badge am-badge-success">{{blog.creatorName}} </span> &nbsp;&nbsp;
+                            <!--
                             更新于：<span class="am-badge am-badge-success">{{blog.gmtModified|timeFormat}} </span>
+                            -->
                             分类：<span class="am-badge am-badge-success">{{blog.categoryName}} </span>
                             标签：<span class="am-badge am-badge-success">{{blog.tag}}</span>
                             </h4>
@@ -133,6 +135,7 @@
                            
                         })
                         .then(function(response){
+                            debugger
                             blog.title = response.data.content.title;
                             blog.content = markdown.toHTML(response.data.content.content, 'Maruku');
                             blog.creatorName = response.data.creatorName;
