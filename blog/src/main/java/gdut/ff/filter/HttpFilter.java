@@ -21,9 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
  */
 @WebFilter(urlPatterns = "/*")
 public class HttpFilter implements Filter {
-	
-	@Value("${filter.url}")
-	private String filterUrl;
+
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {

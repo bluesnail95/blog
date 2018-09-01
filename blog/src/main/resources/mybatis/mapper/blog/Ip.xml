@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gdut.ff.mapper.IpMapper">
+
+  <resultMap id="ipMap" type="gdut.ff.domain.Ip">
+	  <result column="id" property="id" jdbcType="int" javaType="int"/>
+	  <result column="ip" property="ip" jdbcType="varchar" javaType="String"/>
+	  <result column="country" property="country" jdbcType="varchar" javaType="String"/>
+	  <result column="province" property="province" jdbcType="varchar" javaType="String"/>
+	  <result column="city" property="city" jdbcType="varchar" javaType="String"/>
+	  <result column="district" property="district" jdbcType="varchar" javaType="String"/>
+	  <result column="gmt_create" property="gmtCreate" jdbcType="timestamp" javaType="Date"/>
+	  <result column="gmt_modified" property="gmtModified" jdbcType="timestamp" javaType="Date"/>
+  </resultMap>
+  
+  <!-- 插入一条记录 -->
+  <insert id="insertIp" parameterType="gdut.ff.domain.Ip">
+	  insert into ip (id,ip,country,province,city,district,gmt_create,gmt_modified)
+	  values (#{id},#{ip},#{country},#{province},#{city},#{district},#{gmtCreate},#{gmtModified})
+  </insert>
+  
+  <!-- 查找记录 -->
+  <select id="findIpById" resultMap="ipMap">
+  	  select id,ip,country,province,city,district,gmt_create,gmt_modified
+  	  from ip
+  </select>
+  
+   <!-- 查找全部记录 -->
+  <select id="findAllIp" resultMap="ipMap">
+      select id,ip,country,province,city,district,gmt_create,gmt_modified 
+      from ip
+      where 1 = 1
+          <if test = "id != null and id != ''">
+              and id = #{id}
+          </if>
+          <if test = "ip != null and ip != ''">
+              and ip = #{ip}
+          </if>
+          <if test = "country != null and country != ''">
+              and country = #{country}
+          </if>
+          <if test = "province != null and province != ''">
+              and province = #{province}
+          </if>
+          <if test = "city != null and city != ''">
+              and city = #{city}
+          </if>
+          <if test = "district != null and district != ''">
+              and district = #{district}
+          </if>
+          <if test = "gmtCreate != null">
+              and gmt_create = #{gmtCreate}
+          </if>
+          <if test = "gmtModified != null">
+              and gmt_modified = #{gmtModified}
+          </if>
+  </select>
+  
+  <!-- 更新记录-->
+  <update id="updateIp" parameterType="gdut.ff.domain.Ip">
+	  update ip
+	  <set>
+	         <if test = "id != null and id != ''">
+	             id = #{id},
+	          </if>
+	         <if test = "ip != null and ip != ''">
+	             ip = #{ip},
+	          </if>
+	         <if test = "country != null and country != ''">
+	             country = #{country},
+	          </if>
+	         <if test = "province != null and province != ''">
+	             province = #{province},
+	          </if>
+	         <if test = "city != null and city != ''">
+	             city = #{city},
+	          </if>
+	         <if test = "district != null and district != ''">
+	             district = #{district},
+	          </if>
+	         <if test = "gmtCreate != null">
+	             gmt_create = #{gmtCreate},
+	          </if>
+	         <if test = "gmtModified != null">
+	             gmt_modified = #{gmtModified},
+	          </if>
+	  </set>
+	  <where>
+	      id = ${id}
+	  </where>
+	  
+  </update>
+  
+  <!-- 删除记录 -->
+  <delete id="deleteipById" parameterType="java.lang.String">
+      delete from ip where id = #{id}
+  </delete>
+</mapper>
