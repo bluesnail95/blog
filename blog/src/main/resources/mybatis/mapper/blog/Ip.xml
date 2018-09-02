@@ -3,14 +3,14 @@
 <mapper namespace="gdut.ff.mapper.IpMapper">
 
   <resultMap id="ipMap" type="gdut.ff.domain.Ip">
-	  <result column="id" property="id" jdbcType="int" javaType="int"/>
-	  <result column="ip" property="ip" jdbcType="varchar" javaType="String"/>
-	  <result column="country" property="country" jdbcType="varchar" javaType="String"/>
-	  <result column="province" property="province" jdbcType="varchar" javaType="String"/>
-	  <result column="city" property="city" jdbcType="varchar" javaType="String"/>
-	  <result column="district" property="district" jdbcType="varchar" javaType="String"/>
-	  <result column="gmt_create" property="gmtCreate" jdbcType="timestamp" javaType="Date"/>
-	  <result column="gmt_modified" property="gmtModified" jdbcType="timestamp" javaType="Date"/>
+	  <result column="id" property="id" jdbcType="INTEGER" javaType="int"/>
+	  <result column="ip" property="ip" jdbcType="VARCHAR" javaType="String"/>
+	  <result column="country" property="country" jdbcType="VARCHAR" javaType="String"/>
+	  <result column="province" property="province" jdbcType="VARCHAR" javaType="String"/>
+	  <result column="city" property="city" jdbcType="VARCHAR" javaType="String"/>
+	  <result column="district" property="district" jdbcType="VARCHAR" javaType="String"/>
+	  <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" javaType="Date"/>
+	  <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" javaType="Date"/>
   </resultMap>
   
   <!-- 插入一条记录 -->
@@ -95,4 +95,9 @@
   <delete id="deleteipById" parameterType="java.lang.String">
       delete from ip where id = #{id}
   </delete>
+  
+  <!-- 查询当天 -->
+  <select id="findOneCurrentDate" resultMap="ipMap">
+      select id,ip,country,province,city,district from ip  where DATE_FORMAT(gmt_create,'%Y-%m-%d') = CURRENT_DATE
+  </select>
 </mapper>

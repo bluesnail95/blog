@@ -48,4 +48,9 @@ public class IpServiceImpl {
 		return ipMapper.findAllIp();
 	}
 	
+	@Transactional(readOnly = true)
+	public Ip findOneCurrentDate() {
+		return ipMapper.findOneCurrentDate();
+	}
+	
 }

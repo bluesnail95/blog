@@ -75,7 +75,7 @@ public class IpController {
 	 * @param id
 	 * @return
 	 */
-	@DeleteMapping(value = "/blog/{id}")
+	@DeleteMapping(value = "/ip/{id}")
 	public JSONObject deleteIpById(@PathVariable String id) {
 		ipServiceImpl.deleteIpById(id);
 		return JsonUtil.successJson();

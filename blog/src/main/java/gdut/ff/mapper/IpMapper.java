@@ -21,4 +21,6 @@ public interface IpMapper {
 	public int deleteIpById(String id);
 	
 	public List<Ip> findAllIp();
+	
+	public Ip findOneCurrentDate();
 }
