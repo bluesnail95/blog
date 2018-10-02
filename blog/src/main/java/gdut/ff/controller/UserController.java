@@ -2,12 +2,15 @@ package gdut.ff.controller;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.eclipse.jetty.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +23,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import gdut.ff.domain.User;
 import gdut.ff.domain.UserAccess;
+import gdut.ff.redis.RedisService;
 import gdut.ff.service.UserAccessServiceImpl;
 import gdut.ff.service.UserServiceImpl;
 import gdut.ff.utils.JsonUtil;
@@ -40,6 +44,9 @@ public class UserController extends CommController{
 	
 	@Autowired
 	private UserAccessServiceImpl userAccessServiceImpl;
+	
+	@Autowired
+	private RedisService redisService;
 	
 	/**
 	 * 查询全部的用户
@@ -105,6 +112,10 @@ public class UserController extends CommController{
 		//不返回用户密码
 		user.setPassword(null);
 		result.put("user", user);
+		
+		//将用户信息存储到redis中
+		redisService.addSetValue("users", user.getUserId());
+		redisService.expireTime("users", 5, TimeUnit.MINUTES);
 		return result;
 	}
 	

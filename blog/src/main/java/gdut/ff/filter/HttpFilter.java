@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 import javax.servlet.Filter;
@@ -16,9 +17,15 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import gdut.ff.domain.Ip;
+import gdut.ff.domain.User;
+import gdut.ff.redis.RedisService;
 import gdut.ff.service.IpServiceImpl;
 import gdut.ff.utils.IpUtil;
+import gdut.ff.utils.TokenUtil;
 
 /**
  * 
@@ -33,6 +40,9 @@ public class HttpFilter implements Filter {
 	
 	@Resource
 	IpUtil ipUtil;
+	
+	@Autowired
+	RedisService redisService;
 	
 
 	@Override
@@ -103,6 +113,10 @@ public class HttpFilter implements Filter {
         	Ip ip = ipUtil.queryIpDetail(requestIpAddr);
         	ipService.insertIp(ip);
         }
+        
+        //将ip存储到redis中
+        redisService.addSetValue("ips", requestIpAddr);
+        redisService.expireTime("users", 5, TimeUnit.MINUTES);
 	}
 
 }
