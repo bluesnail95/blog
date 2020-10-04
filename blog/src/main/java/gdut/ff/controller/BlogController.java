@@ -161,14 +161,16 @@ public class BlogController extends CommController{
 	
 	/**
 	 * 查询全部博客
-	 * @param id
+	 * @param
 	 * @return
 	 */
 	@GetMapping(value = "/blogs")
 	public JSONObject findAllBlogs(Blog blog) {
 		List<Blog> blogs = blogServiceImpl.findAllBlog(blog);
+		int totalSize = blogServiceImpl.countBlog(blog);
 		JSONObject result = JsonUtil.successJson();
 		result.put("blogs", blogs);
+		result.put("totalSize", totalSize);
 		return result;
 	}
 	

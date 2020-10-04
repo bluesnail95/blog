@@ -16,6 +16,8 @@ import gdut.ff.domain.Blog;
 import gdut.ff.mapper.BlogMapper;
 import gdut.ff.utils.Constant;
 
+import javax.annotation.Resource;
+
 /**
  * 
  * @author liuffei
@@ -25,7 +27,7 @@ import gdut.ff.utils.Constant;
 @Transactional
 public class BlogServiceImpl {
 	
-	@Autowired
+	@Resource
 	private BlogMapper blogMapper;
 
 	@Transactional(readOnly = true)
@@ -49,7 +51,12 @@ public class BlogServiceImpl {
 	public int deleteBlogById(Integer id) {
 		return blogMapper.deleteBlogById(id);
 	}
-	
+
+	@Transactional(readOnly = true)
+	public int countBlog(Blog blog) {
+		return blogMapper.countBlog(blog);
+	}
+
 	@Transactional(readOnly = true)
 	public List<Blog> findAllBlog(Blog blog) {
 		return blogMapper.findAllBlog(blog);

@@ -28,6 +28,8 @@ public interface BlogMapper {
 	public int deleteBlogById(Integer id);
 	
 	public List<Blog> findAllBlog(Blog blog);
+
+	public int countBlog(Blog blog);
 	
 	public Blog findLastestBlog();
 	

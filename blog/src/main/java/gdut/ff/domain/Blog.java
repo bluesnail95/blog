@@ -52,6 +52,12 @@ public class Blog implements Serializable{
 	//用于目录的图片
 	private String img;
 
+	//当前页
+	private int currentPage;
+
+	//每页大小
+	private int pageSize;
+
 	public int getId() {
 		return id;
 	}
@@ -146,6 +152,22 @@ public class Blog implements Serializable{
 
 	public void setImg(String img) {
 		this.img = img;
+	}
+
+	public int getCurrentPage() {
+		return currentPage;
+	}
+
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
 	}
 
 	@Override
