@@ -1,0 +1,52 @@
+package gdut.ff.service;
+
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import gdut.ff.domain.${className};
+import gdut.ff.mapper.${className}Mapper;
+
+/**
+ * 
+ * @author liuffei
+ * @date 
+ */
+@Service
+@Transactional
+public class ${className}ServiceImpl {
+	
+	@Autowired
+	private ${className}Mapper ${beanName}Mapper;
+
+	@Transactional(readOnly = true)
+	public ${className} find${className}ById(String id) {
+		return ${beanName}Mapper.find(${className}ById(id);
+	}
+	
+	public int insert${className}(${className} ${beanName}) {
+		${beanName}.setId(UUID.randomUUID().toString());
+		${beanName}.setGmtCreate(new Date());
+		${beanName}.setGmtModified(new Date());
+		return ${beanName}Mapper.insert${className}(${beanName});
+	}
+	
+	public int update${className}(${className} ${beanName}) {
+		${beanName}.setGmtModified(new Date());
+		return ${beanName}Mapper.update${className}(${beanName});
+	}
+
+	public int delete${className}ById(String id) {
+		return ${beanName}Mapper.delete${className}ById(id);
+	}
+	
+	@Transactional(readOnly = true)
+	public List<${className}> findAll${className}(${className} ${beanName}) {
+		return ${beanName}Mapper.findAll${className}();
+	}
+	
+}

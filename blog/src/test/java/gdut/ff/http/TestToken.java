@@ -1,5 +1,6 @@
 package gdut.ff.http;
 
+import org.eclipse.jetty.util.security.Credential;
 import org.junit.Test;
 
 import gdut.ff.domain.User;
@@ -13,6 +14,7 @@ public class TestToken {
 	public void testToken() throws Exception {
 		User user1 = new User();
 		user1.setEmail("1192905443@163.com");
+		user1.setPassword("123456");
 		String secret = "liuffei";
 		String token = TokenUtil.token(secret,user1,30);
 		System.out.println(token);

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gdut.ff.mapper.${className}Mapper">
+
+  <#macro mapperEl value>${r"#{"}${value}}</#macro>
+
+  <#macro jspEl value>${r"${"}${value}}</#macro> 
+    
+  <resultMap id="${beanName}Map" type="gdut.ff.domain.${className}">
+	  <#list columns as column>
+	  <result column="${column.columnName}" property="${column.propertyName}" jdbcType="${column.dataType}" javaType="${column.javaType}"/>
+	  </#list>
+  </resultMap>
+  
+  <!-- 插入一条记录 -->
+  <insert id="insert${className}" parameterType="gdut.ff.domain.${className}">
+	  insert into ${beanName} (<#list columns as column>${column.columnName},</#list>)
+	  values (<#list columns as column><@mapperEl '${column.propertyName}'/>,</#list>)
+  </insert>
+  
+  <!-- 查找记录 -->
+  <select id="find${className}ById" resultMap="${beanName}Map">
+  	  select <#list columns as column>${column.columnName},</#list>
+  	  from ${beanName}
+  </select>
+  
+   <!-- 查找全部记录 -->
+  <select id="findAll${className}" resultMap="${beanName}Map">
+      select <#list columns as column>${column.columnName},</#list>  
+      from ${beanName}
+      where 1 = 1
+      <#list columns as column>
+          <if test = "${column.propertyName} != null and ${column.propertyName} != ''">
+              and ${column.columnName} = <@mapperEl '${column.propertyName}'/>
+          </if>
+      </#list>
+  </select>
+  
+  <!-- 更新记录-->
+  <update id="update${className}" parameterType="gdut.ff.domain.${className}">
+	  update ${beanName}
+	  <set>
+	      <#list columns as column>
+	         <if test = "${column.propertyName} != null and ${column.propertyName} != ''">
+	             ${column.columnName} = <@mapperEl '${column.propertyName}'/>,
+	          </if>
+	      </#list>
+	  </set>
+	  <where>
+	      id = <@jspEl 'id'/>
+	  </where>
+	  
+  </update>
+  
+  <!-- 删除记录 -->
+  <delete id="delete${beanName}ById" parameterType="java.lang.String">
+      delete from ${beanName} where id = <@mapperEl 'id'/>
+  </delete>
+</mapper>

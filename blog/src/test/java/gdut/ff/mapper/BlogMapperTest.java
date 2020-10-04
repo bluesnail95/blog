@@ -13,6 +13,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import gdut.ff.domain.Blog;
 import gdut.ff.service.BlogServiceImpl;
 
+import javax.annotation.Resource;
+
 /**
  * 测试博客的增删改查接口
  * @author bluesnail95
@@ -25,7 +27,7 @@ public class BlogMapperTest {
 	@Autowired
 	private BlogServiceImpl blogServiceImpl;
 	
-	@Autowired
+	@Resource
 	private BlogMapper blogMapper;
 	
 	@Autowired CacheManager cacheManager;
@@ -34,6 +36,11 @@ public class BlogMapperTest {
 	public void testGetBlog() {
 		//Blog blog = blogServiceImpl.fingOneById("bb38eab4-2f04-4560-b8c2-6b4a625e7ede");
 		//System.out.println(blog);
+		Blog blog = new Blog();
+		blog.setPageSize(1);
+		blog.setCurrentPage(1);
+		List<Blog> allBlog = blogMapper.findAllBlog(blog);
+		System.out.println("the result is " + allBlog);
 	}
 	
 	@Test

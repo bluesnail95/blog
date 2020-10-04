@@ -1,0 +1,31 @@
+package gdut.ff.domain;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ *实体
+ *@author liuffei
+ *@date 
+ */
+public class ${className} implements Serializable{
+
+    private final static long serialVersionUID = 1L;
+
+    <#list columns as column>
+    //${column.columnComment}
+    private ${column.javaType} ${column.propertyName};
+		
+    </#list>
+	<#list columns as column>
+	
+    public void set${column.propertyName?cap_first}(${column.javaType} ${column.propertyName}){
+        this.${column.propertyName} = ${column.propertyName};
+    }
+    
+    public ${column.javaType} get${column.propertyName?cap_first}(){
+        return this.${column.propertyName};
+    }
+	</#list>
+
+}
