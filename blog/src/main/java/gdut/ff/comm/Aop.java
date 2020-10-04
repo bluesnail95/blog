@@ -43,7 +43,7 @@ public class Aop {
 	 */
 	@Around("execution(* gdut.ff.controller.*.*(..))")
 	public JSONObject around(ProceedingJoinPoint joinPoint) {
-		//System.out.println("环绕通知前");
+		long start = System.currentTimeMillis();
 		JSONObject obj = null;
 		try {
 		    obj = (JSONObject) joinPoint.proceed();
@@ -57,7 +57,8 @@ public class Aop {
 			e.printStackTrace();
 			obj = JsonUtil.errorJson(e.getMessage());
 		}
-		//System.out.println("环绕通知后");
+		long end = System.currentTimeMillis();
+		System.out.println("消耗时间：" + (end - start) + " interface name is : " + joinPoint.getTarget());
 		return obj;
 	}
 	
