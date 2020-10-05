@@ -25,9 +25,9 @@
             </div>
         </header>
         <hr class="am-article-divider"/>
-        <div class="am-g am-g-fixed"">
-            <div class="am-u-md-9 am-u-md-push-3 ">
-                <ul class="am-list blog-list" id="menu">
+        <div class="am-g am-g-fixed">
+            <div class="am-u-md-9 am-u-md-push-3 " id="menu">
+                <ul class="am-list blog-list" >
                     <li v-for="blog in blogs">
                         <div class="am-g am-margin-top">
                             <div class="am-u-sm-12 am-u-md-3">
@@ -56,6 +56,22 @@
                         </div>
                     </li>
                 </ul>
+                <div class="page-bar">
+                    <ul>
+                        <li v-if="currentPage == 1"><a class="banclick">上一页</a></li>
+                        <li v-if="currentPage > 1">
+                            <a v-on:click="pageClick(currentPage - 1);" href="javascript:void(0)" target="_blank">上一页</a>
+                        </li>
+                        <li v-for="index in indexs" v-bind:class="{'active': currentPage == index}">
+                            <a v-on:click="btnClick(index)">{{index}}</a>
+                        </li>
+                        <li v-if="currentPage < totalPage">
+                            <a v-on:click="pageClick(currentPage + 1)" href="javascript:void(0)" target="_blank">下一页</a>
+                        </li>
+                        <li v-if="currentPage == totalPage"><a class="banclick">下一页</a></li>
+                        <li><a>共<i>{{totalPage}}</i>页</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="am-u-md-3 am-u-md-pull-9 my-sidebar">
                 <div class="am-offcanvas" id="sidebar">
@@ -93,6 +109,16 @@
                                     Github
                                 </a>
                             </li>
+                            <li>
+                                <a href="https://blog.csdn.net/u012734723">
+                                    CSDN
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://segmentfault.com/u/bluesnail95">
+                                    segmentfault
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -106,7 +132,7 @@
         </div>
         <footer class="my-footer">
             <small>
-                © Copyright by liuffei.
+                © 2018 - 2020 liuffei - 刘菲菲 版权所有 粤ICP备18082047号-1
             </small>
         </footer>
     </body>
@@ -138,14 +164,19 @@
         data: function() {
             return {
                 blogs: [],
-                categorys: {}
+                categorys: {},
+                totalSize:0,//总记录数
+                totalPage: 0, //总页数
+                currentPage: 1,//当前页码
+                pageSize: 10,//每页大小
+                indexs:1//页数
             };
         },
         mounted: function() {
             this.$nextTick(function () {
                 this.loadAllCategory(this.categorys);
-                this.init(this.blogs);
-            })
+                this.init(this.blogs, this.totalSize, this.currentPage, this.pageSize, this.totalPage);
+            });
         },
         filters: {
             categoryFormat: function(value) {
@@ -163,13 +194,16 @@
                 window.location.href = "view.html";   
             },
             init(value) {
-                axios.get(SERVER_URL+"/blogs?isDraft=1",{
-                   
+                axios.get(SERVER_URL+"/blogs?isDraft=1&currentPage=" + this.currentPage + "&pageSize=" + this.pageSize,{
+                    
                 })
                 .then(function(response){
                     for(var i = 0;i < response.data.blogs.length;i++){
                         value.push(response.data.blogs[i]);
                     }
+                    this.vm.totalSize = response.data.totalSize;
+                    this.vm.totalPage = Math.ceil(this.vm.totalSize / this.vm.pageSize);
+                    this.vm.indexs = this.vm.paging();
                  })
                 .catch(function(error){
                     console.log(error);
@@ -191,6 +225,46 @@
                 .catch(function(error){
                     console.log(error);
                 })  
+            },
+            //分页
+            btnClick: function(data){//页码点击事件
+                debugger
+                if(data != this.currentPage && data >= 1 && data <= this.totalPage){
+                    this.currentPage = data;
+                }
+                //根据点击页数请求数据
+                this.pageClick(this.currentPage);
+            },
+            pageClick: function(newPage){
+                //根据点击页数请求数据
+                this.blogs = [];
+                this.currentPage = newPage;
+                this.init(this.blogs);
+            },
+            //分页
+            paging: function(){
+                var left = 1;
+                var right = this.totalPage;
+                var arr = [];
+                if(this.totalPage >= 5){
+                    if(this.currentPage > 3 && this.currentPage < this.totalPage - 2) {
+                        left = this.currentPage - 2;
+                        right = this.currentPage + 2;
+                    }else{
+                        if(this.currentPage <= 3){
+                            left = 1;
+                            right = 5;
+                        }else{
+                            right = this.currentPage;
+                            left = this.currentPage - 3;
+                        }
+                    }
+                }
+                while (left <= right){
+                    arr.push(left);
+                    left++;
+                }
+                return arr;
             }
         }
     });

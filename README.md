@@ -68,3 +68,7 @@ Project : blog
 (2)后台：springboot使用内置的tomcat。
 
 (3)运行在腾讯云centos7.3操作系统。
+
+(4)部署命令：
+
+nohup java -jar -Dspring.profiles.active=dev2 blog-1.0.0.jar > blog.log &
