@@ -32,7 +32,7 @@
   <!-- 插入一条博客记录 -->
   <insert id="insertBlog" parameterType="gdut.ff.domain.Blog">
 	  insert into blog (id,blog_id,title, summary, category_id, creator, gmt_create, gmt_modified, content,is_draft,img)
-	  values (#{id,jdbcType=VARCHAR},#{blogId,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, 
+	  values (next value for MYCATSEQ_MYCAT,#{blogId,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR},
 	    #{categoryId,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
 	    #{gmtModified,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARBINARY},#{isDraft,jdbcType=CHAR},#{img,jdbcType=VARCHAR})
   </insert>
@@ -43,6 +43,15 @@
   	  from blog 
   	  where id = #{id}
   </select>
+	
+ <select id="countBlog" resultType="int">
+	select count(id)
+	from blog
+	where 1 = 1
+	 <if test="isDraft != null and isDraft != ''">
+		 and is_draft = #{isDraft}
+	 </if>
+ </select>
   
   <select id="findAllBlog" resultMap="blogMap">
       select <include refid="fieldWithNoContent"></include>
@@ -51,6 +60,9 @@
       <if test="isDraft != null and isDraft != ''">
           and is_draft = #{isDraft}
       </if>
+	  <if test="currentPage > 0 and pageSize > 0">
+	  limit ${(currentPage - 1) * pageSize},${pageSize}
+	  </if>
   </select>
   
   <!-- 更新博客记录 -->
@@ -101,7 +113,7 @@
   
   <!-- 查找最新的一条博客记录 -->
   <select id="findLastestBlog" resultMap="blogMap">
-  	  select id,title,content,gmt_modified from blog order by gmt_create desc limit 1;
+  	  select id,title,content,gmt_modified,gmt_create from blog order by gmt_create desc limit 1
   </select>
   
   <update id="updateClickCount" parameterType="map">
