@@ -3,6 +3,7 @@ package gdut.ff.mapper;
 import java.util.List;
 
 import gdut.ff.domain.User;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 用户数据访问层操作接口
@@ -23,6 +24,13 @@ public interface UserMapper {
 	 * @return
 	 */
 	public User fingUserById(int id);
+
+	/**
+	 * 根据用户名查找用户
+	 * @param loginName 登录名
+	 * @return
+	 */
+	public User fingUserByName(@Param("username") String username);
 	
 	/**
 	 * 保存用户

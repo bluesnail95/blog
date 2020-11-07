@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gdut.ff.mapper.RoleMapper">
+    
+    <resultMap id="roleMap" type="gdut.ff.domain.Role">
+        <id column="id" property="id" jdbcType="INTEGER" javaType="int"/>
+        <result column="role_id" property="roleId" jdbcType="VARCHAR" javaType="String"/>
+        <result column="name" property="name" jdbcType="VARCHAR" javaType="String"/>
+        <result column="name_zh" property="nameZh" jdbcType="VARCHAR" javaType="String"/>
+    </resultMap>
+    
+    <!-- 查找全部用户 -->
+    <select id="findRoleByUser" resultMap="roleMap">
+        select id, role_id, role_name, role_name_zh
+        from role
+        where role_id in (
+            select distinct role_id
+            from role_user
+            where user_id  = #{userId}
+        )
+    </select>
+
+</mapper>

@@ -1,8 +1,14 @@
 package gdut.ff.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,9 +18,7 @@ import org.springframework.stereotype.Component;
  * @description
  */
 @Component
-public class User implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
+public class User implements UserDetails {
 
 	private int id;
 	
@@ -32,6 +36,8 @@ public class User implements Serializable{
 	
 	//登录名
 	private String loginName;
+
+	private String username;
 	
 	//密码
 	private String password;
@@ -50,6 +56,14 @@ public class User implements Serializable{
 	
 	//修改时间
 	private Date gmtModified;
+
+	//是否启用
+	private boolean enabled;
+
+	//是否锁定
+	private boolean locked;
+
+	private List<Role> roleList;
 
 	public int getId() {
 		return id;
@@ -81,10 +95,6 @@ public class User implements Serializable{
 
 	public void setLoginName(String loginName) {
 		this.loginName = loginName;
-	}
-
-	public String getPassword() {
-		return password;
 	}
 
 	public void setPassword(String password) {
@@ -145,6 +155,66 @@ public class User implements Serializable{
 
 	public void setGmtModified(Date gmtModified) {
 		this.gmtModified = gmtModified;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return !locked;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+		for(Role role : roleList) {
+			authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+		}
+		return authorities;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public boolean isLocked() {
+		return locked;
+	}
+
+	public void setLocked(boolean locked) {
+		this.locked = locked;
+	}
+
+	public List<Role> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
 	}
 
 	@Override

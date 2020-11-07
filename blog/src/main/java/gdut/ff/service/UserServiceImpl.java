@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import gdut.ff.domain.User;
 import gdut.ff.mapper.UserMapper;
 
+import javax.annotation.Resource;
+
 /**
  * 
  * @author liuffei
@@ -20,7 +22,7 @@ import gdut.ff.mapper.UserMapper;
 @Transactional
 public class UserServiceImpl {
 	
-	@Autowired
+	@Resource
 	private UserMapper userMapper;
 
 	/**
@@ -41,7 +43,17 @@ public class UserServiceImpl {
 	public User fingUserById(int id) {
 		return userMapper.fingUserById(id);
 	}
-	
+
+	/**
+	 * 根据用户名查找用户
+	 * @param loginName
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public User fingUserByName(String username) {
+		return userMapper.fingUserByName(username);
+	}
+
 	/**
 	 * 保存用户
 	 * @param user
@@ -66,8 +78,7 @@ public class UserServiceImpl {
 	
 	/**
 	 * 根据用户用户名或邮箱登录
-	 * @param loginName 登录名
-	 * @param password 密码
+	 * @param user 用户
 	 */
 	@Transactional(readOnly = true)
 	public User loginUser(User user) {

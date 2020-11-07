@@ -95,7 +95,6 @@ public class UserController extends CommController{
 	
 	/**
 	 * 用户登录
-	 * @param user
 	 * @return
 	 * @throws Exception 
 	 */
@@ -121,7 +120,6 @@ public class UserController extends CommController{
 	
 	/**
 	 * 用户注册
-	 * @param user
 	 * @return
 	 */
 	@PostMapping("/user/regist")

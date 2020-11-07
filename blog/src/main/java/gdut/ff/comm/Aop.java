@@ -2,6 +2,9 @@ package gdut.ff.comm;
 
 import javax.security.auth.login.LoginException;
 
+import com.codahale.metrics.MetricRegistry;
+import com.codahale.metrics.Timer;
+import gdut.ff.listener.MetricsListener;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -22,6 +25,8 @@ import gdut.ff.utils.JsonUtil;
 @Configuration
 @Aspect
 public class Aop {
+
+    private final Timer executions = MetricsListener.METRIC_REGISTRY.timer(MetricRegistry.name(Aop.class, "executions"));
 	
 	/**
 	 * 异常通知
@@ -43,6 +48,7 @@ public class Aop {
 	 */
 	@Around("execution(* gdut.ff.controller.*.*(..))")
 	public JSONObject around(ProceedingJoinPoint joinPoint) {
+        final Timer.Context context = executions.time();
 		long start = System.currentTimeMillis();
 		JSONObject obj = null;
 		try {
@@ -59,6 +65,7 @@ public class Aop {
 		}
 		long end = System.currentTimeMillis();
 		System.out.println("消耗时间：" + (end - start) + " interface name is : " + joinPoint.getTarget());
+		context.stop();
 		return obj;
 	}
 	

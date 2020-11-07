@@ -64,7 +64,7 @@ public class HttpFilter implements Filter {
         res.addHeader("Access-Control-Allow-Credentials", "true");
         
         //以天为单位保存请求的Ip
-        saveIp(req);
+//        saveIp(req);
         
         chain.doFilter(request, res);
 	}

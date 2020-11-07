@@ -23,11 +23,18 @@
         FROM user
     </select>
     
-    <!-- 查询指定的用户 -->
+    <!-- 根据id查询指定的用户 -->
     <select id="findUserById" resultMap="userMap">
         SELECT id,user_id,name,email,birthday,login_name,password,signature,img,is_admin,gmt_create,gmt_modified 
         FROM user 
         WHERE id = #{id}
+    </select>
+
+    <!-- 根据name查询指定的用户 -->
+    <select id="findUserByName" resultMap="userMap">
+        SELECT id,user_id,name,email,birthday,login_name,password,signature,img,is_admin,gmt_create,gmt_modified
+        FROM user
+        WHERE username = #{username}
     </select>
     
     <!-- 保存用户 -->
